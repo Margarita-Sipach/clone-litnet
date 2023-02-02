@@ -16,10 +16,10 @@ interface BlogElementProps {
 
 export const BlogElement = ({ blog }: BlogElementProps) => {
   return (
-    <ElementWrapper className="flex flex-col justify-between w-full gap-y-4 h-52 relative">
-      <div className="text-base">{blog.title}</div>
+    <ElementWrapper className="flex flex-col w-full gap-y-5 h-40 sm:h-44 relative">
+      <div className="text-xl">{blog.title}</div>
 			<Avatar image={blog.img} name={blog.author} date={blog.date}></Avatar>
-			<div className="text-sm overflow-ellipsis overflow-hidden h-40">{blog.text}</div>
+			<div className="text-sm overflow-ellipsis overflow-hidden">{blog.text}</div>
 			<div className="absolute right-3 top-3 text-xs flex items-center gap-1"><AiFillEye className="text-indigo-400 text-sm"/> {blog.commentCount}</div>
     </ElementWrapper>
   );
