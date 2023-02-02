@@ -10,7 +10,7 @@ interface SidebarElementProps {
 
 export const SidebarElement = ({ book }: SidebarElementProps) => {
   return (
-    <a href="" className="flex items-start w-full h-24">
+    <a href="" className="flex items-start w-full sm:h-20 lg:h-32">
       <img
         src={book.img}
         alt=""

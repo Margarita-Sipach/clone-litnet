@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Sidebar } from "../../modules/sidebar";
 import { Wrapper } from "../wrapper";
 
 interface PageWrapperProps {
@@ -15,11 +16,14 @@ export const PageWrapper = ({
   isTop,
 }: PageWrapperProps) => {
   return (
-    <Wrapper className={`${isTop ? "mt-28" : "mt-0"} w-full ${className}`}>
+    <div className={`${isTop ? "mt-28" : "mt-0"} w-full ${className}`}>
       <h1 className="text-3xl mb-9">{title}</h1>
-      <div className="flex flex-col justify-between items-center gap-y-6">
-        {children}
+      <div className="flex items-start">
+        <Sidebar />
+        <div className="flex flex-col justify-between items-center gap-y-6">
+          {children}
+        </div>
       </div>
-    </Wrapper>
+    </div>
   );
 };
