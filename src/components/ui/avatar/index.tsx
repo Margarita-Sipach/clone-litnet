@@ -1,3 +1,5 @@
+import { Date } from "../date";
+
 interface AvatarProps {
   image?: string
 	name: string
@@ -13,7 +15,7 @@ export const Avatar = ({ image, name, date }: AvatarProps) => {
 			className="h-8 w-8 object-cover rounded-sm sm:h-10 sm:w-10"
 		/>
 		<div className="text-sm">{name}</div>
-		<div className="text-xs text-slate-400">{date}</div>
+		<Date date={date}/>
 		</div>
 		
   );
