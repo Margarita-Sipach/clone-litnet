@@ -18,7 +18,7 @@ const categories = [
 
 export const Categories = () => {
   return (
-    <div>
+    <div className="w-full">
       <div className="grid grid-cols-2 gap-x-6 justify-between sm:grid-cols-3">
         {categories.map((item) => (
           <a
