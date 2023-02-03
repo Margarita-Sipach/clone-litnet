@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 interface SidebarProps {
   className?: string;
-	children: ReactNode
+  children: ReactNode;
 }
 
 export const Sidebar = ({ className, children }: SidebarProps) => {
@@ -12,7 +12,7 @@ export const Sidebar = ({ className, children }: SidebarProps) => {
     <ElementWrapper
       className={`hidden sm:flex sm:flex-col sm:w-80 sm:gap-y-6 lg:w-96 mr-5 ${className}`}
     >
-			{children}
+      {children}
     </ElementWrapper>
   );
 };
