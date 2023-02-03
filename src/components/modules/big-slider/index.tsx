@@ -1,6 +1,11 @@
 import { PrimaryButton } from "../../ui/primary-button";
 import { Wrapper } from "../../ui/wrapper";
 
+import slide1 from "../../../common/assets/images/big-slider/banner-light-1.png";
+import slide2 from "../../../common/assets/images/big-slider/banner-light-2.png";
+import slide3 from "../../../common/assets/images/big-slider/banner-light-3.png";
+import slide4 from "../../../common/assets/images/big-slider/banner-light-4.png";
+
 import "./animation.css";
 
 const benefits = [
@@ -14,13 +19,11 @@ interface BigSliderProps {}
 export const BigSlider = ({}: BigSliderProps) => {
   return (
     <div className="relative w-full h-[550px] flex items-center justify-center mb-10">
-      {new Array(4).fill("").map((item, index) => (
+      {[slide1, slide2, slide3, slide4].map((item, index) => (
         <div
           key={item}
           style={{
-            background: `url(https://rust.litnet.com/common/redesign/images/banner-light-${
-              index + 1
-            }.png) center`,
+            background: `url(${item}) center`,
             animation: `item${index + 1} 10s linear infinite`,
           }}
           className="w-full h-full bg-cover absolute top-0 left-0"
