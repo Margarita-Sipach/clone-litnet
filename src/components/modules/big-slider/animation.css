@@ -1,0 +1,27 @@
+@keyframes item1{
+  0%{opacity:1;}
+  33%{opacity:0;}
+  66%{opacity:0;}
+  100%{opacity:0;}
+}
+
+@keyframes item2{
+  0%{opacity:0;}
+  33%{opacity:1;}
+  66%{opacity:0;}
+  100%{opacity:0;} 
+}
+
+@keyframes item3{
+  0%{opacity:0;}
+  33%{opacity:0;}
+  66%{opacity:1;}
+  100%{opacity:0;}
+}
+
+@keyframes item4{
+  0%{opacity:0;}
+  33%{opacity:0;}
+  66%{opacity:0;}
+  100%{opacity:1;}
+}
