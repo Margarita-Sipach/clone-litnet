@@ -1,8 +1,9 @@
-import { BlogElement } from "../../ui/blog-element";
+import React from "react";
 import { PageWrapper } from "../../ui/page-wrapper";
+import { BlogElement } from "../../ui/blog-element";
 import { Wrapper } from "../../ui/wrapper";
 
-export const BlogPage = () => {
+const Blogs = () => {
   return (
     <Wrapper className="flex items-start">
       <PageWrapper title="Литературные блоги" isTop={true}>
@@ -22,3 +23,5 @@ export const BlogPage = () => {
     </Wrapper>
   );
 };
+
+export default Blogs;
