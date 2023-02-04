@@ -1,19 +1,14 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { Header } from "../../modules/header";
+import { Footer } from "../../modules/footer";
 
 const Root = () => {
   return (
-    <div className="max-w-screen-lg mx-auto py-4">
-      <nav className="flex justify-center gap-6">
-        <Link to="/">Home</Link>
-        <Link to="/blogs">Blogs</Link>
-        <Link to="/info">Info</Link>
-        <Link to="/user/testuser">User</Link>
-        <Link to="/account">Account</Link>
-      </nav>
-      <div>
-        <Outlet />
-      </div>
+    <div className="flex flex-col justify-between items-center min-h-screen bg-white ">
+      <Header />
+      <Outlet />
+      <Footer />
     </div>
   );
 };
