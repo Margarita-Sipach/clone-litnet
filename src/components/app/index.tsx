@@ -16,6 +16,8 @@ import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
 import AccountEdit from "../pages/Account/AccountEdit";
 import ContestPage from "../pages/ContestPage";
+import { RegistrationPage } from "../pages/registration";
+import { AuthorizationPage } from "../pages/authorization";
 function App() {
   const router = createBrowserRouter([
     {
@@ -44,6 +46,14 @@ function App() {
               element: <Payment />,
             },
           ],
+        },
+				{
+          path: "/registration",
+          element: <RegistrationPage />,
+        },
+				{
+          path: "/authorization",
+          element: <AuthorizationPage />,
         },
         {
           path: "/contests",
