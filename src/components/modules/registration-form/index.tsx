@@ -2,19 +2,12 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { PrimaryInput } from "../../ui/primary-input";
 import { ChangeEvent, useState } from "react";
 import avatar from "../../../common/assets/images/avatar.png";
+import { FileInput } from "../../ui/file-input";
 
 interface registrationProps {}
 
 export const RegistrationForm = ({}: registrationProps) => {
   const [preview, setPreview] = useState(avatar);
-
-  const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
-    const file = (e?.target as HTMLInputElement)?.files;
-    if (file) {
-      const objectUrl = URL.createObjectURL(file[0]);
-      setPreview(objectUrl);
-    }
-  };
 
   return (
     <form action="" className="max-w-[500px] flex flex-col items-left gap-y-5 ">
@@ -23,9 +16,9 @@ export const RegistrationForm = ({}: registrationProps) => {
         alt="avatar"
         className="w-32 h-32 object-cover rounded border-zinc-200 border-2"
       />
-      <PrimaryInput
+      <FileInput
         attributes={{ placeholder: "Аватарка", required: true, type: "file" }}
-        onChange={onLoadFile}
+        onChangeImage={setPreview}
       />
       <PrimaryInput attributes={{ placeholder: "Логин", required: true }} />
       <PrimaryInput
