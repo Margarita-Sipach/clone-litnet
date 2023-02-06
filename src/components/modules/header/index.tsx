@@ -59,15 +59,19 @@ export const Header = ({}: FooterProps) => {
             ))}
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
-            <SecondaryButton
-              className="w-full sm:w-auto"
-              onClickButton={() => {}}
-            >
-              Войти
-            </SecondaryButton>
-            <PrimaryButton onClickButton={() => {}}>
-              Зарегистрироваться
-            </PrimaryButton>
+            <Link to="/authorization">
+              <SecondaryButton
+                className="w-full sm:w-auto"
+                onClickButton={() => {}}
+              >
+                Войти
+              </SecondaryButton>
+            </Link>
+            <Link to="/registration">
+              <PrimaryButton onClickButton={() => {}}>
+                Зарегистрироваться
+              </PrimaryButton>
+            </Link>
           </div>
           <CloseButton
             onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
