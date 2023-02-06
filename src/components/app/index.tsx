@@ -47,11 +47,11 @@ function App() {
             },
           ],
         },
-				{
+        {
           path: "/registration",
           element: <RegistrationPage />,
         },
-				{
+        {
           path: "/authorization",
           element: <AuthorizationPage />,
         },

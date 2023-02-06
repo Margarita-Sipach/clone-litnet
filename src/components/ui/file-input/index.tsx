@@ -11,8 +11,7 @@ interface FileInputProps {
 }
 
 export const FileInput = ({ attributes, onChangeImage }: FileInputProps) => {
-
-	const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
+  const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const file = (e?.target as HTMLInputElement)?.files;
     if (file) {
       const objectUrl = URL.createObjectURL(file[0]);
@@ -22,8 +21,8 @@ export const FileInput = ({ attributes, onChangeImage }: FileInputProps) => {
 
   return (
     <PrimaryInput
-        attributes={{ placeholder: "Аватарка", required: true, type: "file" }}
-        onChange={onLoadFile}
-      />
+      attributes={{ placeholder: "Аватарка", required: true, type: "file" }}
+      onChange={onLoadFile}
+    />
   );
 };
