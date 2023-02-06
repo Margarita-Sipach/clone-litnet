@@ -7,6 +7,7 @@ import slide3 from "../../../common/assets/images/big-slider/banner-light-3.png"
 import slide4 from "../../../common/assets/images/big-slider/banner-light-4.png";
 
 import "./animation.css";
+import { Link } from "react-router-dom";
 
 const benefits = [
   "Все популярные жанры: боевики, фэнтези, фантастика и другие",
@@ -43,9 +44,9 @@ export const BigSlider = ({}: BigSliderProps) => {
             </div>
           ))}
         </div>
-        <a href="#">
+        <Link to="/registration">
           <PrimaryButton>Присоединиться</PrimaryButton>
-        </a>
+        </Link>
       </Wrapper>
     </div>
   );
