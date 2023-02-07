@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
-interface UserMenuProps {
-}
+interface UserMenuProps {}
 
 const navItems = [
   {
@@ -20,21 +19,22 @@ const navItems = [
     title: "Добавить книгу",
     link: "",
   },
-	{
+  {
     title: "Мои блоги",
     link: "",
   },
-	{
+  {
     title: "Добавить блог",
     link: "",
   },
-	
 ];
 
 export const UserMenu = () => {
   return (
-    <div className="flex flex-col gap-3 items-center">
-      {navItems.map(item => <Link to={item.link}>{item.title}</Link>)}
+    <div className="flex flex-col items-center gap-3">
+      {navItems.map((item) => (
+        <Link to={item.link}>{item.title}</Link>
+      ))}
     </div>
   );
 };
