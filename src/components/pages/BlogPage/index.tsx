@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "../../ui/wrapper";
 import { PageWrapper } from "../../ui/page-wrapper";
-import { CommentElement } from "../../ui/comment-element";
-import { PrimaryButton } from "../../ui/primary-button";
-import { SecondaryButton } from "../../ui/secodary-button";
+import CommentSection from "../../modules/comment-section";
 
 type Params = {
   id: string;
@@ -63,8 +61,6 @@ const mockBlog = {
 
 const BlogPage = () => {
   const { id } = useParams<Params>();
-  const [isClickedOn, setIsClickedOn] = useState(false);
-
   return (
     <Wrapper>
       <PageWrapper isTop={true}>
@@ -79,39 +75,7 @@ const BlogPage = () => {
           </button>
         </div>
         <p>{mockBlog.text}</p>
-        <div className="w-full border p-6">
-          <p className="pb-4">{mockBlog.comments.length} комментариев</p>
-          <textarea
-            className={`mb-4 flex w-full items-start rounded border bg-gray-50 px-2 py-1 transition-all focus:outline-none ${
-              isClickedOn ? "h-44" : ""
-            }`}
-            onClick={() => setIsClickedOn(true)}
-            placeholder="Напишите свой комментарий..."
-          />
-          {isClickedOn && (
-            <div className="mb-4 flex gap-4">
-              <PrimaryButton className="text-sm lg:text-sm">
-                Добавить
-              </PrimaryButton>
-              <SecondaryButton
-                onClickButton={() => setIsClickedOn(false)}
-                className="text-sm lg:text-sm"
-              >
-                Отменить
-              </SecondaryButton>
-            </div>
-          )}
-          <div className="flex flex-col gap-6">
-            {mockBlog.comments.map((item) => (
-              <CommentElement
-                image={item.image}
-                name={item.name}
-                date={item.date}
-                content={item.content}
-              />
-            ))}
-          </div>
-        </div>
+        <CommentSection comments={mockBlog.comments} />
       </PageWrapper>
     </Wrapper>
   );
