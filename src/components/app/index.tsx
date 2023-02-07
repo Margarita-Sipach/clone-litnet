@@ -18,6 +18,7 @@ import AccountEdit from "../pages/Account/AccountEdit";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
+import { PersonalPage } from "../pages/personal";
 
 const router = createBrowserRouter([
 	{
@@ -87,11 +88,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/account",
-				element: <Account />,
+				element: <PersonalPage />,
 				children: [
 					{
 						index: true,
-						element: <AccountLibrary />,
+						element: <PersonalPage />,
 					},
 					{
 						path: "library",

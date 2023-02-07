@@ -8,8 +8,11 @@ import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
+import { UserMenu } from "../user-menu";
 
-interface FooterProps {}
+interface FooterProps {
+	isUser?: boolean;
+}
 
 const navItems = [
   {
@@ -25,14 +28,16 @@ const navItems = [
     link: "blogs",
   },
   {
-    title: "Моя библиотека",
-    link: "account/library",
+    title: "Моя страница",
+    link: "account",
   },
 ];
 
-export const Header = ({}: FooterProps) => {
+export const Header = ({isUser = true}: FooterProps) => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+	const [userModalDisplay, setUserModalDisplay] = useState(false);
+
 
   return (
     <header className="fixed backdrop-blur-sm w-full flex justify-center h-16 z-10 bg-white bg-opacity-60 shadow">
@@ -58,7 +63,11 @@ export const Header = ({}: FooterProps) => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
+          {
+						!isUser 
+					?
+					
+					(<div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
             <Link to="/authorization">
               <SecondaryButton
                 className="w-full sm:w-auto"
@@ -72,19 +81,48 @@ export const Header = ({}: FooterProps) => {
                 Зарегистрироваться
               </PrimaryButton>
             </Link>
-          </div>
+          </div>)
+					
+					:
+					(
+						<Link to="/">
+              <SecondaryButton onClickButton={() => {}}>
+                Выход
+              </SecondaryButton>
+            </Link>
+					)
+}
           <CloseButton
             onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
             className="sm:hidden"
           />
         </nav>
-        <Burger
+				<div className="flex items-center gap-x-2 ">
+				
+				{isUser && (<img
+        src="https://rust.litnet.com/uploads/covers/120/1661453573_85.jpg"
+        alt=""
+        className="h-10 w-10 ml-2 object-cover rounded-md border-2 border-indigo-400 hover:border-indigo-500 cursor-pointer"
+				onClick={() => {
+					setUserModalDisplay(true);
+				}}
+      />)
+}
+<Burger
           onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
         ></Burger>
+				</div>
+        
+
       </Wrapper>
       {categoriesModalDisplay && (
         <Modal displayModal={setCategoriesModalDisplay}>
           <Categories />
+        </Modal>
+      )}
+			{userModalDisplay && (
+        <Modal displayModal={setUserModalDisplay}>
+          <UserMenu />
         </Modal>
       )}
     </header>
