@@ -20,8 +20,8 @@ export const PageWrapper = ({
   return (
     <div className={`${isTop ? "mt-28" : "mt-0"} w-full ${className}`}>
       <h1 className="text-3xl mb-9">{title}</h1>
-      <div className="flex items-start gap-x-5">
-        <div className="w-full flex flex-col justify-between gap-y-6">
+      <div className="flex items-start gap-x-5 overflow-hidden">
+        <div className="w-full flex flex-col overflow-hidden gap-y-6">
           {children}
         </div>
         {isThereSidebar ? (
