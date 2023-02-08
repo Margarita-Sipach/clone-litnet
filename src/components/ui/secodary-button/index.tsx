@@ -11,7 +11,7 @@ export const SecondaryButton = ({
 }: SecondaryButtonProps) => {
   return (
     <button
-      className={`text-indigo-400 py-1 px-3 rounded-md font-medium border-indigo-400 border-2 sm:text-sm lg:text-lg hover:text-indigo-500 hover:border-indigo-500 ${className}`}
+      className={`rounded-md border-2 border-indigo-400  py-1 px-1 font-medium text-indigo-400 hover:border-indigo-500 hover:text-indigo-500 sm:px-3 sm:text-sm lg:text-lg ${className}`}
       onClick={onClickButton}
     >
       {children}
