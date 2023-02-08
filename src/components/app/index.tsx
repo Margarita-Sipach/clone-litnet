@@ -19,6 +19,8 @@ import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
 import BlogPage from "../pages/BlogPage";
+import { BooksPage } from "../pages/books";
+import { books } from "../../common/data";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/all",
+        element: <BooksPage title="Все жанры" books={books} />,
       },
       {
         path: "/blogs",
