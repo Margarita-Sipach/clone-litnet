@@ -1,5 +1,3 @@
-import { PrimaryButton } from "../../ui/primary-button";
-import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
@@ -8,6 +6,7 @@ import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
+import Button from "../../ui/button";
 
 interface FooterProps {}
 
@@ -35,7 +34,7 @@ export const Header = ({}: FooterProps) => {
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
 
   return (
-    <header className="fixed backdrop-blur-sm w-full flex justify-center h-16 z-10 bg-white bg-opacity-60 shadow">
+    <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
       <Wrapper className="flex items-center justify-between">
         <Link to="/">
           <Logo className="sm:mr-5 lg:mr-10" />
@@ -43,13 +42,13 @@ export const Header = ({}: FooterProps) => {
         <nav
           className={`${
             burgerMenuDisplay ? "flex" : "hidden"
-          } w-screen h-screen absolute top-0 left-0 bg-white flex-col items-center py-8 sm:flex sm:flex-row sm:flex-grow sm:w-auto sm:h-auto sm:bg-transparent sm:relative sm:justify-between sm:py-0`}
+          } absolute top-0 left-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
             {navItems.map((item) => (
               <div
                 key={item.title}
-                className="w-full my-2 text-center sm:text-sm sm:my-0 sm:w-auto lg:text-lg hover:text-indigo-400"
+                className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
                 onClick={() => {
                   if (item.title === "Книги") setCategoriesModalDisplay(true);
                 }}
@@ -60,17 +59,10 @@ export const Header = ({}: FooterProps) => {
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
             <Link to="/authorization">
-              <SecondaryButton
-                className="w-full sm:w-auto"
-                onClickButton={() => {}}
-              >
-                Войти
-              </SecondaryButton>
+              <Button type="secondary">Войти</Button>
             </Link>
             <Link to="/registration">
-              <PrimaryButton onClickButton={() => {}}>
-                Зарегистрироваться
-              </PrimaryButton>
+              <Button>Зарегистрироваться</Button>
             </Link>
           </div>
           <CloseButton
