@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const categories = [
   "Фэнтези",
   "ЛитРПГ",
@@ -16,26 +18,32 @@ const categories = [
   "Разное",
 ];
 
-export const Categories = () => {
+interface CategoriesProps{
+	onClick?: () => void;
+}
+
+export const Categories = ({onClick}: CategoriesProps) => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-2 gap-x-6 justify-between sm:grid-cols-3">
+      <div className="grid grid-cols-2 justify-between gap-x-6 sm:grid-cols-3">
         {categories.map((item) => (
-          <a
-            href=""
-            className="text-sm mb-3 hover:text-indigo-400 sm:text-base lg:text-lg"
+          <Link
+            to=""
+            className="mb-3 text-sm hover:text-indigo-400 sm:text-base lg:text-lg"
+						onClick={onClick}
           >
             {item}
-          </a>
+          </Link>
         ))}
       </div>
-      <div className="w-full h-[1px] bg-black my-1"></div>
-      <a
-        href=""
-        className="block text-indigo-400 font-bold text-right w-full sm:text-base lg:text-lg"
-      >
+      <div className="my-1 h-[1px] w-full bg-black"></div>
+      <Link
+        to="/all"
+        className="block w-full text-right font-bold text-indigo-400 sm:text-base lg:text-lg"
+				onClick={onClick}
+			>
         Посмотреть все жанры
-      </a>
+      </Link>
     </div>
   );
 };
