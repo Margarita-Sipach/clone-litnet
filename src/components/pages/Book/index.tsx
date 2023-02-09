@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { useParams } from "react-router-dom";
@@ -42,6 +42,7 @@ const comments = [
 
 const BookPage = () => {
   // let { slug } = useParams<Params>();
+  const [addedBook, setAddedBook] = useState(false);
 
   return (
     <Wrapper>
@@ -68,7 +69,12 @@ const BookPage = () => {
             </div>
 
             <div className="flex gap-x-5 justify-self-end">
-              <SecondaryButton className="w-1/2">Добавить</SecondaryButton>
+              <SecondaryButton
+                className="w-1/2"
+                onClickButton={() => setAddedBook(!addedBook)}
+              >
+                {addedBook ? "Добавлена" : "Добавить"}
+              </SecondaryButton>
               <PrimaryButton className="w-1/2">Читать онлайн</PrimaryButton>
             </div>
             <div className="my-5 h-[1px] w-full bg-slate-300"></div>
