@@ -1,17 +1,13 @@
 import React, { useState } from "react";
+import { CommentProps } from "../../../types/types";
 import { CommentElement } from "../../ui/comment-element";
 import { PrimaryButton } from "../../ui/primary-button";
 import { SecondaryButton } from "../../ui/secodary-button";
 
-type Comment = {
-  image: string;
-  name: string;
-  date: string;
-  content: string;
-};
+
 
 type CommentSectionProps = {
-  comments: Comment[];
+  comments: CommentProps[];
 };
 
 const CommentSection: React.FC<CommentSectionProps> = ({ comments }) => {
