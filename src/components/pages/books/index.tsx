@@ -12,8 +12,17 @@ export const BooksPage = ({ title, books }: BooksPageProps) => {
   return (
     <Wrapper>
       <PageWrapper title={title} isTop={true}>
-        {books.map((item) => (
-          <BookElement book={item}></BookElement>
+        {books.map((book) => (
+          <BookElement
+            img={book.img}
+            title={book.title}
+            author={book.author}
+            categories={book.categories}
+            annotation={book.annotation}
+            commentAmount={book.commentAmount}
+            readAmount={book.readAmount}
+            rating={book.rating}
+          />
         ))}
       </PageWrapper>
     </Wrapper>
