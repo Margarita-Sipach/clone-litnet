@@ -13,16 +13,7 @@ export const BooksPage = ({ title, books }: BooksPageProps) => {
     <Wrapper>
       <PageWrapper title={title} isTop={true}>
         {books.map((book) => (
-          <BookElement
-            img={book.img}
-            title={book.title}
-            author={book.author}
-            categories={book.categories}
-            annotation={book.annotation}
-            commentAmount={book.commentAmount}
-            readAmount={book.readAmount}
-            rating={book.rating}
-          />
+          <BookElement {...book} />
         ))}
       </PageWrapper>
     </Wrapper>
