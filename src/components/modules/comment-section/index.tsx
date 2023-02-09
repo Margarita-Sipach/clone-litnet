@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CommentElement } from "../../ui/comment-element";
-import { PrimaryButton } from "../../ui/primary-button";
-import { SecondaryButton } from "../../ui/secodary-button";
+import Button from "../../ui/button";
 
 type Comment = {
   image: string;
@@ -28,13 +27,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments }) => {
       />
       {isActive && (
         <div className="mb-4 flex gap-4">
-          <PrimaryButton className="text-sm lg:text-sm">Добавить</PrimaryButton>
-          <SecondaryButton
-            onClickButton={() => setIsActive(false)}
-            className="text-sm lg:text-sm"
-          >
-            Отменить
-          </SecondaryButton>
+          <Button>Добавить</Button>
+          <Button onClick={() => setIsActive(false)}>Отменить</Button>
         </div>
       )}
       <div className="flex flex-col gap-6">

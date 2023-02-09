@@ -1,10 +1,9 @@
 //TODO: responsive mobile version
 import React from "react";
-import { PrimaryButton } from "../primary-button";
-import { SecondaryButton } from "../secodary-button";
 import { FaTrophy } from "react-icons/fa";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import Button from "../button";
 
 type ContestElementProps = {
   title: string;
@@ -88,12 +87,8 @@ const ContestElement: React.FC<ContestElementProps> = ({
             </div>
           </div>
           <div className="mt-auto flex gap-4">
-            <PrimaryButton className="text-sm lg:text-sm">
-              Перейти к работам
-            </PrimaryButton>
-            <SecondaryButton className="text-sm lg:text-sm">
-              Правила конкурса
-            </SecondaryButton>
+            <Button>Перейти к работам</Button>
+            <Button>Правила конкурса</Button>
           </div>
         </div>
       </div>
