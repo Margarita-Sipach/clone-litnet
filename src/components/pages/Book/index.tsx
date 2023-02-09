@@ -49,34 +49,27 @@ const BookPage = () => {
         <ElementWrapper className="flex gap-x-5">
           <img src={book.img} alt="" className="w-1/3" />
           <div className="flex w-full flex-col justify-between">
-            <div className="flex flex-grow gap-x-10">
-              <div className="relative w-1/2">
-                <h4 className="mb-1 text-2xl">{book.title}</h4>
-                <div className="mb-1">{book.author}</div>
-                <div className="mb-3 flex flex-wrap gap-x-2">
-                  {book.categories.map((item) => (
-                    <div className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base">
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <PrimaryButton className="absolute bottom-0 w-full">
-                  Читать онлайн
-                </PrimaryButton>
+            <div className="relative flex h-full flex-grow flex-col gap-x-10">
+              <h4 className="mb-1 text-2xl">{book.title}</h4>
+              <div className="mb-4">{book.author}</div>
+              <div className="mb-6 flex flex-wrap gap-x-2">
+                {book.categories.map((item) => (
+                  <div className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base">
+                    {item}
+                  </div>
+                ))}
               </div>
-              <div className="relative mt-2 w-1/2">
+
+              <div className="flex items-center gap-x-7">
                 <Rating rating={book.rating} />
-                <div className="flex items-center gap-x-3">
-                  <Icon title={book.readAmount} icon={<GiBookshelf />} />
-                  <Icon
-                    title={book.commentAmount}
-                    icon={<AiOutlineComment />}
-                  />
-                </div>
-                <SecondaryButton className="absolute bottom-0 w-full">
-                  Добавить
-                </SecondaryButton>
+                <Icon title={book.readAmount} icon={<GiBookshelf />} />
+                <Icon title={book.commentAmount} icon={<AiOutlineComment />} />
               </div>
+            </div>
+
+            <div className="flex gap-x-5 justify-self-end">
+              <SecondaryButton className="w-1/2">Добавить</SecondaryButton>
+              <PrimaryButton className="w-1/2">Читать онлайн</PrimaryButton>
             </div>
             <div className="my-5 h-[1px] w-full bg-slate-300"></div>
             <PrimarySelect
