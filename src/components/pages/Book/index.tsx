@@ -26,7 +26,8 @@ const book = {
     "Представьте, что по дороге на работу вы задремали в маршрутке. Вас разбудили крики ужаса, а вокруг творится невесть что - одна за другой взрываются машины на проспекте, люди сгорают словно свечки. А над всем этим хаосом и смертью в небе кружит таинственный боевой корабль треугольной формы. И вот очередь взлететь на воздух доходит и до вашей маршрутки... Вот именно об этом данное произведение",
   commentAmount: 55,
   readAmount: 234,
-  rating: 8.9,
+  rating: 9,
+  ratingStatistic: [10, 20, 30, 40, 50],
 };
 
 const comments = [
@@ -61,7 +62,7 @@ const BookPage = () => {
               </div>
 
               <div className="flex items-center gap-x-7">
-                <Rating rating={book.rating} />
+                <Rating rating={book.rating} statistic={book.ratingStatistic} />
                 <Icon title={book.readAmount} icon={<GiBookshelf />} />
                 <Icon title={book.commentAmount} icon={<AiOutlineComment />} />
               </div>

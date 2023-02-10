@@ -1,25 +1,38 @@
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { Date } from "../date";
 
 interface RatingProps {
   rating: number;
+  statistic: number[];
 }
 
-export const Rating = ({ rating }: RatingProps) => {
-  let roundRating = Math.round(rating / 2);
-
+export const Rating = ({ rating, statistic }: RatingProps) => {
   return (
-    <div className="flex items-center gap-x-1 text-indigo-400" title={`★★★★★ - ${1}\n★★★★ - ${1}\n★★★ - ${1}\n★★ - ${1}\n★ - ${1}`}>
+    <div
+      className="flex items-center gap-x-1 text-indigo-400"
+      title={`Статистика оценок\n${statistic
+        .map((item, index) => `${"★".repeat(index + 1)} - ${item}`)
+        .join("\n")}`}
+    >
       <div className="flex">
-        {new Array(5)
-          .fill("")
-          .map((_, index) =>
-            roundRating <= index ? (
-              <AiOutlineStar className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
-            ) : (
-              <AiFillStar className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
-            )
-          )}
+        {new Array(5).fill("").map((_, index) => {
+          let ratingStr = rating / 2 + "";
+          if (
+            ratingStr[ratingStr.length - 1] === "5" &&
+            +ratingStr < index + 1 &&
+            +ratingStr > index
+          )
+            return (
+              <BsStarHalf className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+            );
+          if (+ratingStr > index)
+            return (
+              <BsStarFill className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+            );
+          return (
+            <BsStar className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+          );
+        })}
       </div>
       <span>{rating}</span>
     </div>
