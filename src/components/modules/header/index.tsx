@@ -1,3 +1,5 @@
+import { PrimaryButton } from "../../ui/primary-button";
+import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
@@ -6,9 +8,11 @@ import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
-import Button from "../../ui/button";
+import { UserMenu } from "../user-menu";
 
-const userId = 1;
+interface FooterProps {
+  isUser?: boolean;
+}
 
 const navItems = [
   {
@@ -25,11 +29,11 @@ const navItems = [
   },
   {
     title: "Моя страница",
-    link: `users/${userId}`,
+    link: "account",
   },
 ];
 
-export const Header = () => {
+export const Header = ({ isUser = true }: FooterProps) => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
 
@@ -57,22 +61,37 @@ export const Header = () => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
-            <Link to="/authorization">
-              <Button type="secondary">Войти</Button>
+          {!isUser ? (
+            <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
+              <Link to="/authorization">
+                <SecondaryButton
+                  className="w-full sm:w-auto"
+                  onClickButton={() => {}}
+                >
+                  Войти
+                </SecondaryButton>
+              </Link>
+              <Link to="/registration">
+                <PrimaryButton onClickButton={() => {}}>
+                  Зарегистрироваться
+                </PrimaryButton>
+              </Link>
+            </div>
+          ) : (
+            <Link to="/">
+              <SecondaryButton onClickButton={() => {}}>Выход</SecondaryButton>
             </Link>
-            <Link to="/registration">
-              <Button>Зарегистрироваться</Button>
-            </Link>
-          </div>
+          )}
           <CloseButton
             onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
             className="sm:hidden"
           />
         </nav>
-        <Burger
-          onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
-        ></Burger>
+        <div className="flex items-center gap-x-2 ">
+          <Burger
+            onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}
+          ></Burger>
+        </div>
       </Wrapper>
       {categoriesModalDisplay && (
         <Modal displayModal={setCategoriesModalDisplay}>

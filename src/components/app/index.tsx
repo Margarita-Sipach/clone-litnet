@@ -8,8 +8,9 @@ import Payment from "../pages/Info/Payment";
 import Contests from "../pages/Contests";
 import Account from "../pages/Account";
 import User from "../pages/User";
+import UserFollowing from "../pages/User/UserFollowing";
+import UserComments from "../pages/User/UserComments";
 import UserAbout from "../pages/User/UserAbout";
-import UserBlogs from "../pages/User/UserBlogs";
 import BookPage from "../pages/Book";
 import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
@@ -17,10 +18,7 @@ import AccountEdit from "../pages/Account/AccountEdit";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
-import BlogPage from "../pages/BlogPage";
-import { BooksPage } from "../pages/books";
-import { books } from "../../common/data";
-import UserBooks from "../pages/User/UserBooks";
+import { PersonalPage } from "../pages/personal";
 
 const router = createBrowserRouter([
   {
@@ -33,16 +31,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/all",
-        element: <BooksPage title="Все жанры" books={books} />,
-      },
-      {
         path: "/blogs",
         element: <Blogs />,
-      },
-      {
-        path: "/blogs/:id",
-        element: <BlogPage />,
       },
       {
         path: "/info",
@@ -79,7 +69,7 @@ const router = createBrowserRouter([
         element: <BookPage />,
       },
       {
-        path: "/users/:id",
+        path: "/user/:slug",
         element: <User />,
         children: [
           {
@@ -87,22 +77,22 @@ const router = createBrowserRouter([
             element: <UserAbout />,
           },
           {
-            path: "blogs",
-            element: <UserBlogs />,
+            path: "comments",
+            element: <UserComments />,
           },
           {
-            path: "books",
-            element: <UserBooks />,
+            path: "following",
+            element: <UserFollowing />,
           },
         ],
       },
       {
         path: "/account",
-        element: <Account />,
+        element: <PersonalPage />,
         children: [
           {
             index: true,
-            element: <AccountLibrary />,
+            element: <PersonalPage />,
           },
           {
             path: "library",
