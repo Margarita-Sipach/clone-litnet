@@ -8,9 +8,8 @@ import Payment from "../pages/Info/Payment";
 import Contests from "../pages/Contests";
 import Account from "../pages/Account";
 import User from "../pages/User";
-import UserFollowing from "../pages/User/UserFollowing";
-import UserComments from "../pages/User/UserComments";
 import UserAbout from "../pages/User/UserAbout";
+import UserBlogs from "../pages/User/UserBlogs";
 import BookPage from "../pages/Book";
 import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
@@ -21,6 +20,7 @@ import { AuthorizationPage } from "../pages/authorization";
 import BlogPage from "../pages/BlogPage";
 import { BooksPage } from "../pages/books";
 import { books } from "../../common/data";
+import UserBooks from "../pages/User/UserBooks";
 
 const router = createBrowserRouter([
   {
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
         element: <BookPage />,
       },
       {
-        path: "/user/:slug",
+        path: "/users/:id",
         element: <User />,
         children: [
           {
@@ -87,12 +87,12 @@ const router = createBrowserRouter([
             element: <UserAbout />,
           },
           {
-            path: "comments",
-            element: <UserComments />,
+            path: "blogs",
+            element: <UserBlogs />,
           },
           {
-            path: "following",
-            element: <UserFollowing />,
+            path: "books",
+            element: <UserBooks />,
           },
         ],
       },

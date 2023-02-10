@@ -8,7 +8,7 @@ import { Categories } from "../categories";
 import { Link } from "react-router-dom";
 import Button from "../../ui/button";
 
-interface FooterProps {}
+const userId = 1;
 
 const navItems = [
   {
@@ -24,12 +24,12 @@ const navItems = [
     link: "blogs",
   },
   {
-    title: "Моя библиотека",
-    link: "account/library",
+    title: "Моя страница",
+    link: `users/${userId}`,
   },
 ];
 
-export const Header = ({}: FooterProps) => {
+export const Header = () => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
 

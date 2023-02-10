@@ -5,10 +5,9 @@ type Params = {
   id: string;
 };
 
-const UserAbout = () => {
+const UserBlogs = () => {
   const { id } = useParams<Params>();
-  console.log(id);
-  return <div>About user (id: {id})</div>;
+  return <div>User (id: {id}) blogs</div>;
 };
 
-export default UserAbout;
+export default UserBlogs;
