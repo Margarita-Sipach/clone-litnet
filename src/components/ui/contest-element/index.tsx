@@ -4,6 +4,7 @@ import { FaTrophy } from "react-icons/fa";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import Button from "../button";
+import { Link } from "react-router-dom";
 
 type ContestElementProps = {
   title: string;
@@ -87,7 +88,9 @@ const ContestElement: React.FC<ContestElementProps> = ({
             </div>
           </div>
           <div className="mt-auto flex gap-4">
-            <Button>Перейти к работам</Button>
+            <Link to="/contests/1">
+              <Button>Перейти к работам</Button>
+            </Link>
             <Button>Правила конкурса</Button>
           </div>
         </div>
