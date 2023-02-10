@@ -7,10 +7,9 @@ import CommentSection from "../../modules/comment-section";
 import { ElementWrapper } from "../../ui/element-wrapper";
 import { Icon } from "../../ui/icon";
 import { PageWrapper } from "../../ui/page-wrapper";
-import { PrimaryButton } from "../../ui/primary-button";
 import { PrimarySelect } from "../../ui/primary-select";
 import { Rating } from "../../ui/rating";
-import { SecondaryButton } from "../../ui/secodary-button";
+import Button from "../../ui/button";
 import { Wrapper } from "../../ui/wrapper";
 
 type Params = {
@@ -69,13 +68,14 @@ const BookPage = () => {
             </div>
 
             <div className="flex gap-x-5 justify-self-end">
-              <SecondaryButton
+              <Button
+                type="secondary"
                 className="w-1/2"
-                onClickButton={() => setAddedBook(!addedBook)}
+                onClick={() => setAddedBook(!addedBook)}
               >
                 {addedBook ? "Добавлена" : "Добавить"}
-              </SecondaryButton>
-              <PrimaryButton className="w-1/2">Читать онлайн</PrimaryButton>
+              </Button>
+              <Button className="w-1/2">Читать онлайн</Button>
             </div>
             <div className="my-5 h-[1px] w-full bg-slate-300"></div>
             <PrimarySelect
