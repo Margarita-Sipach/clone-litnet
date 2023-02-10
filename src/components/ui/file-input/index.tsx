@@ -1,28 +1,34 @@
-import { ChangeEvent } from "react";
-import { PrimaryInput } from "../primary-input";
+import { ChangeEvent, useState } from "react";
+import avatar from "../../../common/assets/images/avatar.png";
 
 interface FileInputProps {
-  attributes?: {
-    type?: string;
-    placeholder?: string;
-    required?: boolean;
-  };
-  onChangeImage: (url: string) => void;
+  className: string;
 }
 
-export const FileInput = ({ attributes, onChangeImage }: FileInputProps) => {
+export const FileInput = ({ className }: FileInputProps) => {
+  const [preview, setPreview] = useState(avatar);
+
   const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const file = (e?.target as HTMLInputElement)?.files;
     if (file) {
       const objectUrl = URL.createObjectURL(file[0]);
-      onChangeImage(objectUrl);
+      setPreview(objectUrl);
     }
   };
 
   return (
-    <PrimaryInput
-      attributes={{ placeholder: "Аватарка", required: true, type: "file" }}
-      onChange={onLoadFile}
-    />
+    <div className="relative flex">
+      <img
+        src={preview}
+        alt="avatar"
+        className={`${className} rounded border-2 border-zinc-200 object-cover`}
+      />
+      <input
+        required
+        type="file"
+        onChange={onLoadFile}
+        className={`absolute top-0 left-0 flex cursor-pointer opacity-0 ${className}`}
+      />
+    </div>
   );
 };
