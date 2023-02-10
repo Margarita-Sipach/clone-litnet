@@ -1,7 +1,6 @@
-import { PrimaryButton } from "../../ui/primary-button";
 import { PrimaryInput } from "../../ui/primary-input";
-
 import { FileInput } from "../../ui/file-input";
+import Button from "../../ui/button";
 
 interface registrationProps {}
 
@@ -16,7 +15,7 @@ export const RegistrationForm = ({}: registrationProps) => {
       <PrimaryInput
         attributes={{ placeholder: "Пароль", required: true, type: "password" }}
       />
-      <PrimaryButton>Зарегистрироваться</PrimaryButton>
+      <Button className="text-base">Зарегистрироваться</Button>
     </form>
   );
 };
