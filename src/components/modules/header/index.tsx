@@ -1,5 +1,3 @@
-import { PrimaryButton } from "../../ui/primary-button";
-import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
@@ -8,6 +6,7 @@ import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
+import Button from "../../ui/button";
 
 interface FooterProps {}
 
@@ -61,17 +60,10 @@ export const Header = ({}: FooterProps) => {
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
             <Link to="/authorization">
-              <SecondaryButton
-                className="w-full sm:w-auto"
-                onClickButton={() => {}}
-              >
-                Войти
-              </SecondaryButton>
+              <Button type="secondary">Войти</Button>
             </Link>
             <Link to="/registration">
-              <PrimaryButton onClickButton={() => {}}>
-                Зарегистрироваться
-              </PrimaryButton>
+              <Button>Зарегистрироваться</Button>
             </Link>
           </div>
           <CloseButton

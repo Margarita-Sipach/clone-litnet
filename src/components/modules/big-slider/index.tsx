@@ -1,4 +1,3 @@
-import { PrimaryButton } from "../../ui/primary-button";
 import { Wrapper } from "../../ui/wrapper";
 
 import slide1 from "../../../common/assets/images/big-slider/banner-light-1.png";
@@ -8,6 +7,7 @@ import slide4 from "../../../common/assets/images/big-slider/banner-light-4.png"
 
 import "./animation.css";
 import { Link } from "react-router-dom";
+import Button from "../../ui/button";
 
 const benefits = [
   "Все популярные жанры: боевики, фэнтези, фантастика и другие",
@@ -15,11 +15,9 @@ const benefits = [
   "Общайтесь с авторами напрямую в блогах и комментариях",
 ];
 
-interface BigSliderProps {}
-
-export const BigSlider = ({}: BigSliderProps) => {
+export const BigSlider = () => {
   return (
-    <div className="relative w-full h-[550px] flex items-center justify-center mb-10">
+    <div className="relative mb-10 flex h-[550px] w-full items-center justify-center">
       {[slide1, slide2, slide3, slide4].map((item, index) => (
         <div
           key={item}
@@ -27,25 +25,25 @@ export const BigSlider = ({}: BigSliderProps) => {
             background: `url(${item}) center`,
             animation: `item${index + 1} 10s linear infinite`,
           }}
-          className="w-full h-full bg-cover absolute top-0 left-0"
+          className="absolute top-0 left-0 h-full w-full bg-cover"
         />
       ))}
       <Wrapper className="absolute ">
-        <h1 className="text-white text-3xl mb-7 max-w-[700px] sm:text-6xl">
+        <h1 className="mb-7 max-w-[700px] text-3xl text-white sm:text-6xl">
           Книги, которые ты полюбишь
         </h1>
         <div className="mb-7 flex justify-between gap-4 sm:gap-6 lg:gap-8">
           {benefits.map((item) => (
             <div
               key={item}
-              className="w-1/3 text-white text-sm sm:text-base sm:text-lg"
+              className="w-1/3 text-sm text-white sm:text-base sm:text-lg"
             >
               {item}
             </div>
           ))}
         </div>
         <Link to="/registration">
-          <PrimaryButton>Присоединиться</PrimaryButton>
+          <Button className="lg:text-lg">Присоединиться</Button>
         </Link>
       </Wrapper>
     </div>
