@@ -32,10 +32,6 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-			{
-        path: "/book",
-        element: <BookPage />,
-      },
       {
         path: "/all",
         element: <BooksPage title="Все жанры" books={books} />,
