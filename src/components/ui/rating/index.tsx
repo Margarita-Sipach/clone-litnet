@@ -9,7 +9,7 @@ interface RatingProps {
 export const Rating = ({ rating, statistic }: RatingProps) => {
   return (
     <div
-      className="flex items-center gap-x-1 text-indigo-400"
+      className="flex items-center gap-x-1"
       title={`Статистика оценок\n${statistic
         .map((item, index) => `${"★".repeat(index + 1)} - ${item}`)
         .join("\n")}`}
