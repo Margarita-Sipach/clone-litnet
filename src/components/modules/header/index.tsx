@@ -8,9 +8,8 @@ import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
-import { UserMenu } from "../user-menu";
 
-interface FooterProps {
+interface HeaderProps {
   isUser?: boolean;
 }
 
@@ -29,11 +28,11 @@ const navItems = [
   },
   {
     title: "Моя страница",
-    link: "account",
+    link: `users/1`,
   },
 ];
 
-export const Header = ({ isUser = true }: FooterProps) => {
+export const Header = ({ isUser = true }: HeaderProps) => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
 

@@ -1,31 +1,21 @@
 import { Link } from "react-router-dom";
 
-interface UserMenuProps {}
-
 const navItems = [
   {
-    title: "Mоя страница",
-    link: "",
-  },
-  {
     title: "Редактировать профиль",
-    link: "",
+    link: "/account/edit",
   },
   {
     title: "Моя библиотека",
-    link: "",
+    link: "/account/library",
   },
   {
     title: "Добавить книгу",
-    link: "",
-  },
-  {
-    title: "Мои блоги",
-    link: "",
+    link: "/account/add-book",
   },
   {
     title: "Добавить блог",
-    link: "",
+    link: "/account/add-blog",
   },
 ];
 

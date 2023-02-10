@@ -6,12 +6,8 @@ import Info from "../pages/Info";
 import Terms from "../pages/Info/Terms";
 import Payment from "../pages/Info/Payment";
 import Contests from "../pages/Contests";
-import Account from "../pages/Account";
-import User from "../pages/User";
-import UserFollowing from "../pages/User/UserFollowing";
-import UserComments from "../pages/User/UserComments";
-import UserAbout from "../pages/User/UserAbout";
 import BookPage from "../pages/Book";
+import { PersonalAbout } from "../modules/personal-about";
 import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
 import AccountEdit from "../pages/Account/AccountEdit";
@@ -19,6 +15,9 @@ import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
 import { PersonalPage } from "../pages/personal";
+import { PersonalBlog } from "../modules/personal-blog";
+import { PersonalBook } from "../modules/personal-book";
+import Account from "../pages/Account";
 
 const router = createBrowserRouter([
   {
@@ -69,30 +68,30 @@ const router = createBrowserRouter([
         element: <BookPage />,
       },
       {
-        path: "/user/:slug",
-        element: <User />,
+        path: "/users/:id",
+        element: <PersonalPage />,
         children: [
           {
             path: "about",
-            element: <UserAbout />,
+            element: <PersonalAbout />,
           },
           {
-            path: "comments",
-            element: <UserComments />,
+            path: "blogs",
+            element: <PersonalBlog />,
           },
           {
-            path: "following",
-            element: <UserFollowing />,
+            path: "books",
+            element: <PersonalBook />,
           },
         ],
       },
       {
         path: "/account",
-        element: <PersonalPage />,
+        element: <Account />,
         children: [
           {
             index: true,
-            element: <PersonalPage />,
+            element: <AccountLibrary />,
           },
           {
             path: "library",

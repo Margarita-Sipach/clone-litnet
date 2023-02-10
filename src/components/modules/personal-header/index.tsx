@@ -6,6 +6,7 @@ import { Modal } from "../../ui/modal";
 import { UserMenu } from "../user-menu";
 import { useState } from "react";
 import { PrimaryButton } from "../../ui/primary-button";
+import { Link } from "react-router-dom";
 
 const blog = {
   img: "https://mirpozitiva.ru/wp-content/uploads/2019/11/1472042660_10.jpg",
@@ -35,9 +36,15 @@ export const PersonalHeader = ({ isUser = true }: PersonalHeaderProps) => {
         </div>
       </div>
       <div className="flex w-full flex-wrap gap-2 ">
-        <SecondaryButton className="">Книги</SecondaryButton>
-        <SecondaryButton className="">Блог</SecondaryButton>
-        <SecondaryButton className="">Обо мне</SecondaryButton>
+        <Link to="books">
+          <SecondaryButton className="">Книги</SecondaryButton>
+        </Link>
+        <Link to="blogs">
+          <SecondaryButton className="">Блог</SecondaryButton>
+        </Link>
+        <Link to="about">
+          <SecondaryButton className="">Обо мне</SecondaryButton>
+        </Link>
         {isUser && (
           <PrimaryButton
             className=""
