@@ -9,7 +9,7 @@ export const Rating = ({ rating }: RatingProps) => {
   let roundRating = Math.round(rating / 2);
 
   return (
-    <div className="flex items-center gap-x-1">
+    <div className="flex items-center gap-x-1 text-indigo-400" title={`★★★★★ - ${1}\n★★★★ - ${1}\n★★★ - ${1}\n★★ - ${1}\n★ - ${1}`}>
       <div className="flex">
         {new Array(5)
           .fill("")
