@@ -49,15 +49,16 @@ export const Header = ({ isUser = true }: HeaderProps) => {
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
             {navItems.map((item) => (
-              <div
+              <Link
+                to={item.link}
                 key={item.title}
                 className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
                 onClick={() => {
-                  if (item.title === "Книги") setCategoriesModalDisplay(true);
+                  item.title === "Книги" && setCategoriesModalDisplay(true);
                 }}
               >
-                <Link to={item.link}>{item.title}</Link>
-              </div>
+                {item.title}
+              </Link>
             ))}
           </div>
           {!isUser ? (
@@ -94,7 +95,7 @@ export const Header = ({ isUser = true }: HeaderProps) => {
       </Wrapper>
       {categoriesModalDisplay && (
         <Modal displayModal={setCategoriesModalDisplay}>
-          <Categories />
+          <Categories onClick={() => setCategoriesModalDisplay(false)} />
         </Modal>
       )}
     </header>
