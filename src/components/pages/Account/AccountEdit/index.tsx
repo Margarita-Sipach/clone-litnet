@@ -3,6 +3,7 @@ import Button from "../../../ui/button";
 import { FileInput } from "../../../ui/file-input";
 import { PageWrapper } from "../../../ui/page-wrapper";
 import { PrimaryInput } from "../../../ui/primary-input";
+import { PrimaryTextarea } from "../../../ui/primary-textarea";
 import { Wrapper } from "../../../ui/wrapper";
 
 const AccountEdit = () => {
@@ -17,6 +18,7 @@ const AccountEdit = () => {
           className="h-60 rounded-md border-[1px] bg-slate-100 py-2 px-4 text-slate-500 placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none sm:text-sm sm:placeholder:text-sm lg:text-lg lg:placeholder:text-lg"
           placeholder="О себе"
         />
+				<PrimaryTextarea attributes={{ placeholder: "О себе" }} />
         <Button>Сохранить</Button>
       </PageWrapper>
       <PageWrapper title="Редактирование настроек для чтения" isTop={true}>
