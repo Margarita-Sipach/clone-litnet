@@ -14,10 +14,6 @@ const AccountEdit = () => {
         <PrimaryInput attributes={{ placeholder: "Логин" }} />
         <PrimaryInput attributes={{ placeholder: "Email" }} />
         <PrimaryInput attributes={{ placeholder: "Пароль" }} />
-        <textarea
-          className="h-60 rounded-md border-[1px] bg-slate-100 py-2 px-4 text-slate-500 placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none sm:text-sm sm:placeholder:text-sm lg:text-lg lg:placeholder:text-lg"
-          placeholder="О себе"
-        />
 				<PrimaryTextarea attributes={{ placeholder: "О себе" }} />
         <Button>Сохранить</Button>
       </PageWrapper>
@@ -32,11 +28,6 @@ const AccountEdit = () => {
             <input type="radio" name="view" value="no" id="no" />
             <label htmlFor="no">Нет</label>
           </div>
-
-          {/* <label for="contactChoice1">Email</label>
-
-    <input type="radio" id="contactChoice2"
-     name="contact" value="phone"></input> */}
         </div>
       </PageWrapper>
     </Wrapper>
