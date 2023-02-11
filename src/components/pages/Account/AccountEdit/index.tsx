@@ -12,16 +12,18 @@ const AccountEdit = () => {
       <PageWrapper title="Редактирование профиля" isTop={true}>
         <FileInput className="h-32 w-32"></FileInput>
         <PrimaryInput attributes={{ placeholder: "Логин" }} />
-        <PrimaryInput attributes={{ placeholder: "Email" }} />
-        <PrimaryInput attributes={{ placeholder: "Пароль" }} />
-				<PrimaryTextarea attributes={{ placeholder: "О себе" }} />
+        <PrimaryInput attributes={{ placeholder: "Email", type: "email" }} />
+        <PrimaryInput
+          attributes={{ placeholder: "Пароль", type: "password" }}
+        />
+        <PrimaryTextarea attributes={{ placeholder: "О себе" }} />
         <Button>Сохранить</Button>
       </PageWrapper>
       <PageWrapper title="Редактирование настроек для чтения" isTop={true}>
         <div className="flex flex-col">
-          <p className="text-lg mb-2">Разбить на страницы?</p>
+          <p className="mb-2 text-lg">Разбить на страницы?</p>
           <div className="flex gap-x-2">
-            <input type="radio" name="view" value="yes" id="yes" checked/>
+            <input type="radio" name="view" value="yes" id="yes" checked />
             <label htmlFor="yes">Да</label>
           </div>
           <div className="flex gap-x-2">
