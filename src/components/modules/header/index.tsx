@@ -2,14 +2,15 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { LocalStorage } from "../../storage";
+import { Router } from "../../router";
 
 const navItems = [
   {
@@ -35,11 +36,17 @@ export const Header = () => {
   const isUserLogged = useMemo(() => (user?.id ? true : false), [user]);
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setUser();
     LocalStorage.removeUserToken();
+    navigate(Router.main);
   };
+
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
 
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">

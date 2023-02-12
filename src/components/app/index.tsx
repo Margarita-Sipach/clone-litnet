@@ -18,6 +18,7 @@ import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
+import { UserContextProvider } from "../context/userContext";
 
 const router = createBrowserRouter([
   {
@@ -109,9 +110,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <UserContextProvider>
       <RouterProvider router={router} />
-    </>
+    </UserContextProvider>
   );
 }
 
