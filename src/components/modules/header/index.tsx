@@ -2,16 +2,14 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
-
-interface HeaderProps {
-  isUser?: boolean;
-}
+import { useUserContext } from "../../context/userContext";
+import { LocalStorage } from "../../storage";
 
 const navItems = [
   {
@@ -32,9 +30,16 @@ const navItems = [
   },
 ];
 
-export const Header = ({ isUser = false }: HeaderProps) => {
+export const Header = () => {
+  const { user, setUser } = useUserContext();
+  const isUserLogged = useMemo(() => (user?.id ? true : false), [user]);
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+
+  const handleLogout = () => {
+    setUser();
+    LocalStorage.removeUserToken();
+  };
 
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
@@ -61,7 +66,7 @@ export const Header = ({ isUser = false }: HeaderProps) => {
               </Link>
             ))}
           </div>
-          {!isUser ? (
+          {!isUserLogged ? (
             <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
               <Link to="/authorization">
                 <SecondaryButton
@@ -79,7 +84,9 @@ export const Header = ({ isUser = false }: HeaderProps) => {
             </div>
           ) : (
             <Link to="/">
-              <SecondaryButton onClickButton={() => {}}>Выход</SecondaryButton>
+              <SecondaryButton onClickButton={handleLogout}>
+                Выход
+              </SecondaryButton>
             </Link>
           )}
           <CloseButton

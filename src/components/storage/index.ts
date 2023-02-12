@@ -13,11 +13,15 @@ export class LocalStorage {
     return localStorage.getItem(this.storage.USER_TOKEN);
   };
 
+  public static removeUserToken = () => {
+    localStorage.removeItem(this.storage.USER_TOKEN);
+  };
+
   public static getUserByToken = () => {
     const token = this.getUserToken();
     if (token) {
       return JSON.parse(atob(token.split(".")[1]));
     }
     return null;
-  }
+  };
 }

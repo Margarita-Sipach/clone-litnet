@@ -15,7 +15,7 @@ export interface ProviderProps {
 
 export interface CreateUserContext {
   user: UserType | null;
-  setUser: (user: UserType) => void;
+  setUser: (user?: UserType | null) => void;
 }
 
 const UserContext = createContext<CreateUserContext>({
@@ -30,7 +30,7 @@ export const useUserContext = () => {
 export const UserContextProvider: FC<ProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null);
 
-  const handleSetUser = useCallback((user: UserType) => {
+  const handleSetUser = useCallback((user: UserType | null = null) => {
     setUser(user);
   }, []);
 
