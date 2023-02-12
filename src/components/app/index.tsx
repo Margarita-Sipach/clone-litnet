@@ -102,7 +102,7 @@ const router = createBrowserRouter([
             path: "edit",
             element: <AccountEdit />,
           },
-					{
+          {
             path: "add-blog",
             element: <AccountAddBlog />,
           },
