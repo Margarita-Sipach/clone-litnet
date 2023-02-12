@@ -3,17 +3,19 @@ import avatar from "../../../common/assets/images/avatar.png";
 
 interface FileInputProps {
   className: string;
+  onChange?: (e?: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const FileInput = ({ className }: FileInputProps) => {
+export const FileInput = ({ className, onChange }: FileInputProps) => {
   const [preview, setPreview] = useState(avatar);
 
   const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
-    const file = (e?.target as HTMLInputElement)?.files;
-    if (file) {
-      const objectUrl = URL.createObjectURL(file[0]);
+    const files = (e?.target as HTMLInputElement)?.files;
+    if (files) {
+      const objectUrl = URL.createObjectURL(files[0]);
       setPreview(objectUrl);
     }
+    if (onChange) onChange(e)
   };
 
   return (

@@ -9,8 +9,8 @@ enum API_URLS {
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
   USERS_AVATAR = "/users/avatar/:id",
-  USER_REGISTER = "/registration",
-  USER_LOGIN = "/login",
+  USER_REGISTER = "/auth/registration",
+  USER_LOGIN = "/auth/login",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
@@ -56,12 +56,21 @@ export class API {
   private static fetch = async ({
     url = "",
     params = {},
-    options = { method: "GET" },
+    options = { method: "GET", body: "" },
   }: FetchArguments) => {
     const fetchUrl = `${API.URLS.BASE_URL}${url}${API.createQueryString(
       params
     )}`;
-    return await fetch(fetchUrl, options);
+    try {
+      return await fetch(fetchUrl, {
+        method: options.method,
+        body: options.body,
+      });
+    } catch (error) {
+      return new Promise((resolve, reject) => {
+        reject(error);
+      }) as Promise<Response>;
+    }
   };
 
   private static createQueryString = (params: QueryParams) => {
@@ -82,7 +91,7 @@ export class API {
   private static update = async (url: string, body: any = {}) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "PATCH", body: JSON.stringify(body) },
+      options: { method: "PATCH", body },
     };
     return await API.fetch(fetchArguments);
   };
@@ -90,7 +99,7 @@ export class API {
   private static post = async (url: string, body: any = {}) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "POST", body: JSON.stringify(body) },
+      options: { method: "POST", body },
     };
     return await API.fetch(fetchArguments);
   };

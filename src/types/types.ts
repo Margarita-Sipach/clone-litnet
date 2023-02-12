@@ -1,8 +1,7 @@
 export interface TestInterface {}
 
-
 export interface BookElementType {
-	img: string;
+  img: string;
   title: string;
   author: string;
   categories: string[];
@@ -12,10 +11,17 @@ export interface BookElementType {
   rating: number;
 }
 
-
 export type CommentProps = {
   image: string;
   name: string;
   date: string;
   content: string;
 };
+
+export interface UserType {
+  id: number;
+  name: string;
+  description: string;
+  readingView: string | null;
+  image: string | null;
+}

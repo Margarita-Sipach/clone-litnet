@@ -32,7 +32,7 @@ const navItems = [
   },
 ];
 
-export const Header = ({ isUser = true }: HeaderProps) => {
+export const Header = ({ isUser = false }: HeaderProps) => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
 

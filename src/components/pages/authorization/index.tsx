@@ -1,5 +1,4 @@
 import { AuthorizationForm } from "../../modules/authorization-form";
-import { BlogElement } from "../../ui/blog-element";
 import { PageWrapper } from "../../ui/page-wrapper";
 import { Wrapper } from "../../ui/wrapper";
 
