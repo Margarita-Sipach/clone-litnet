@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { LocalStorage } from "../../storage";
 import { Router } from "../../router";
+import { CircleUserAvatar } from "../../ui/circle-avatar";
 
 const navItems = [
   {
@@ -26,8 +27,8 @@ const navItems = [
     link: "blogs",
   },
   {
-    title: "Моя страница",
-    link: `users/1`,
+    title: "Моя библиотека",
+    link: `account/library`,
   },
 ];
 
@@ -43,10 +44,6 @@ export const Header = () => {
     LocalStorage.removeUserToken();
     navigate(Router.main);
   };
-
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
 
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
@@ -75,7 +72,7 @@ export const Header = () => {
           </div>
           {!isUserLogged ? (
             <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
-              <Link to="/authorization">
+              <Link to={Router.login}>
                 <SecondaryButton
                   className="w-full sm:w-auto"
                   onClickButton={() => {}}
@@ -83,18 +80,23 @@ export const Header = () => {
                   Войти
                 </SecondaryButton>
               </Link>
-              <Link to="/registration">
+              <Link to={Router.register}>
                 <PrimaryButton onClickButton={() => {}}>
                   Зарегистрироваться
                 </PrimaryButton>
               </Link>
             </div>
           ) : (
-            <Link to="/">
-              <SecondaryButton onClickButton={handleLogout}>
-                Выход
-              </SecondaryButton>
-            </Link>
+            <div className="flex justify-center gap-4">
+              <Link to={Router.main}>
+                <SecondaryButton onClickButton={handleLogout}>
+                  Выход
+                </SecondaryButton>
+              </Link>
+              <Link to={`${Router.users}/${user?.id}`}>
+                <CircleUserAvatar image={user?.img || ""} />
+              </Link>
+            </div>
           )}
           <CloseButton
             onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}

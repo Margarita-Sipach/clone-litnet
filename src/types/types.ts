@@ -23,5 +23,5 @@ export interface UserType {
   name: string;
   description: string;
   readingView: string | null;
-  image: string | null;
+  img: string | null;
 }

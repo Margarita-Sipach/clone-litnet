@@ -19,6 +19,7 @@ import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
 import { UserContextProvider } from "../context/userContext";
+import { ProtectedRoute } from "../context/userProtectRoute";
 
 const router = createBrowserRouter([
   {
@@ -88,7 +89,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <Account />,
+        element: (
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        ),
         children: [
           {
             index: true,
