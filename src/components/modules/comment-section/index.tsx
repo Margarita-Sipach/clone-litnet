@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { CommentProps } from "../../../types/types";
+import { CommentType } from "../../../types/types";
 import { CommentElement } from "../../ui/comment-element";
 import Button from "../../ui/button";
 
-
-
 type CommentSectionProps = {
-  comments: CommentProps[];
+  comments: CommentType[];
 };
 
 const CommentSection: React.FC<CommentSectionProps> = ({ comments }) => {
