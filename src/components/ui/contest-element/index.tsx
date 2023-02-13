@@ -5,27 +5,17 @@ import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import Button from "../button";
 import { Link } from "react-router-dom";
+import DetailsElement from "../details-element";
 
 type ContestElementProps = {
   title: string;
   prize: string;
   imageUrl: string;
-  startDate: Date;
-  endDate: Date;
-  resultsDate: Date;
+  startDate: string;
+  endDate: string;
+  resultsDate: string;
   booksAmount?: number;
 };
-
-function formatDate(date: Date) {
-  let month = "" + (date.getMonth() + 1);
-  let day = "" + date.getDate();
-  let year = date.getFullYear();
-
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [day, month, year].join("/");
-}
 
 const ContestElement: React.FC<ContestElementProps> = ({
   title,
@@ -51,41 +41,24 @@ const ContestElement: React.FC<ContestElementProps> = ({
           </div>
 
           <div className="flex justify-between rounded-md border border-slate-300 p-2 lg:gap-12 lg:p-6">
-            <div className="flex shrink-0 grow-0 basis-2/5">
-              <FaTrophy className="grow-1 mr-1 shrink-0 lg:mr-3" size="20px" />
-              <div>
-                <p className="mb-2 text-xs uppercase text-slate-500">Приз</p>
-                <p className="text-sm">{prize}</p>
-              </div>
-            </div>
+            <DetailsElement
+              title="Приз"
+              description={prize}
+              icon={FaTrophy}
+              className="flex shrink-0 grow-0 basis-2/5"
+            />
 
-            <div className="flex flex-1">
-              <RiCalendarEventFill
-                className="grow-1 mr-1 shrink-0 lg:mr-3"
-                size="20px"
-              />
-              <div>
-                <p className="mb-2 text-xs uppercase text-slate-500">
-                  Срок приема работ
-                </p>
-                <p className="text-sm">
-                  {formatDate(startDate)} - {formatDate(endDate)}
-                </p>
-              </div>
-            </div>
+            <DetailsElement
+              title="Срок приема работ"
+              description={`${startDate} - ${endDate}`}
+              icon={RiCalendarEventFill}
+            />
 
-            <div className="flex flex-1">
-              <AiOutlineClockCircle
-                className="grow-1 mr-1 shrink-0 lg:mr-3"
-                size="20px"
-              />
-              <div>
-                <p className="mb-2 text-xs uppercase text-slate-500">
-                  Оглашение результатов
-                </p>
-                <p className="text-sm">До {formatDate(endDate)}</p>
-              </div>
-            </div>
+            <DetailsElement
+              title="Оглашение результатов"
+              description={`До ${resultsDate}`}
+              icon={AiOutlineClockCircle}
+            />
           </div>
           <div className="mt-auto flex gap-4">
             <Link to="/contests/1">
