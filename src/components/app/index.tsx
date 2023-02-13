@@ -18,6 +18,7 @@ import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
+import { Game } from "../pages/Game";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/game",
+        element: <Game />,
       },
       {
         path: "/info",

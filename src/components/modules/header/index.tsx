@@ -30,6 +30,10 @@ const navItems = [
     title: "Моя страница",
     link: `users/1`,
   },
+  {
+    title: "Игра",
+    link: "game",
+  },
 ];
 
 export const Header = ({ isUser = true }: HeaderProps) => {
