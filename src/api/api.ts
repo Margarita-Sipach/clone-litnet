@@ -11,6 +11,7 @@ enum API_URLS {
   USERS_AVATAR = "/users/avatar/:id",
   USER_REGISTER = "/auth/registration",
   USER_LOGIN = "/auth/login",
+  USER_PASSWORD = "/auth/password",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
@@ -56,7 +57,7 @@ export class API {
   private static fetch = async ({
     url = "",
     params = {},
-    options = { method: "GET", body: "" },
+    options = { method: "GET", body: "", headers: {} },
   }: FetchArguments) => {
     const fetchUrl = `${API.URLS.BASE_URL}${url}${API.createQueryString(
       params
@@ -65,6 +66,7 @@ export class API {
       return await fetch(fetchUrl, {
         method: options.method,
         body: options.body,
+        headers: options.headers,
       });
     } catch (error) {
       return new Promise((resolve, reject) => {
@@ -88,10 +90,14 @@ export class API {
     return await API.fetch(fetchArguments);
   };
 
-  private static update = async (url: string, body: any = {}) => {
+  private static update = async (
+    url: string,
+    body: any = {},
+    headers: any = {}
+  ) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "PATCH", body },
+      options: { method: "PATCH", body, headers },
     };
     return await API.fetch(fetchArguments);
   };
@@ -111,6 +117,10 @@ export class API {
       options: { method: "GET" },
     };
     return await API.fetch(fetchArguments);
+  };
+
+  public static getImage = (url: string) => {
+    return API.URLS.BASE_URL + url;
   };
 
   public static getBooks = async (params: QueryParams = {}) => {
@@ -171,6 +181,11 @@ export class API {
   public static registerUser = async (body: any) => {
     const url = API.URLS.USER_REGISTER;
     return await API.post(url, body);
+  };
+
+  public static updateUserPassword = async (body: any) => {
+    const url = API.URLS.USER_PASSWORD;
+    return await API.update(url, body, { "Content-Type": "application/json" });
   };
 
   public static loginUser = async (body: any) => {

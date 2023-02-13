@@ -2,7 +2,7 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";

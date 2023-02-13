@@ -6,7 +6,6 @@ import { useUserContext } from "../../context/userContext";
 import { Router } from "../../router";
 
 const Account = () => {
-  // user id will be stored somewhere in context
   const { user } = useUserContext();
   return (
     <Wrapper>
@@ -19,8 +18,11 @@ const Account = () => {
           >
             Моя страница
           </Link>
-          <Link className="font-medium text-blue-500" to="edit">
+          <Link className="font-medium text-blue-500" to={Router.edit}>
             Редактировать
+          </Link>
+          <Link className="font-medium text-blue-500" to={Router.editPassword}>
+            Сменить пароль
           </Link>
         </nav>
         <Outlet />

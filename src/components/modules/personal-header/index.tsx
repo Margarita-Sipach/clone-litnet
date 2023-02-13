@@ -4,9 +4,10 @@ import { SecondaryButton } from "../../ui/secodary-button";
 import "./gradient.css";
 import { Modal } from "../../ui/modal";
 import { UserMenu } from "../user-menu";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PrimaryButton } from "../../ui/primary-button";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/userContext";
 
 const blog = {
   img: "https://mirpozitiva.ru/wp-content/uploads/2019/11/1472042660_10.jpg",
@@ -17,12 +18,10 @@ const blog = {
   commentCount: 25,
 };
 
-interface PersonalHeaderProps {
-  isUser?: boolean;
-}
-
-export const PersonalHeader = ({ isUser = true }: PersonalHeaderProps) => {
+export const PersonalHeader = () => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
+  const { user } = useUserContext();
+  const isUserLogged = useMemo(() => (user ? true : false), [user]);
 
   return (
     <Wrapper className="gradient mb-10 flex h-72 w-full flex-col justify-between bg-indigo-400 pt-24 sm:pt-24">
@@ -30,7 +29,7 @@ export const PersonalHeader = ({ isUser = true }: PersonalHeaderProps) => {
         <img src={blog.img} alt="" className="h-32 w-32 rounded object-cover" />
         <div className="flex flex-col items-start gap-2">
           <div className="text-lg text-white">{blog.author}</div>
-          {!isUser && (
+          {!isUserLogged && (
             <SecondaryButton className="">Подписаться</SecondaryButton>
           )}
         </div>
@@ -45,7 +44,7 @@ export const PersonalHeader = ({ isUser = true }: PersonalHeaderProps) => {
         <Link to="about">
           <SecondaryButton className="">Обо мне</SecondaryButton>
         </Link>
-        {isUser && (
+        {isUserLogged && (
           <PrimaryButton
             className=""
             onClickButton={() => setUserModalDisplay(true)}

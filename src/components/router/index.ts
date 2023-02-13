@@ -4,5 +4,6 @@ export class Router {
   public static register = "/registration";
   public static users = "/users";
   public static user = "/users/:id";
-  public static edit = "/edit";
+  public static edit = "/account/edit";
+  public static editPassword = "/account/edit-password";
 }

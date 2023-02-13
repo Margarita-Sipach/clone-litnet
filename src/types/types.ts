@@ -20,8 +20,9 @@ export type CommentProps = {
 
 export interface UserType {
   id: number;
+  email: string;
   name: string;
-  description: string;
+  autobiography: string;
   readingView: string | null;
   img: string | null;
 }

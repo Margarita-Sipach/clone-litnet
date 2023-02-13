@@ -11,6 +11,7 @@ import { PersonalAbout } from "../modules/personal-about";
 import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
 import AccountEdit from "../pages/Account/AccountEdit";
+import { AccountEditPassword } from "../pages/Account/AccountEditPassword";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
           {
             path: "edit",
             element: <AccountEdit />,
+          },
+          {
+            path: "edit-password",
+            element: <AccountEditPassword />,
           },
         ],
       },
