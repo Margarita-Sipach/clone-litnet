@@ -3,7 +3,6 @@ import { FaBaseballBall } from "react-icons/fa";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import Button from "../../ui/button";
 import { Modal } from "../../ui/modal";
-import success from "../../../common/assets/sounds/success.mp3";
 
 import "./game.css";
 import { Link } from "react-router-dom";
@@ -61,9 +60,6 @@ export const Game = () => {
     }, 1000);
 
     setTimeout(() => {
-      const sound = new Audio(success);
-      sound.play();
-
       clearInterval(eyeId);
       clearInterval(timerId);
       clearInterval(appearId);
@@ -76,7 +72,7 @@ export const Game = () => {
   };
 
   return (
-    <div className="absolute top-0 left-0 h-screen w-screen bg-teal-200">
+    <div className="absolute top-0 left-0 h-screen w-screen bg-teal-200" onClick={() => {}}>
       <span className="absolute bottom-2 right-2 text-5xl font-bold text-indigo-400">
         {timer}
       </span>
