@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import { Wrapper } from "../../ui/wrapper";
 import { PageWrapper } from "../../ui/page-wrapper";
 import ContestElement from "../../ui/contest-element";
@@ -10,27 +9,27 @@ const mockContests = [
     prize:
       "3 победителя получат: выплаты от 20 до 50 тыс. руб.; рекламную поддержку; коммерческий статус.",
     imageUrl: "https://litnet.com/uploads/contests/cover_1675424625.png",
-    startDate: new Date("December 17, 1995 03:24:00"),
-    endDate: new Date("December 17, 1995 03:24:00"),
-    resultsDate: new Date("December 17, 1995 03:24:00"),
+    startDate: "03 февр. 2023",
+    endDate: "03 июн. 2023",
+    resultsDate: "03 июл. 2023",
   },
   {
     title: "Second Contest",
     prize:
       "3 победителя получат: выплаты от 20 до 50 тыс. руб.; рекламную поддержку; коммерческий статус.",
     imageUrl: "https://litnet.com/uploads/contests/cover_1675424625.png",
-    startDate: new Date("December 17, 1995 03:24:00"),
-    endDate: new Date("December 17, 1995 03:24:00"),
-    resultsDate: new Date("December 17, 1995 03:24:00"),
+    startDate: "03 февр. 2023",
+    endDate: "03 июн. 2023",
+    resultsDate: "03 июл. 2023",
   },
   {
     title: "Third Contest",
     prize:
       "3 победителя получат: выплаты от 20 до 50 тыс. руб.; рекламную поддержку; коммерческий статус.",
     imageUrl: "https://litnet.com/uploads/contests/cover_1675424625.png",
-    startDate: new Date("December 17, 1995 03:24:00"),
-    endDate: new Date("December 17, 1995 03:24:00"),
-    resultsDate: new Date("December 17, 1995 03:24:00"),
+    startDate: "03 февр. 2023",
+    endDate: "03 июн. 2023",
+    resultsDate: "03 июл. 2023",
   },
 ];
 

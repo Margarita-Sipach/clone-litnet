@@ -18,6 +18,9 @@ import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
+import BlogPage from "../pages/BlogPage";
+import ContestRules from "../pages/ContestPage/ContestRules";
+import ContestBooks from "../pages/ContestPage/ContestBooks";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/blogs/:id",
+        element: <BlogPage />,
       },
       {
         path: "/info",
@@ -62,6 +69,16 @@ const router = createBrowserRouter([
       {
         path: "/contests/:slug",
         element: <ContestPage />,
+        children: [
+          {
+            index: true,
+            element: <ContestBooks />,
+          },
+          {
+            path: "rules",
+            element: <ContestRules />,
+          },
+        ],
       },
       {
         path: "/book/:slug",
