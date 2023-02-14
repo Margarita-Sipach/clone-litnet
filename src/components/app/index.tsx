@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
 import Root from "../pages/Root";
 import Home from "../pages/Home";
 import Blogs from "../pages/Blogs";
@@ -21,6 +22,9 @@ import Account from "../pages/Account";
 import BlogPage from "../pages/BlogPage";
 import ContestRules from "../pages/ContestPage/ContestRules";
 import ContestBooks from "../pages/ContestPage/ContestBooks";
+import { AuthProvider } from "../context/AuthContext";
+
+const client = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -127,7 +131,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={client}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </QueryClientProvider>
     </>
   );
 }
