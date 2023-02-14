@@ -19,6 +19,7 @@ import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
 import { Game } from "../pages/Game";
+import { AccountAddBlog } from "../pages/Account/AccountAddBlog";
 import BlogPage from "../pages/BlogPage";
 import ContestRules from "../pages/ContestPage/ContestRules";
 import ContestBooks from "../pages/ContestPage/ContestBooks";
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
           {
             path: "edit",
             element: <AccountEdit />,
+          },
+          {
+            path: "add-blog",
+            element: <AccountAddBlog />,
           },
         ],
       },
