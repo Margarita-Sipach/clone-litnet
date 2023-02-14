@@ -12,6 +12,7 @@ enum API_URLS {
   USER_REGISTER = "/auth/registration",
   USER_LOGIN = "/auth/login",
   USER_PASSWORD = "/auth/password",
+  USER_REFRESH_TOKEN = "/auth/refresh",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
@@ -102,10 +103,14 @@ export class API {
     return await API.fetch(fetchArguments);
   };
 
-  private static post = async (url: string, body: any = {}) => {
+  private static post = async (
+    url: string,
+    body: any = {},
+    headers: any = {}
+  ) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "POST", body },
+      options: { method: "POST", body, headers },
     };
     return await API.fetch(fetchArguments);
   };
@@ -181,6 +186,11 @@ export class API {
   public static registerUser = async (body: any) => {
     const url = API.URLS.USER_REGISTER;
     return await API.post(url, body);
+  };
+
+  public static checkUser = async (body: any) => {
+    const url = API.URLS.USER_REFRESH_TOKEN;
+    return await API.post(url, body, { "Content-Type": "application/json" });
   };
 
   public static updateUserPassword = async (body: any) => {

@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../../api/api";
-// import { API } from "../../../../api/api";
 import { useUserContext } from "../../../context/userContext";
 import { Router } from "../../../router";
 import { LocalStorage } from "../../../storage";
@@ -28,7 +27,6 @@ export const AccountEditPassword = () => {
       LocalStorage.setUserToken(token);
       navigate(`${Router.users}/${user.id}`);
     } else {
-      console.log(response);
       throw new Error("It's impossible to change password");
     }
   };

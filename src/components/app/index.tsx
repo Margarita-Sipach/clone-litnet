@@ -15,12 +15,20 @@ import { AccountEditPassword } from "../pages/Account/AccountEditPassword";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
-import { PersonalPage } from "../pages/personal";
+import { PersonalPage, loader as personalPageLoader } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
-import { PersonalBook } from "../modules/personal-book";
+import {
+  PersonalBook,
+  loader as personalBookLoader,
+} from "../modules/personal-book";
 import Account from "../pages/Account";
-import { UserContextProvider } from "../context/userContext";
+import { UserContextProvider, useUserContext } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
+import { useEffect, useState } from "react";
+import { LocalStorage } from "../storage";
+import { API } from "../../api/api";
+import { checkAuth } from "../../utils/utils";
+import { UserStateType } from "../../types/types";
 
 const router = createBrowserRouter([
   {
@@ -73,7 +81,12 @@ const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <PersonalPage />,
+        loader: personalPageLoader,
         children: [
+          {
+            index: true,
+            element: <PersonalAbout />,
+          },
           {
             path: "about",
             element: <PersonalAbout />,
@@ -85,6 +98,7 @@ const router = createBrowserRouter([
           {
             path: "books",
             element: <PersonalBook />,
+            loader: personalBookLoader,
           },
         ],
       },
@@ -119,8 +133,16 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const [user, setUser] = useState<UserStateType>(undefined);
+
+  useEffect(() => {
+    checkAuth(setUser);
+  }, []);
+
+  if (user === undefined) return <h1>Loading...</h1>;
+
   return (
-    <UserContextProvider>
+    <UserContextProvider defaultUser={user}>
       <RouterProvider router={router} />
     </UserContextProvider>
   );

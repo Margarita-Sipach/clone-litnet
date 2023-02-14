@@ -4,6 +4,7 @@ import { BlogElement } from "../../ui/blog-element";
 import { Wrapper } from "../../ui/wrapper";
 
 const Blogs = () => {
+  
   return (
     <Wrapper className="flex items-start">
       <PageWrapper title="Литературные блоги" isTop={true}>

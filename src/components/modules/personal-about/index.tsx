@@ -1,10 +1,11 @@
+import { useUserContext } from "../../context/userContext";
 import { PageWrapper } from "../../ui/page-wrapper";
 
 export const PersonalAbout = () => {
+  const { selectedUser } = useUserContext();
   return (
     <PageWrapper title="Обо мне">
-      ggggggggggggggg gggggggggggggggggggg ggggggggggggggggg ggggggggggg
-      gggggggggggggggggg ggggggggggggg ggggggggg ggggggggggggg ggggggggg
+      {selectedUser?.autobiography || "Пользователь не указал информацию"}
     </PageWrapper>
   );
 };

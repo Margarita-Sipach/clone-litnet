@@ -6,8 +6,8 @@ export interface BookElementType {
   author: string;
   categories: string[];
   annotation: string;
-  commentAmount: number;
-  readAmount: number;
+  commentAmount?: number;
+  readAmount?: number;
   rating: number;
 }
 
@@ -25,4 +25,16 @@ export interface UserType {
   autobiography: string;
   readingView: string | null;
   img: string | null;
+}
+
+export type UserStateType = UserType | null | undefined;
+
+export interface AccountType extends UserType {
+  createdAt: string;
+  contestId: null;
+  updatedAt: string;
+  contest: null;
+  // books: [];
+  // bookmarks: [];
+  // comments: [];
 }

@@ -40,8 +40,8 @@ export const BookElement = ({
           <div className="mb-2 text-sm">{author}</div>
           <div className="flex items-center gap-x-3">
             <Icon title={rating} icon={<AiFillStar />} />
-            <Icon title={readAmount} icon={<GiBookshelf />} />
-            <Icon title={commentAmount} icon={<AiOutlineComment />} />
+            {/* <Icon title={readAmount} icon={<GiBookshelf />} />
+            <Icon title={commentAmount} icon={<AiOutlineComment />} /> */}
           </div>
         </div>
       </div>
