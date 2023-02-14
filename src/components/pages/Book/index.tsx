@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { useParams } from "react-router-dom";
-import { CommentProps } from "../../../types/types";
+import { CommentType } from "../../../types/types";
 import CommentSection from "../../modules/comment-section";
 import { ElementWrapper } from "../../ui/element-wrapper";
 import { Icon } from "../../ui/icon";
@@ -14,7 +14,7 @@ import { Wrapper } from "../../ui/wrapper";
 
 type Params = {
   slug: string;
-  comments: CommentProps[];
+  comments: CommentType[];
 };
 
 const book = {
