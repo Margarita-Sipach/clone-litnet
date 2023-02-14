@@ -1,17 +1,13 @@
-import { PrimaryButton } from "../../ui/primary-button";
-import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link } from "react-router-dom";
-
-interface HeaderProps {
-  isUser?: boolean;
-}
+import AuthContext from "../../context/AuthContext";
+import Button from "../../ui/button";
 
 const navItems = [
   {
@@ -32,9 +28,11 @@ const navItems = [
   },
 ];
 
-export const Header = ({ isUser = true }: HeaderProps) => {
+export const Header = () => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
@@ -61,25 +59,24 @@ export const Header = ({ isUser = true }: HeaderProps) => {
               </Link>
             ))}
           </div>
-          {!isUser ? (
+          {!isLoggedIn ? (
             <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
               <Link to="/authorization">
-                <SecondaryButton
-                  className="w-full sm:w-auto"
-                  onClickButton={() => {}}
-                >
+                <Button className="w-full sm:w-auto" onClick={() => {}}>
                   Войти
-                </SecondaryButton>
+                </Button>
               </Link>
               <Link to="/registration">
-                <PrimaryButton onClickButton={() => {}}>
+                <Button type="secondary" onClick={() => {}}>
                   Зарегистрироваться
-                </PrimaryButton>
+                </Button>
               </Link>
             </div>
           ) : (
             <Link to="/">
-              <SecondaryButton onClickButton={() => {}}>Выход</SecondaryButton>
+              <Button type="secondary" onClick={() => logout()}>
+                Выход
+              </Button>
             </Link>
           )}
           <CloseButton
