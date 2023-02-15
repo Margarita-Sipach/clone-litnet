@@ -24,6 +24,15 @@ import { ProtectedRoute } from "../context/userProtectRoute";
 import { useEffect, useState } from "react";
 import { checkAuth } from "../../utils/utils";
 import { UserStateType } from "../../types/types";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const client = new QueryClient({
+  logger: {
+    error: () => {},
+    warn: console.warn,
+    log: console.log,
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -76,7 +85,7 @@ const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <PersonalPage />,
-        loader: personalPageLoader,
+        loader: personalPageLoader(client),
         children: [
           {
             index: true,
@@ -136,9 +145,11 @@ function App() {
   if (user === undefined) return <h1>Loading...</h1>;
 
   return (
-    <UserContextProvider defaultUser={user}>
-      <RouterProvider router={router} />
-    </UserContextProvider>
+    <QueryClientProvider client={client}>
+      <UserContextProvider defaultUser={user}>
+        <RouterProvider router={router} />
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 }
 
