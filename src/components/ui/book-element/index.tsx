@@ -13,8 +13,6 @@ export const BookElement = ({
   author,
   img,
   rating,
-  commentAmount,
-  readAmount,
   categories,
   annotation,
 }: BookElementProps) => {

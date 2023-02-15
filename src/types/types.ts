@@ -8,7 +8,7 @@ export interface BookElementType {
   annotation: string;
   commentAmount?: number;
   readAmount?: number;
-  rating: number;
+  rating: string | number;
 }
 
 export type CommentProps = {
@@ -17,6 +17,21 @@ export type CommentProps = {
   date: string;
   content: string;
 };
+
+export interface BookType {
+  id: number;
+  title: string;
+  rating: string;
+  description: string; 
+  user: { name: string };
+  img: string;
+  genres: GenreType[];
+}
+
+export interface GenreType {
+  id: number;
+  name: string;
+}
 
 export interface UserType {
   id: number;

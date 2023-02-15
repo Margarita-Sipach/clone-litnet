@@ -17,16 +17,11 @@ import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
 import { PersonalPage, loader as personalPageLoader } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
-import {
-  PersonalBook,
-  loader as personalBookLoader,
-} from "../modules/personal-book";
+import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
-import { UserContextProvider, useUserContext } from "../context/userContext";
+import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { useEffect, useState } from "react";
-import { LocalStorage } from "../storage";
-import { API } from "../../api/api";
 import { checkAuth } from "../../utils/utils";
 import { UserStateType } from "../../types/types";
 
@@ -98,7 +93,6 @@ const router = createBrowserRouter([
           {
             path: "books",
             element: <PersonalBook />,
-            loader: personalBookLoader,
           },
         ],
       },

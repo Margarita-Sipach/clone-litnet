@@ -1,54 +1,44 @@
-import { Suspense } from "react";
-import {
-  Await,
-  defer,
-  LoaderFunctionArgs,
-  useLoaderData,
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { API } from "../../../api/api";
+import { BookType } from "../../../types/types";
 import { BookElement } from "../../ui/book-element";
 import { PageWrapper } from "../../ui/page-wrapper";
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const { id } = params;
-  if (!id) throw new Error("User id not found");
-  return defer({
-    response: await (await API.getBooksByUserId(id)).json(),
-  });
-};
-
 export const PersonalBook = () => {
-  const { response } = useLoaderData() as any;
-  return (
+  const { id } = useParams();
+  const [books, setBooks] = useState<BookType[] | null>(null);
+
+  useEffect(() => {
+    try {
+      API.getBooksByUserId(`${id}`).then((response) => {
+        if (!response.ok) throw new Error("Something went wrong");
+        response.json().then((data) => {
+          setBooks(data.rows);
+        });
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
+  }, [id]);
+
+  return books ? (
     <PageWrapper title="Книги">
-      <Suspense fallback={<h1>Books are loading...</h1>}>
-        <Await resolve={response}>
-          {({ rows }: any) => {
-            return rows.map((book: any) => {
-              return (
-                <BookElement
-                  img={book.img}
-                  title={book.title}
-                  author={book.user.name}
-                  annotation={book.description}
-                  rating={book.rating}
-                  categories={book.genre}
-                ></BookElement>
-              );
-            });
-          }}
-        </Await>
-      </Suspense>
-      {/* <BookElement
-        img="https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg"
-        title="wwwwwwwwwww"
-        author="wwwwwww wwwwww"
-        annotation="ddddddddd dddddddddddddd ddddddddddddddddd dddddddddddddddddddddd ddddddddddddddddddddddddddd ddddddddddddddddddddddd dddddddddddddddddddddddd ddddddddddd"
-        rating={5}
-        categories={["gasgasd"]}
-        commentAmount={5}
-        readAmount={5}
-      ></BookElement> */}
+      <>
+        {books.map((book: BookType) => (
+          <BookElement
+            key={book.id}
+            img={book.img}
+            title={book.title}
+            author={book.user.name}
+            annotation={book.description}
+            rating={book.rating}
+            categories={[]}
+          ></BookElement>
+        ))}
+      </>
     </PageWrapper>
+  ) : (
+    <h1>Loading...</h1>
   );
 };

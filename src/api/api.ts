@@ -4,7 +4,7 @@ enum API_URLS {
   BASE_URL = "https://litnet.herokuapp.com",
   BOOKS = "/books",
   BOOKS_BY_ID = "/books/:id",
-  BOOKS_BY_USER_ID = "books/user/:id",
+  BOOKS_BY_USER_ID = "/books/user/:id",
   BOOKS_BY_GENRE_NAME = "books/genre",
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
