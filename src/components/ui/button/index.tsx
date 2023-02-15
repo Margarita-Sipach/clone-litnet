@@ -3,7 +3,7 @@ import React from "react";
 type ButtonProps = {
   children: string;
   type?: "primary" | "secondary";
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent) => void;
   className?: string;
 };
 
@@ -22,7 +22,11 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={`rounded-md border-2 border-indigo-400 py-1 px-3 text-sm font-medium hover:border-indigo-500 ${conditionalStyles} ${className}`}
-      onClick={onClick}
+      onClick={(event?: React.MouseEvent) => {
+        if (onClick) {
+          onClick(event);
+        }
+      }}
     >
       {children}
     </button>
