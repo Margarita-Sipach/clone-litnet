@@ -18,6 +18,7 @@ import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
+import { Game } from "../pages/Game";
 import { AccountAddBlog } from "../pages/Account/AccountAddBlog";
 import BlogPage from "../pages/BlogPage";
 import ContestRules from "../pages/ContestPage/ContestRules";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/game",
+        element: <Game />,
       },
       {
         path: "/blogs/:id",
