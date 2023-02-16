@@ -13,13 +13,16 @@ export const AccountAddContest = () => {
         <FileInput className="h-72 w-52" />
         <div className="flex flex-grow flex-col gap-y-5">
           <PrimaryInput attributes={{ placeholder: "Название конкурса" }} />
-          <select multiple className="border px-2">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <option key={item} value={item} className="py-1">
-                {item}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-col">
+            <span className="mb-3 text-xl">Жанры</span>
+            <select multiple className="border px-2">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <option key={item} value={item} className="py-1">
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
       <div className="flex flex-col">
