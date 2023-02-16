@@ -3,9 +3,12 @@ import { AiFillStar, AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { Icon } from "../icon";
 import { BookElementType } from "../../../types/types";
+import Button from "../button";
+import { Link } from "react-router-dom";
 
 type BookElementProps = {
   onClick?: () => void;
+  isUserBook?: boolean;
 } & BookElementType;
 
 export const BookElement = ({
@@ -15,6 +18,7 @@ export const BookElement = ({
   rating,
   categories,
   annotation,
+  isUserBook = false,
 }: BookElementProps) => {
   return (
     <ElementWrapper className="relative flex h-60 flex-col gap-y-5 lg:h-72">
@@ -29,7 +33,10 @@ export const BookElement = ({
 
           <div className="mb-2 flex flex-wrap gap-x-3 ">
             {categories.map((item) => (
-              <div className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm">
+              <div
+                key={item}
+                className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm"
+              >
                 {item}
               </div>
             ))}
@@ -41,6 +48,11 @@ export const BookElement = ({
             {/* <Icon title={readAmount} icon={<GiBookshelf />} />
             <Icon title={commentAmount} icon={<AiOutlineComment />} /> */}
           </div>
+          {isUserBook && (
+            <Link to="/account/book/1/edit-book">
+              <Button className="mt-2">Редактировать</Button>
+            </Link>
+          )}
         </div>
       </div>
       <div className="h-28 overflow-hidden">{annotation}</div>

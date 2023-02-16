@@ -4,10 +4,15 @@ import avatar from "../../../common/assets/images/avatar.png";
 interface FileInputProps {
   className: string;
   onChange?: (e?: ChangeEvent<HTMLInputElement>) => void;
+  defaultImage?: React.ReactNode;
 }
 
-export const FileInput = ({ className, onChange }: FileInputProps) => {
-  const [preview, setPreview] = useState(avatar);
+export const FileInput = ({
+  className,
+  onChange,
+  defaultImage,
+}: FileInputProps) => {
+  const [preview, setPreview] = useState(defaultImage || avatar);
 
   const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
@@ -15,7 +20,7 @@ export const FileInput = ({ className, onChange }: FileInputProps) => {
       const objectUrl = URL.createObjectURL(files[0]);
       setPreview(objectUrl);
     }
-    if (onChange) onChange(e)
+    if (onChange) onChange(e);
   };
 
   return (

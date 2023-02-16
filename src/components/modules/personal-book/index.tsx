@@ -20,6 +20,7 @@ export const PersonalBook = () => {
             annotation={book.description}
             rating={book.rating}
             categories={[]}
+            isUserBook={true}
           ></BookElement>
         ))}
       </>

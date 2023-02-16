@@ -29,6 +29,10 @@ const navItems = [
     title: "Моя библиотека",
     link: `account/library`,
   },
+  {
+    title: "Игра",
+    link: "game",
+  },
 ];
 
 export const Header = () => {

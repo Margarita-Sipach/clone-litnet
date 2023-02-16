@@ -70,3 +70,10 @@ export interface AccountType extends UserType {
   // bookmarks: [];
   // comments: [];
 }
+
+export type CommentType = {
+  image: string;
+  name: string;
+  date: string;
+  content: string;
+};

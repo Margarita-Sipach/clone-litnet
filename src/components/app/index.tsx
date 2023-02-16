@@ -19,6 +19,16 @@ import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
+import { Game } from "../pages/Game";
+import { AccountAddBlog } from "../pages/Account/AccountAddBlog";
+import BlogPage from "../pages/BlogPage";
+import ContestRules from "../pages/ContestPage/ContestRules";
+import ContestBooks from "../pages/ContestPage/ContestBooks";
+import { AccountEditBook } from "../pages/Account/AccountEditBook";
+import { AccountEditBookChapter } from "../pages/Account/AccountEditBook/AccountEditBookNewChapters";
+import { AccountBook } from "../pages/Account/AccountBook";
+import { AccountAddBook } from "../pages/Account/AccountAddBook";
+import { AccountEditBookInfo } from "../pages/Account/AccountEditBook/AccountEditBookInfo";
 import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -45,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/game",
+        element: <Game />,
+      },
+      {
+        path: "/blogs/:id",
+        element: <BlogPage />,
       },
       {
         path: "/info",
@@ -75,6 +93,16 @@ const router = createBrowserRouter([
       {
         path: "/contests/:slug",
         element: <ContestPage />,
+        children: [
+          {
+            index: true,
+            element: <ContestBooks />,
+          },
+          {
+            path: "rules",
+            element: <ContestRules />,
+          },
+        ],
       },
       {
         path: "/book/:slug",
@@ -125,6 +153,36 @@ const router = createBrowserRouter([
           {
             path: "edit-password",
             element: <AccountEditPassword />,
+          },
+          {
+            path: "add-blog",
+            element: <AccountAddBlog />,
+          },
+          {
+            path: "add-book",
+            element: <AccountAddBook />,
+          },
+          {
+            path: "book/:id",
+            element: <AccountBook />,
+            children: [
+              {
+                path: "edit-book",
+                element: <AccountEditBook />,
+              },
+              {
+                path: "book-info/:id",
+                element: <AccountEditBookInfo />,
+              },
+              {
+                path: "chapter",
+                element: <AccountEditBookChapter />,
+              },
+              {
+                path: "chapter/:id",
+                element: <AccountEditBookChapter />,
+              },
+            ],
           },
         ],
       },
