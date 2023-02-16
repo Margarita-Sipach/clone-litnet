@@ -1,6 +1,5 @@
 import { Wrapper } from "../../ui/wrapper";
 import { SecondaryButton } from "../../ui/secodary-button";
-
 import "./gradient.css";
 import { Modal } from "../../ui/modal";
 import { UserMenu } from "../user-menu";
@@ -9,16 +8,8 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { Link, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { AccountType } from "../../../types/types";
-import { API } from "../../../api/api";
-
-const blog = {
-  img: "https://mirpozitiva.ru/wp-content/uploads/2019/11/1472042660_10.jpg",
-  author: "wwwwww wwwww",
-  date: "20.22.2222",
-  title: "kkkkkkkkkk",
-  text: "kkkkkkkkk kkkkkk kkkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-  commentCount: 25,
-};
+import { useUserAvatar } from "../../../hooks";
+import avatar from "../../../common/assets/images/avatar.png";
 
 export interface PersonalHeaderProps {
   account: AccountType;
@@ -28,17 +19,8 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
-  const isUserLogged = useMemo(
-    () => (`${user?.id}` === id ? true : false),
-    [user, id]
-  );
-  const image = useMemo(() => {
-    try {
-      return API.getImage(`/${account.img}`);
-    } catch (error) {
-      return blog.img;
-    }
-  }, [account]);
+  const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);
+  const image = useUserAvatar(account);
 
   useEffect(() => {
     if (account) setSelectedUser(account);
@@ -47,10 +29,17 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   return (
     <Wrapper className="gradient mb-10 flex h-72 w-full flex-col justify-between bg-indigo-400 pt-24 sm:pt-24">
       <div className="flex w-full gap-x-5">
-        <img src={image} alt="" className="h-32 w-32 rounded object-cover" />
+        <img
+          src={image}
+          alt=""
+          className="h-32 w-32 rounded object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = avatar;
+          }}
+        />
         <div className="flex flex-col items-start gap-2">
           <div className="text-lg text-white">{account.name}</div>
-          {!isUserLogged && (
+          {!isPageOwner && (
             <SecondaryButton className="">Подписаться</SecondaryButton>
           )}
         </div>
@@ -65,7 +54,7 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
         <Link to="about">
           <SecondaryButton className="">Обо мне</SecondaryButton>
         </Link>
-        {isUserLogged && (
+        {isPageOwner && (
           <PrimaryButton
             className=""
             onClickButton={() => setUserModalDisplay(true)}

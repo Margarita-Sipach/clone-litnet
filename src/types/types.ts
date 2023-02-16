@@ -22,10 +22,15 @@ export interface BookType {
   id: number;
   title: string;
   rating: string;
-  description: string; 
+  description: string;
   user: { name: string };
   img: string;
   genres: GenreType[];
+}
+
+export interface BookResponseType {
+  rows: BookType[];
+  count: number;
 }
 
 export interface GenreType {
@@ -40,6 +45,18 @@ export interface UserType {
   autobiography: string;
   readingView: string | null;
   img: string | null;
+}
+
+export interface BlogType {
+  id: string;
+  title: string;
+  text: string;
+  createdAt: string;
+}
+
+export interface BlogResponseType {
+  rows: BlogType[];
+  count: number;
 }
 
 export type UserStateType = UserType | null | undefined;

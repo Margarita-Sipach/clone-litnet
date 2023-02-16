@@ -1,26 +1,12 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API } from "../../../api/api";
+import { useFetchBooks } from "../../../hooks";
 import { BookType } from "../../../types/types";
 import { BookElement } from "../../ui/book-element";
 import { PageWrapper } from "../../ui/page-wrapper";
 
 export const PersonalBook = () => {
   const { id } = useParams();
-  const [books, setBooks] = useState<BookType[] | null>(null);
-
-  useEffect(() => {
-    try {
-      API.getBooksByUserId(`${id}`).then((response) => {
-        if (!response.ok) throw new Error("Something went wrong");
-        response.json().then((data) => {
-          setBooks(data.rows);
-        });
-      });
-    } catch (error: any) {
-      alert(error.message);
-    }
-  }, [id]);
+  const { books } = useFetchBooks(id as string);
 
   return books ? (
     <PageWrapper title="Книги">

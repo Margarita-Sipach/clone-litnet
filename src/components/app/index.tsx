@@ -15,16 +15,14 @@ import { AccountEditPassword } from "../pages/Account/AccountEditPassword";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
-import { PersonalPage, loader as personalPageLoader } from "../pages/personal";
+import { PersonalPage } from "../pages/personal";
 import { PersonalBlog } from "../modules/personal-blog";
 import { PersonalBook } from "../modules/personal-book";
 import Account from "../pages/Account";
 import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
-import { useEffect, useState } from "react";
-import { checkAuth } from "../../utils/utils";
-import { UserStateType } from "../../types/types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useCheckingAuth } from "../../hooks";
 
 const client = new QueryClient({
   logger: {
@@ -85,7 +83,6 @@ const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <PersonalPage />,
-        loader: personalPageLoader(client),
         children: [
           {
             index: true,
@@ -136,20 +133,16 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [user, setUser] = useState<UserStateType>(undefined);
+  const user = useCheckingAuth();
 
-  useEffect(() => {
-    checkAuth(setUser);
-  }, []);
-
-  if (user === undefined) return <h1>Loading...</h1>;
-
-  return (
+  return user !== undefined ? (
     <QueryClientProvider client={client}>
       <UserContextProvider defaultUser={user}>
         <RouterProvider router={router} />
       </UserContextProvider>
     </QueryClientProvider>
+  ) : (
+    <h1>Loading...</h1>
   );
 }
 

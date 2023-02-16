@@ -1,12 +1,10 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { PrimaryInput } from "../../ui/primary-input";
 import { FileInput } from "../../ui/file-input";
 import { Link } from "react-router-dom";
 import { Router } from "../../router";
 import FormButton from "../../ui/form-button";
 import { useRegistration } from "../../../hooks";
-import { isError } from "@tanstack/react-query";
-
 export const RegistrationForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [email, setEmail] = useState("");

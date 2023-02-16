@@ -1,8 +1,6 @@
-import React, { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { API } from "../../../../api/api";
+import { ChangeEvent, useState } from "react";
+import { useEditUserPage } from "../../../../hooks";
 import { useUserContext } from "../../../context/userContext";
-import { Router } from "../../../router";
 import { FileInput } from "../../../ui/file-input";
 import FormButton from "../../../ui/form-button";
 import { PageWrapper } from "../../../ui/page-wrapper";
@@ -11,42 +9,31 @@ import { PrimaryTextarea } from "../../../ui/primary-textarea";
 import { Wrapper } from "../../../ui/wrapper";
 
 const AccountEdit = () => {
-  const { user, setUser } = useUserContext();
+  const { user } = useUserContext();
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
   const [readingView, setReadingView] = useState(user?.readingView || "");
   const [autobiography, setAutobiography] = useState(user?.autobiography || "");
-  const navigate = useNavigate();
+  const { edit, isError } = useEditUserPage();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
     if (files) setFile(files[0]);
   };
 
-  const handleUpdate = async (formData: FormData) => {
-    if (!user) return;
-    const id = user.id;
-    const response = (await API.updateUserById(`${id}`, formData)) as Response;
-    if (response.ok) {
-      const user = await response.json();
-      setUser(user);
-      navigate(`${Router.users}/${user.id}`);
-    } else {
-      const error = await response.json();
-      alert(error.message);
-    }
-  };
-
-  const handleSubmitForm = async () => {
+  const createFormData = () => {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("name", name);
     formData.append("readingView", readingView);
     formData.append("autobiography", autobiography);
     if (file) formData.append("img", file);
+    return formData;
+  };
 
-    await handleUpdate(formData);
+  const handleSubmitForm = async () => {
+    edit(createFormData());
   };
 
   return (
@@ -62,6 +49,7 @@ const AccountEdit = () => {
             placeholder: "Email",
             initialValue: email,
             type: "email",
+            invalid: isError,
           }}
           onChange={(e) => setEmail(e?.target.value || "")}
         />
@@ -69,11 +57,8 @@ const AccountEdit = () => {
           attributes={{ placeholder: "О себе", initialValue: autobiography }}
           onChange={(e) => setAutobiography(e?.target.value || "")}
         />
-        <FormButton onSubmit={handleSubmitForm}>Сохранить</FormButton>
-      </PageWrapper>
-      <PageWrapper title="Редактирование настроек для чтения" isTop={true}>
         <div className="flex flex-col">
-          <p className="mb-2 text-lg">Разбить на страницы?</p>
+          <p className="mb-2 text-lg">Вид чтения: разбить на страницы?</p>
           <div className="flex gap-x-2">
             <input
               type="radio"
@@ -96,6 +81,7 @@ const AccountEdit = () => {
             <label htmlFor="no">Нет</label>
           </div>
         </div>
+        <FormButton onSubmit={handleSubmitForm}>Сохранить</FormButton>
       </PageWrapper>
     </Wrapper>
   );

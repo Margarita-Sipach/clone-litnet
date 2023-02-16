@@ -1,53 +1,34 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { API } from "../../../../api/api";
+import { checkUserPassword } from "../../../../api/service";
+import { useEditPassword } from "../../../../hooks";
 import { useUserContext } from "../../../context/userContext";
-import { Router } from "../../../router";
-import { LocalStorage } from "../../../storage";
 import FormButton from "../../../ui/form-button";
 import { PageWrapper } from "../../../ui/page-wrapper";
 import { PrimaryInput } from "../../../ui/primary-input";
 import { Wrapper } from "../../../ui/wrapper";
 
 export const AccountEditPassword = () => {
-  const { user, setUser } = useUserContext();
+  const { user } = useUserContext();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const navigate = useNavigate();
+  const { editPassword } = useEditPassword();
 
-  const handleUpdatePassword = async () => {
-    const body = JSON.stringify({
-      id: user?.id,
-      password: newPassword,
-    });
-    const response = (await API.updateUserPassword(body)) as Response;
-    if (response.ok) {
-      const { token, user } = await response.json();
-      setUser(user);
-      LocalStorage.setUserToken(token);
-      navigate(`${Router.users}/${user.id}`);
-    } else {
-      throw new Error("It's impossible to change password");
-    }
-  };
-
-  const handleCheckPassword = async () => {
-    if (!user) throw new Error("User not found");
+  const createFormData = () => {
+    if (!user) return;
     const formData = new FormData();
     formData.append("password", password);
     formData.append("email", user.email);
-    const response = (await API.loginUser(formData)) as Response;
-    if (!response.ok) throw new Error("Password is incorrect");
+    return formData;
   };
 
   const handleSubmitForm = async () => {
-    try {
-      await handleCheckPassword();
-      await handleUpdatePassword();
-    } catch (error: any) {
-      alert(error.message);
-      return;
-    }
+    await checkUserPassword(createFormData());
+    editPassword(
+      JSON.stringify({
+        id: user?.id,
+        password: newPassword,
+      })
+    );
   };
 
   return (

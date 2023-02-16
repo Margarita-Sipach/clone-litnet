@@ -2,14 +2,13 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { SecondaryButton } from "../../ui/secodary-button";
 import { Wrapper } from "../../ui/wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
-import { LocalStorage } from "../../storage";
 import { Router } from "../../router";
 import { CircleUserAvatar } from "../../ui/circle-avatar";
 
@@ -33,15 +32,13 @@ const navItems = [
 ];
 
 export const Header = () => {
-  const { user, setUser } = useUserContext();
-  const isUserLogged = useMemo(() => (user?.id ? true : false), [user]);
+  const { user, isUserLogged, logout } = useUserContext();
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setUser();
-    LocalStorage.removeUserToken();
+    logout();
     navigate(Router.main);
   };
 
