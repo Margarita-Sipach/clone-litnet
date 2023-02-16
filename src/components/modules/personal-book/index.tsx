@@ -5,6 +5,7 @@ export const PersonalBook = () => {
   return (
     <PageWrapper title="Книги">
       <BookElement
+        isUserBook={true}
         img="https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg"
         title="wwwwwwwwwww"
         author="wwwwwww wwwwww"

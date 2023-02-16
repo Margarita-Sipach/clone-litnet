@@ -5,6 +5,7 @@ interface PrimaryInputProps {
     type?: string;
     placeholder?: string;
     required?: boolean;
+    value?: string;
   };
   onChange?: (e?: ChangeEvent<HTMLInputElement>) => void;
 }
