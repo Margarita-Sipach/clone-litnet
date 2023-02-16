@@ -23,6 +23,11 @@ import { AccountAddBlog } from "../pages/Account/AccountAddBlog";
 import BlogPage from "../pages/BlogPage";
 import ContestRules from "../pages/ContestPage/ContestRules";
 import ContestBooks from "../pages/ContestPage/ContestBooks";
+import { AccountEditBook } from "../pages/Account/AccountEditBook";
+import { AccountEditBookChapter } from "../pages/Account/AccountEditBook/AccountEditBookNewChapters";
+import { AccountBook } from "../pages/Account/AccountBook";
+import { AccountAddBook } from "../pages/Account/AccountAddBook";
+import { AccountEditBookInfo } from "../pages/Account/AccountEditBook/AccountEditBookInfo";
 
 const router = createBrowserRouter([
   {
@@ -127,6 +132,32 @@ const router = createBrowserRouter([
           {
             path: "add-blog",
             element: <AccountAddBlog />,
+          },
+          {
+            path: "add-book",
+            element: <AccountAddBook />,
+          },
+          {
+            path: "book/:id",
+            element: <AccountBook />,
+            children: [
+              {
+                path: "edit-book",
+                element: <AccountEditBook />,
+              },
+              {
+                path: "book-info/:id",
+                element: <AccountEditBookInfo />,
+              },
+              {
+                path: "chapter",
+                element: <AccountEditBookChapter />,
+              },
+              {
+                path: "chapter/:id",
+                element: <AccountEditBookChapter />,
+              },
+            ],
           },
         ],
       },
