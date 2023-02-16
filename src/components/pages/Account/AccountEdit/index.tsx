@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { useEditUserPage } from "../../../../hooks";
 import { useUserContext } from "../../../context/userContext";
+import Button from "../../../ui/button";
 import { FileInput } from "../../../ui/file-input";
-import FormButton from "../../../ui/form-button";
 import { PageWrapper } from "../../../ui/page-wrapper";
 import { PrimaryInput } from "../../../ui/primary-input";
 import { PrimaryTextarea } from "../../../ui/primary-textarea";
@@ -81,7 +81,7 @@ const AccountEdit = () => {
             <label htmlFor="no">Нет</label>
           </div>
         </div>
-        <FormButton onSubmit={handleSubmitForm}>Сохранить</FormButton>
+        <Button onClick={handleSubmitForm}>Сохранить</Button>
       </PageWrapper>
     </Wrapper>
   );

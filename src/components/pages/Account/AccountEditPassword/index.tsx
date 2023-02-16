@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { checkUserPassword } from "../../../../api/service";
 import { useEditPassword } from "../../../../hooks";
 import { useUserContext } from "../../../context/userContext";
-import FormButton from "../../../ui/form-button";
+import Button from "../../../ui/button";
 import { PageWrapper } from "../../../ui/page-wrapper";
 import { PrimaryInput } from "../../../ui/primary-input";
 import { Wrapper } from "../../../ui/wrapper";
@@ -50,7 +50,7 @@ export const AccountEditPassword = () => {
           }}
           onChange={(e) => setNewPassword(e?.target.value || "")}
         />
-        <FormButton onSubmit={handleSubmitForm}>Сохранить</FormButton>
+        <Button onClick={handleSubmitForm}>Сохранить</Button>
       </PageWrapper>
     </Wrapper>
   );

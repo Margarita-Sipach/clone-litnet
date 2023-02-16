@@ -3,8 +3,8 @@ import { PrimaryInput } from "../../ui/primary-input";
 import { FileInput } from "../../ui/file-input";
 import { Link } from "react-router-dom";
 import { Router } from "../../router";
-import FormButton from "../../ui/form-button";
 import { useRegistration } from "../../../hooks";
+import Button from "../../ui/button";
 export const RegistrationForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [email, setEmail] = useState("");
@@ -48,10 +48,15 @@ export const RegistrationForm = () => {
         onChange={(e) => setEmail(e?.target.value || "")}
       />
       <PrimaryInput
-        attributes={{ placeholder: "Пароль", required: true, type: "password" }}
+        attributes={{
+          placeholder: "Пароль",
+          required: true,
+          type: "password",
+          invalid: isError,
+        }}
         onChange={(e) => setPassword(e?.target.value || "")}
       />
-      <FormButton onSubmit={handleSubmitForm}>Зарегистрироваться</FormButton>
+      <Button onClick={handleSubmitForm}>Зарегистрироваться</Button>
       <Link className="text-center hover:text-blue-500" to={Router.login}>
         Уже есть аккаунт? Войти!
       </Link>

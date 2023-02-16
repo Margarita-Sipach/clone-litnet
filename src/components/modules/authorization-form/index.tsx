@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../../hooks";
 import { Router } from "../../router";
-import FormButton from "../../ui/form-button";
+import Button from "../../ui/button";
 import { PrimaryInput } from "../../ui/primary-input";
 
 export const AuthorizationForm = () => {
@@ -42,9 +42,9 @@ export const AuthorizationForm = () => {
         }}
         onChange={(e) => setPassword(e?.target.value || "")}
       />
-      <FormButton className="text-base" onSubmit={handleSubmitForm}>
+      <Button className="text-base" onClick={handleSubmitForm}>
         Войти
-      </FormButton>
+      </Button>
       <Link className="text-center hover:text-blue-500" to={Router.register}>
         Нет аккаунта? Зарегистрироваться!
       </Link>
