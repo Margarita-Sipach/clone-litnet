@@ -3,10 +3,11 @@ import avatar from "../../../common/assets/images/avatar.png";
 
 interface FileInputProps {
   className: string;
+  defaultImage?: React.ReactNode;
 }
 
-export const FileInput = ({ className }: FileInputProps) => {
-  const [preview, setPreview] = useState(avatar);
+export const FileInput = ({ className, defaultImage }: FileInputProps) => {
+  const [preview, setPreview] = useState(defaultImage || avatar);
 
   const onLoadFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const file = (e?.target as HTMLInputElement)?.files;
