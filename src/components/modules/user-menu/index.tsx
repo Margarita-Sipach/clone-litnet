@@ -17,6 +17,10 @@ const navItems = [
     title: "Добавить блог",
     link: "/account/add-blog",
   },
+  {
+    title: "Добавить конкурс",
+    link: "/account/add-contest",
+  },
 ];
 
 export const UserMenu = () => {

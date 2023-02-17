@@ -29,6 +29,7 @@ import { AccountEditBookChapter } from "../pages/Account/AccountEditBook/Account
 import { AccountBook } from "../pages/Account/AccountBook";
 import { AccountAddBook } from "../pages/Account/AccountAddBook";
 import { AccountEditBookInfo } from "../pages/Account/AccountEditBook/AccountEditBookInfo";
+import { AccountAddContest } from "../pages/Account/AccountAddContest";
 import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
           {
             path: "add-book",
             element: <AccountAddBook />,
+          },
+          {
+            path: "add-contest",
+            element: <AccountAddContest />,
           },
           {
             path: "book/:id",
