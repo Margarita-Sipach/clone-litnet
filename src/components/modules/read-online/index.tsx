@@ -1,13 +1,10 @@
-const categories = [
-  "Любовные романы",
-  "Фэнтези",
-  "Фантастику",
-  "ЛитРПГ",
-  "Женскую прозу",
-  "Другие жанры",
-];
+import { FC } from "react";
+import { GenreType } from "../../../types/types";
 
-export const ReadOnline = () => {
+export interface ReadOnlyProps {
+  genres: GenreType[] | undefined;
+}
+export const ReadOnline: FC<ReadOnlyProps> = ({ genres }) => {
   return (
     <div className="flex flex-col gap-y-4">
       <p>
@@ -17,11 +14,15 @@ export const ReadOnline = () => {
         телефона или планшета. На «Литнете» вы можете читать:
       </p>
       <div>
-        {categories.map((item) => (
-          <a className="block text-indigo-400 hover:text-indigo-500" key={item}>
-            {item}
-          </a>
-        ))}
+        {genres ? (
+          genres.splice(0, 5).map((genre, i) => (
+            <a className="block text-indigo-400 hover:text-indigo-500" key={i}>
+              {genre.name}
+            </a>
+          ))
+        ) : (
+          <h1>Loading...</h1>
+        )}
       </div>
       <p>
         Наша удобная читалка предназначена как для Windows, так и для Android, и

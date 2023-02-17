@@ -5,6 +5,7 @@ import {
   getBlogsByUserId,
   getBooks,
   getBooksByUserId,
+  getGenres,
   getImage,
   getUserById,
   loginUser,
@@ -20,6 +21,7 @@ import {
   BlogResponseType,
   BookResponseType,
   BookType,
+  GenreResponseType,
   UserStateType,
 } from "../types/types";
 import { useState, useEffect, useMemo } from "react";
@@ -188,3 +190,19 @@ export const useFetchBooks = () => {
     isLoading,
   };
 };
+
+export const useFetchGenres = () => {
+  const { data, isError, isLoading, isSuccess } = useQuery<GenreResponseType>({
+    queryKey: ["genres"],
+    queryFn: async (params?: any) => getGenres(params),
+    staleTime: 1000 * 10,
+  });
+
+  return {
+    genres: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+}

@@ -80,6 +80,15 @@ export const getBooks = async (params?: QueryParams) => {
   }
 };
 
+export const getGenres = async (params?: QueryParams) => {
+  const response = await API.getGenres(params);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Genres not found"));
+  }
+};
+
 export const checkUser = async (oldToken: string) => {
   const response = await API.checkUser(JSON.stringify({ token: oldToken }));
 

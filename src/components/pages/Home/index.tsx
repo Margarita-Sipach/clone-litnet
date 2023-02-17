@@ -5,7 +5,7 @@ import { PageWrapper } from "../../ui/page-wrapper";
 import { Categories } from "../../modules/categories";
 import { ReadOnline } from "../../modules/read-online";
 import { Slider } from "../../modules/slider";
-import { useFetchBooks } from "../../../hooks";
+import { useFetchBooks, useFetchGenres } from "../../../hooks";
 import { getBooksByComments, getBooksByRating } from "../../../utils/utils";
 
 const books = [
@@ -62,7 +62,9 @@ const books = [
 const BOOK_COUNT = 7;
 
 const Home = () => {
+  const { genres } = useFetchGenres();
   const { books } = useFetchBooks();
+
   const popularBooks = useMemo(
     () => (books ? getBooksByRating(books, BOOK_COUNT) : []),
     [books]
@@ -78,14 +80,17 @@ const Home = () => {
       <BigSlider />
       <Wrapper className="flex flex-col gap-y-10">
         <PageWrapper>
-          <Categories />
+          <Categories/>
           <div className="flex flex-col gap-16">
             <Slider title="ТОП Книг" books={popularBooks} />
-            <Slider title="Самые обсуждаемые книги" books={mostCommentedBooks} />
+            <Slider
+              title="Самые обсуждаемые книги"
+              books={mostCommentedBooks}
+            />
           </div>
         </PageWrapper>
         <PageWrapper title="Читать онлайн">
-          <ReadOnline />
+          <ReadOnline genres={genres} />
         </PageWrapper>
       </Wrapper>
     </div>

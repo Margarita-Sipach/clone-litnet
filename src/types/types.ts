@@ -45,6 +45,11 @@ export interface GenreType {
   name: string;
 }
 
+export interface GenreResponseType {
+  rows: GenreType[];
+  count: number;
+}
+
 export interface UserType {
   id: number;
   email: string;
