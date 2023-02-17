@@ -38,10 +38,7 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
           }}
         />
         <div className="flex flex-col items-start gap-2">
-          <div className="text-lg text-white">{account.name}</div>
-          {!isPageOwner && (
-            <SecondaryButton className="">Подписаться</SecondaryButton>
-          )}
+          <div className="text-lg text-gray-900">{account.name}</div>
         </div>
       </div>
       <div className="flex w-full flex-wrap gap-2 ">

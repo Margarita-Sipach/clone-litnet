@@ -9,14 +9,14 @@ export const PersonalBlog = () => {
   return blogs ? (
     <PageWrapper title="Личный блог">
       <>
-        {blogs.map(({ createdAt, title, text }, i) => {
+        {blogs.length ? blogs.map(({ createdAt, title, text }, i) => {
           return (
             <PersonalBlogElement
               key={i}
               blog={{ date: createdAt, title, text }}
             ></PersonalBlogElement>
           );
-        })}
+        }) : <h1>Пользователь пока не завел личный блог</h1>}
       </>
     </PageWrapper>
   ) : (

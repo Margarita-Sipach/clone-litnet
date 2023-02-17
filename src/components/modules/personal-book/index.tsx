@@ -11,7 +11,7 @@ export const PersonalBook = () => {
   return books ? (
     <PageWrapper title="Книги">
       <>
-        {books.map((book: BookType) => (
+        {books.length ? books.map((book: BookType) => (
           <BookElement
             key={book.id}
             img={book.img}
@@ -22,7 +22,7 @@ export const PersonalBook = () => {
             categories={[]}
             isUserBook={true}
           ></BookElement>
-        ))}
+        )) : <h1>Пользователь пока не добавил книги</h1>}
       </>
     </PageWrapper>
   ) : (
