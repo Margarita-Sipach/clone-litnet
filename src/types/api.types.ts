@@ -4,7 +4,7 @@ export interface QueryParams {
 
 export interface Options {
   method: string;
-  headers?: Headers;
+  headers?: HeadersInit;
   body?: string;
 }
 

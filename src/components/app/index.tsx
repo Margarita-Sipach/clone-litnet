@@ -11,6 +11,7 @@ import { PersonalAbout } from "../modules/personal-about";
 import NotFound from "../pages/NotFound";
 import AccountLibrary from "../pages/Account/AccountLibrary";
 import AccountEdit from "../pages/Account/AccountEdit";
+import { AccountEditPassword } from "../pages/Account/AccountEditPassword";
 import ContestPage from "../pages/ContestPage";
 import { RegistrationPage } from "../pages/registration";
 import { AuthorizationPage } from "../pages/authorization";
@@ -29,6 +30,18 @@ import { AccountBook } from "../pages/Account/AccountBook";
 import { AccountAddBook } from "../pages/Account/AccountAddBook";
 import { AccountEditBookInfo } from "../pages/Account/AccountEditBook/AccountEditBookInfo";
 import { AccountAddContest } from "../pages/Account/AccountAddContest";
+import { UserContextProvider } from "../context/userContext";
+import { ProtectedRoute } from "../context/userProtectRoute";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useCheckingAuth } from "../../hooks";
+
+const client = new QueryClient({
+  logger: {
+    error: () => {},
+    warn: console.warn,
+    log: console.log,
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -101,6 +114,10 @@ const router = createBrowserRouter([
         element: <PersonalPage />,
         children: [
           {
+            index: true,
+            element: <PersonalAbout />,
+          },
+          {
             path: "about",
             element: <PersonalAbout />,
           },
@@ -116,7 +133,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <Account />,
+        element: (
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        ),
         children: [
           {
             index: true,
@@ -129,6 +150,10 @@ const router = createBrowserRouter([
           {
             path: "edit",
             element: <AccountEdit />,
+          },
+          {
+            path: "edit-password",
+            element: <AccountEditPassword />,
           },
           {
             path: "add-blog",
@@ -171,10 +196,16 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
+  const user = useCheckingAuth();
+
+  return user !== undefined ? (
+    <QueryClientProvider client={client}>
+      <UserContextProvider defaultUser={user}>
+        <RouterProvider router={router} />
+      </UserContextProvider>
+    </QueryClientProvider>
+  ) : (
+    <h1>Loading...</h1>
   );
 }
 

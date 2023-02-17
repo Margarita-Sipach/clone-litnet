@@ -4,13 +4,15 @@ enum API_URLS {
   BASE_URL = "https://litnet.herokuapp.com",
   BOOKS = "/books",
   BOOKS_BY_ID = "/books/:id",
-  BOOKS_BY_USER_ID = "books/user/:id",
+  BOOKS_BY_USER_ID = "/books/user/:id",
   BOOKS_BY_GENRE_NAME = "books/genre",
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
   USERS_AVATAR = "/users/avatar/:id",
-  USER_REGISTER = "/registration",
-  USER_LOGIN = "/login",
+  USER_REGISTER = "/auth/registration",
+  USER_LOGIN = "/auth/login",
+  USER_PASSWORD = "/auth/password",
+  USER_REFRESH_TOKEN = "/auth/refresh",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
@@ -56,12 +58,22 @@ export class API {
   private static fetch = async ({
     url = "",
     params = {},
-    options = { method: "GET" },
+    options = { method: "GET", body: "", headers: {} },
   }: FetchArguments) => {
     const fetchUrl = `${API.URLS.BASE_URL}${url}${API.createQueryString(
       params
     )}`;
-    return await fetch(fetchUrl, options);
+    try {
+      return await fetch(fetchUrl, {
+        method: options.method,
+        body: options.body,
+        headers: options.headers,
+      });
+    } catch (error) {
+      return new Promise((resolve, reject) => {
+        reject(error);
+      }) as Promise<Response>;
+    }
   };
 
   private static createQueryString = (params: QueryParams) => {
@@ -79,18 +91,26 @@ export class API {
     return await API.fetch(fetchArguments);
   };
 
-  private static update = async (url: string, body: any = {}) => {
+  private static update = async (
+    url: string,
+    body: any = {},
+    headers: any = {}
+  ) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "PATCH", body: JSON.stringify(body) },
+      options: { method: "PATCH", body, headers },
     };
     return await API.fetch(fetchArguments);
   };
 
-  private static post = async (url: string, body: any = {}) => {
+  private static post = async (
+    url: string,
+    body: any = {},
+    headers: any = {}
+  ) => {
     const fetchArguments: FetchArguments = {
       url,
-      options: { method: "POST", body: JSON.stringify(body) },
+      options: { method: "POST", body, headers },
     };
     return await API.fetch(fetchArguments);
   };
@@ -102,6 +122,10 @@ export class API {
       options: { method: "GET" },
     };
     return await API.fetch(fetchArguments);
+  };
+
+  public static getImage = (url: string) => {
+    return API.URLS.BASE_URL + url;
   };
 
   public static getBooks = async (params: QueryParams = {}) => {
@@ -162,6 +186,16 @@ export class API {
   public static registerUser = async (body: any) => {
     const url = API.URLS.USER_REGISTER;
     return await API.post(url, body);
+  };
+
+  public static checkUser = async (body: any) => {
+    const url = API.URLS.USER_REFRESH_TOKEN;
+    return await API.post(url, body, { "Content-Type": "application/json" });
+  };
+
+  public static updateUserPassword = async (body: any) => {
+    const url = API.URLS.USER_PASSWORD;
+    return await API.update(url, body, { "Content-Type": "application/json" });
   };
 
   public static loginUser = async (body: any) => {

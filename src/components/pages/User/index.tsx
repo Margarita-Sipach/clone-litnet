@@ -9,7 +9,6 @@ type Params = {
 
 const User = () => {
   const { id } = useParams<Params>();
-  console.log(`user id: ${id}`);
   return (
     <Wrapper>
       <PageWrapper isTop={true} isThereSidebar={false}>

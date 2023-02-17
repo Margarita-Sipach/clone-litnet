@@ -1,37 +1,25 @@
+import { useParams } from "react-router-dom";
+import { useFetchBlogs } from "../../../hooks";
 import { PageWrapper } from "../../ui/page-wrapper";
 import { PersonalBlogElement } from "../../ui/personal-blog-element";
 
 export const PersonalBlog = () => {
-  return (
+  const { id } = useParams();
+  const { blogs } = useFetchBlogs(id as string);
+  return blogs ? (
     <PageWrapper title="Личный блог">
-      <PersonalBlogElement
-        blog={{
-          date: "20.22.2222",
-          title: "kkkkkkkkkk",
-          text: "kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-        }}
-      />
-      <PersonalBlogElement
-        blog={{
-          date: "20.22.2222",
-          title: "kkkkkkkkkk",
-          text: "kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-        }}
-      />
-      <PersonalBlogElement
-        blog={{
-          date: "20.22.2222",
-          title: "kkkkkkkkkk",
-          text: "kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-        }}
-      />
-      <PersonalBlogElement
-        blog={{
-          date: "20.22.2222",
-          title: "kkkkkkkkkk",
-          text: "kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k kkkkkkkkk kkkkkk k bbbbbbbbbbbbb bbbbbbbbbbb bbbbbbbbbbb kkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-        }}
-      />
+      <>
+        {blogs.map(({ createdAt, title, text }, i) => {
+          return (
+            <PersonalBlogElement
+              key={i}
+              blog={{ date: createdAt, title, text }}
+            ></PersonalBlogElement>
+          );
+        })}
+      </>
     </PageWrapper>
+  ) : (
+    <h1> loading</h1>
   );
 };

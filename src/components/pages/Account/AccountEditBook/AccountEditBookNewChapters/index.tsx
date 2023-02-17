@@ -3,7 +3,7 @@ import { PageWrapper } from "../../../../ui/page-wrapper";
 import { PrimaryInput } from "../../../../ui/primary-input";
 import { PrimaryTextarea } from "../../../../ui/primary-textarea";
 
-interface AccountEditBookchapterProps {
+interface AccountEditBookChapterProps {
   chapter?: {
     title: string;
     content: string;
@@ -12,19 +12,19 @@ interface AccountEditBookchapterProps {
 
 export const AccountEditBookChapter = ({
   chapter,
-}: AccountEditBookchapterProps) => {
+}: AccountEditBookChapterProps) => {
   return (
     <PageWrapper title="Добавить новую главу" isTop={true}>
       <PrimaryInput
         attributes={{
           placeholder: "Название главы",
-          value: chapter?.content || "",
+          initialValue: chapter?.content || "",
         }}
       />
       <PrimaryTextarea
         attributes={{
           placeholder: "Содержание главы",
-          value: chapter?.content || "",
+          initialValue: chapter?.content || "",
         }}
       ></PrimaryTextarea>
       <Button>Сохранить</Button>
