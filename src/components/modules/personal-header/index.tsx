@@ -8,7 +8,7 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { Link, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { AccountType } from "../../../types/types";
-import { useUserAvatar } from "../../../hooks";
+import { useImage } from "../../../hooks";
 import avatar from "../../../common/assets/images/avatar.png";
 
 export interface PersonalHeaderProps {
@@ -20,7 +20,7 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
   const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);
-  const image = useUserAvatar(account);
+  const image = useImage(account);
 
   useEffect(() => {
     if (account) setSelectedUser(account);

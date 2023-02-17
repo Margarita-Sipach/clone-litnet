@@ -2,7 +2,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   checkUser,
-  getBlogsBlogsId,
+  getBlogsByUserId,
+  getBooks,
   getBooksByUserId,
   getImage,
   getUserById,
@@ -18,9 +19,11 @@ import {
   AccountType,
   BlogResponseType,
   BookResponseType,
+  BookType,
   UserStateType,
 } from "../types/types";
 import { useState, useEffect, useMemo } from "react";
+import { QueryParams } from "../types/api.types";
 
 export const useRegistration = () => {
   const { setUser } = useUserContext();
@@ -77,7 +80,7 @@ export const useFetchUser = (id: string) => {
   return { account, isSuccess, isError, isLoading };
 };
 
-export const useFetchBooks = (userId: string) => {
+export const useFetchUserBooks = (userId: string) => {
   const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
     queryKey: ["users", userId, "books"],
     queryFn: async () => getBooksByUserId(userId as string),
@@ -93,10 +96,10 @@ export const useFetchBooks = (userId: string) => {
   };
 };
 
-export const useFetchBlogs = (userId: string) => {
+export const useFetchUserBlogs = (userId: string) => {
   const { data, isError, isLoading, isSuccess } = useQuery<BlogResponseType>({
     queryKey: ["users", userId, "blogs"],
-    queryFn: async () => getBlogsBlogsId(userId as string),
+    queryFn: async () => getBlogsByUserId(userId as string),
     staleTime: 1000 * 10,
   });
 
@@ -132,10 +135,10 @@ export const useCheckingAuth = () => {
   return user;
 };
 
-export const useUserAvatar = (account: AccountType) => {
+export const useImage = (entity: AccountType | BookType) => {
   const image = useMemo(() => {
-    return getImage(`/${account.img}`);
-  }, [account]);
+    return getImage(`/${entity.img}`);
+  }, [entity]);
 
   return image;
 };
@@ -168,4 +171,20 @@ export const useEditPassword = () => {
   });
 
   return { editPassword, isError };
+};
+
+export const useFetchBooks = () => {
+  const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
+    queryKey: ["books"],
+    queryFn: async (params?: any) => getBooks(params),
+    staleTime: 1000 * 10,
+  });
+
+  return {
+    books: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
 };

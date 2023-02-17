@@ -1,15 +1,11 @@
 import { SliderElement } from "../../ui/slider-element";
 import { ReactComponent as Arrow } from "../../../common/assets/icons/slider-button.svg";
 import { useState } from "react";
+import { BookType } from "../../../types/types";
 
 interface SliderProps {
   title: string;
-  books: Array<{
-    img: string;
-    category: string;
-    title: string;
-    author: string;
-  }>;
+  books: BookType[];
 }
 
 export const Slider = ({ title, books }: SliderProps) => {

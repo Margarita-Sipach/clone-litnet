@@ -1,3 +1,4 @@
+import { QueryParams } from "../types/api.types";
 import { API } from "./api";
 
 export const registerUser = async (body: any) => {
@@ -61,12 +62,21 @@ export const getBooksByUserId = async (id: string) => {
   }
 };
 
-export const getBlogsBlogsId = async (id: string) => {
+export const getBlogsByUserId = async (id: string) => {
   const response = await API.getBlogByUserId(id);
   if (response.ok) {
     return response.json();
   } else {
     return new Promise((res, rej) => rej("This user's blogs are not found"));
+  }
+};
+
+export const getBooks = async (params?: QueryParams) => {
+  const response = await API.getBooks(params);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Books not found"));
   }
 };
 

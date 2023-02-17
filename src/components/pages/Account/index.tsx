@@ -10,8 +10,8 @@ const Account = () => {
   return (
     <Wrapper>
       <PageWrapper isTop={true} isThereSidebar={false}>
-        <h1>My account</h1>
-        <nav className="flex gap-4">
+        <h1 className=" text-3xl font-medium">Мой аккаунт</h1>
+        <nav className="flex gap-4 ">
           <Link
             className="font-medium text-blue-500"
             to={`${Router.users}/${user?.id}`}

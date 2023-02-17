@@ -1,28 +1,32 @@
+import { useImage } from "../../../hooks";
+import { BookType } from "../../../types/types";
+import cover from "../../../common/assets/images/bookcover.png";
+
 interface SliderElementProps {
   onClick?: () => void;
-  book: {
-    img: string;
-    category: string;
-    title: string;
-    author: string;
-  };
+  book: BookType;
 }
 
 export const SliderElement = ({ book }: SliderElementProps) => {
+  const image = useImage(book);
   return (
-    <a href="" className="flex flex-col items-start w-40">
+    <a href="" className="flex w-40 flex-col items-start">
       <img
-        src={book.img}
+        src={image}
         alt=""
-        className="h-60 w-full mb-3 object-cover rounded-md"
+        className="mb-3 h-60 w-full rounded-md object-cover"
+        onError={(e) => ((e.target as HTMLImageElement).src = cover)}
       />
-      <div className="truncate max-w-full text-sm p-1 bg-slate-200 rounded-md mb-1">
-        {book.category}
+      <div className="mb-1 max-w-full truncate rounded-md bg-slate-200 p-1 text-sm">
+        {book.genres
+          .map((g) => g.name)
+          .splice(0, 2)
+          .join(" ")}
       </div>
-      <div className="truncate max-w-full text-base font-bold mb-1">
+      <div className="mb-1 max-w-full truncate text-base font-bold">
         {book.title}
       </div>
-      <div className="truncate max-w-full text-sm">{book.author}</div>
+      <div className="max-w-full truncate text-sm">{book.user.name}</div>
     </a>
   );
 };
