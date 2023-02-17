@@ -7,11 +7,10 @@ import { Burger } from "../../ui/burger";
 import { CloseButton } from "../../ui/close-button";
 import { Modal } from "../../ui/modal";
 import { Categories } from "../categories";
-import { Link } from "react-router-dom";
-
-interface HeaderProps {
-  isUser?: boolean;
-}
+import { Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/userContext";
+import { Router } from "../../router";
+import { CircleUserAvatar } from "../../ui/circle-avatar";
 
 const navItems = [
   {
@@ -27,8 +26,8 @@ const navItems = [
     link: "blogs",
   },
   {
-    title: "Моя страница",
-    link: `users/1/books`,
+    title: "Моя библиотека",
+    link: `account/library`,
   },
   {
     title: "Игра",
@@ -36,9 +35,16 @@ const navItems = [
   },
 ];
 
-export const Header = ({ isUser = true }: HeaderProps) => {
+export const Header = () => {
+  const { user, isUserLogged, logout } = useUserContext();
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate(Router.main);
+  };
 
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
@@ -65,9 +71,9 @@ export const Header = ({ isUser = true }: HeaderProps) => {
               </Link>
             ))}
           </div>
-          {!isUser ? (
+          {!isUserLogged ? (
             <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
-              <Link to="/authorization">
+              <Link to={Router.login}>
                 <SecondaryButton
                   className="w-full sm:w-auto"
                   onClickButton={() => {}}
@@ -75,16 +81,23 @@ export const Header = ({ isUser = true }: HeaderProps) => {
                   Войти
                 </SecondaryButton>
               </Link>
-              <Link to="/registration">
+              <Link to={Router.register}>
                 <PrimaryButton onClickButton={() => {}}>
                   Зарегистрироваться
                 </PrimaryButton>
               </Link>
             </div>
           ) : (
-            <Link to="/">
-              <SecondaryButton onClickButton={() => {}}>Выход</SecondaryButton>
-            </Link>
+            <div className="flex justify-center gap-4">
+              <Link to={Router.main}>
+                <SecondaryButton onClickButton={handleLogout}>
+                  Выход
+                </SecondaryButton>
+              </Link>
+              <Link to={`${Router.users}/${user?.id}`}>
+                <CircleUserAvatar image={user?.img || ""} />
+              </Link>
+            </div>
           )}
           <CloseButton
             onClick={() => setBurgerMenuDisplay(!burgerMenuDisplay)}

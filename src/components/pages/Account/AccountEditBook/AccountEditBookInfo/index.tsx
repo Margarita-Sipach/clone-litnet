@@ -27,7 +27,7 @@ export const AccountEditBookInfo = () => {
             attributes={{
               placeholder: "Название книги",
               required: true,
-              value: book.title || "",
+              initialValue: book.title || "",
             }}
           />
           <PrimarySelect
@@ -46,7 +46,7 @@ export const AccountEditBookInfo = () => {
         attributes={{
           placeholder: "Аннотация",
           required: true,
-          value: book.annotation || "",
+          initialValue: book.annotation || "",
         }}
       />
       <Button>Сохранить</Button>

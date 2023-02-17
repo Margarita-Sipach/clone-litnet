@@ -1,12 +1,20 @@
 import { PersonalHeader } from "../../modules/personal-header";
 import { Wrapper } from "../../ui/wrapper";
-import { Outlet } from "react-router-dom";
+import {
+  Outlet,
+  useParams,
+} from "react-router-dom";
+import { useFetchUser } from "../../../hooks";
 
 export const PersonalPage = () => {
-  return (
+  const { id } = useParams();
+  const { account } = useFetchUser(id as string);
+  return account ? (
     <Wrapper>
-      <PersonalHeader />
+      <PersonalHeader account={account} />
       <Outlet />
     </Wrapper>
+  ) : (
+    <h1>Loading</h1>
   );
 };
