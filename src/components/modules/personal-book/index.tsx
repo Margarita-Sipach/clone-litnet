@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useFetchUserBooks } from "../../../hooks";
 import { BookType } from "../../../types/types";
+import { useUserContext } from "../../context/userContext";
 import { BookElement } from "../../ui/book-element";
 import { PageWrapper } from "../../ui/page-wrapper";
 
 export const PersonalBook = () => {
   const { id } = useParams();
+  const { user } = useUserContext();
   const { books } = useFetchUserBooks(id as string);
 
   return books ? (
@@ -15,13 +17,8 @@ export const PersonalBook = () => {
           books.map((book: BookType) => (
             <BookElement
               key={book.id}
-              img={book.img}
-              title={book.title}
-              author={book.user.name}
-              annotation={book.description}
-              rating={book.rating}
-              categories={[]}
-              isUserBook={true}
+              book={book}
+              isUserBook={Number(id) === user?.id}
             ></BookElement>
           ))
         ) : (

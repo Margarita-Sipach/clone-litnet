@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useFetchGenres } from "../../../hooks";
-import { GenreType } from "../../../types/types";
 
 // const categories = [
 //   "Фэнтези",

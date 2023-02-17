@@ -1,50 +1,49 @@
 import { ElementWrapper } from "../element-wrapper";
-import { AiFillStar, AiOutlineComment } from "react-icons/ai";
-import { GiBookshelf } from "react-icons/gi";
+import { AiFillStar } from "react-icons/ai";
 import { Icon } from "../icon";
-import { BookElementType } from "../../../types/types";
+import { BookType } from "../../../types/types";
 import Button from "../button";
 import { Link } from "react-router-dom";
+import cover from "../../../common/assets/images/bookcover.png";
+import { useImage } from "../../../hooks";
 
 type BookElementProps = {
   onClick?: () => void;
+  book: BookType,
   isUserBook?: boolean;
-} & BookElementType;
+};
 
 export const BookElement = ({
-  title,
-  author,
-  img,
-  rating,
-  categories,
-  annotation,
+  book,
   isUserBook = false,
 }: BookElementProps) => {
+  const image = useImage(book);
   return (
     <ElementWrapper className="relative flex h-60 flex-col gap-y-5 lg:h-72">
       <div className="flex">
         <img
-          src={img}
+          src={image}
           alt=""
           className="mr-5 h-36 w-24 rounded object-cover lg:h-44 lg:w-32"
+          onError={(e) => ((e.target as HTMLImageElement).src = cover)}
         />
         <div className="flex flex-col items-start">
-          <div className="mb-3 text-xl font-bold leading-5">{title}</div>
+          <div className="mb-3 text-xl font-bold leading-5">{book.title}</div>
 
           <div className="mb-2 flex flex-wrap gap-x-3 ">
-            {categories.map((item) => (
+            {book.genres.map((item, i) => (
               <div
-                key={item}
+                key={i}
                 className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm"
               >
-                {item}
+                {item.name}
               </div>
             ))}
           </div>
 
-          <div className="mb-2 text-sm">{author}</div>
+          <div className="mb-2 text-sm">{book.user.name}</div>
           <div className="flex items-center gap-x-3">
-            <Icon title={rating} icon={<AiFillStar />} />
+            <Icon title={book.rating} icon={<AiFillStar />} />
           </div>
           {isUserBook && (
             <Link to="/account/book/1/edit-book">
@@ -53,7 +52,7 @@ export const BookElement = ({
           )}
         </div>
       </div>
-      <div className="h-28 overflow-hidden">{annotation}</div>
+      <div className="h-28 overflow-hidden">{book.description}</div>
     </ElementWrapper>
   );
 };

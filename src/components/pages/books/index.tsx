@@ -12,9 +12,9 @@ export const BooksPage = ({ title, books }: BooksPageProps) => {
   return (
     <Wrapper>
       <PageWrapper title={title} isTop={true}>
-        {books.map((book) => (
-          <BookElement {...book} />
-        ))}
+        {/* {books.map((book) => (
+          // <BookElement {...book} />
+        ))} */}
       </PageWrapper>
     </Wrapper>
   );

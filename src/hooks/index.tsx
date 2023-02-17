@@ -195,7 +195,6 @@ export const useFetchGenres = () => {
   const { data, isError, isLoading, isSuccess } = useQuery<GenreResponseType>({
     queryKey: ["genres"],
     queryFn: async (params?: any) => getGenres(params),
-    staleTime: 1000 * 10,
   });
 
   return {
@@ -205,4 +204,4 @@ export const useFetchGenres = () => {
     isError,
     isLoading,
   };
-}
+};

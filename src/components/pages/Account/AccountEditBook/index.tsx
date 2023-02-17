@@ -5,18 +5,6 @@ import Button from "../../../ui/button";
 import { ElementWrapper } from "../../../ui/element-wrapper";
 import { PageWrapper } from "../../../ui/page-wrapper";
 
-const book = {
-  img: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-  title: "Задача выжить",
-  author: "Михаил Атаманов",
-  categories: ["Боевик", "Фантастика"],
-  annotation:
-    "Представьте, что по дороге на работу вы задремали в маршрутке. Вас разбудили крики ужаса, а вокруг творится невесть что - одна за другой взрываются машины на проспекте, люди сгорают словно свечки. А над всем этим хаосом и смертью в небе кружит таинственный боевой корабль треугольной формы. И вот очередь взлететь на воздух доходит и до вашей маршрутки... Вот именно об этом данное произведение",
-  commentAmount: 55,
-  readAmount: 234,
-  rating: 8.9,
-};
-
 const chapters = [
   {
     id: "1",
@@ -39,7 +27,7 @@ const chapters = [
 export const AccountEditBook = () => {
   return (
     <PageWrapper title="" isTop={true}>
-      <BookElement {...book} />
+      {/* <BookElement book={book} /> */}
       <div className="mb-5 flex flex-col gap-y-5">
         {chapters.map((item) => (
           <ElementWrapper key={item.id} className="flex justify-between">

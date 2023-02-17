@@ -10,13 +10,17 @@ import { useUserContext } from "../../context/userContext";
 import { AccountType } from "../../../types/types";
 import { useImage } from "../../../hooks";
 import avatar from "../../../common/assets/images/avatar.png";
+import { Router } from "../../router";
 
 export interface PersonalHeaderProps {
   account: AccountType;
 }
 
+const DEFAULT_STYLE = `text-indigo-800 border-indigo-800 hover:text-indigo-800 hover:border-indigo-800`;
+
 export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
+  const [selectedButton, setSelectedButton] = useState(Router.about);
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
   const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);
@@ -42,14 +46,32 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
         </div>
       </div>
       <div className="flex w-full flex-wrap gap-2 ">
-        <Link to="books">
-          <SecondaryButton className="">Книги</SecondaryButton>
+        <Link to={Router.books} onClick={() => setSelectedButton(Router.books)}>
+          <SecondaryButton
+            className={`${
+              Router.books === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Книги
+          </SecondaryButton>
         </Link>
-        <Link to="blogs">
-          <SecondaryButton className="">Блог</SecondaryButton>
+        <Link to={Router.blogs} onClick={() => setSelectedButton(Router.blogs)}>
+          <SecondaryButton
+            className={`${
+              Router.blogs === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Блог
+          </SecondaryButton>
         </Link>
-        <Link to="about">
-          <SecondaryButton className="">Обо мне</SecondaryButton>
+        <Link to={Router.about} onClick={() => setSelectedButton(Router.about)}>
+          <SecondaryButton
+            className={`${
+              Router.about === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Обо мне
+          </SecondaryButton>
         </Link>
         {isPageOwner && (
           <PrimaryButton
