@@ -20,7 +20,8 @@ import {
   BookResponseType,
   UserStateType,
 } from "../types/types";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { fetchGenres } from "../api/data";
 
 export const useRegistration = () => {
   const { setUser } = useUserContext();
@@ -107,6 +108,13 @@ export const useFetchBlogs = (userId: string) => {
     isError,
     isLoading,
   };
+};
+
+export const useGenres = () => {
+  return useQuery({
+    queryKey: ["genres"],
+    queryFn: fetchGenres,
+  });
 };
 
 export const useCheckingAuth = () => {
