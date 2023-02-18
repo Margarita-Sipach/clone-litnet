@@ -1,11 +1,17 @@
 import axios from "axios";
-import { GenreType } from "../types/types";
+import { BookType, GenreType } from "../types/types";
 
 const baseUrl = "https://litnet.herokuapp.com";
 
 export const fetchGenres = async () => {
   const response = await axios.get(`${baseUrl}/genre`);
   const data: GenreType[] = response.data.rows;
+  return data;
+};
+
+export const fetchBooks = async () => {
+  const response = await axios.get(`${baseUrl}/books`);
+  const data: BookType[] = response.data.rows;
   return data;
 };
 

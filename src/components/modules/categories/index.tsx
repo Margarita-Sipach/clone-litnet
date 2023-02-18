@@ -15,7 +15,7 @@ export const Categories = ({ onClick }: CategoriesProps) => {
             {genresQuery.data.map((genre) => (
               <Link
                 key={genre.id}
-                to=""
+                to={`books/${genre.name}`}
                 className="mb-3 text-sm hover:text-indigo-400 sm:text-base lg:text-lg"
                 onClick={onClick}
               >
@@ -25,12 +25,12 @@ export const Categories = ({ onClick }: CategoriesProps) => {
           </div>
           <div className="my-1 h-[1px] w-full bg-black"></div>
           <Link
-            to="/all"
+            to="/books"
             className="block w-full text-right font-bold text-indigo-400 sm:text-base lg:text-lg"
             onClick={onClick}
           >
             Посмотреть все жанры
-          </Link>{" "}
+          </Link>
         </>
       ) : (
         <p>loading genres...</p>
