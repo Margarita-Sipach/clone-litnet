@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import Button from "../../../../ui/button";
 import { FileInput } from "../../../../ui/file-input";
 import { PageWrapper } from "../../../../ui/page-wrapper";
@@ -24,11 +23,9 @@ export const AccountEditBookInfo = () => {
         <FileInput className="h-52 w-40" defaultImage={book && book.img} />
         <div className="flex flex-grow flex-col gap-y-5">
           <PrimaryInput
-            attributes={{
-              placeholder: "Название книги",
-              required: true,
-              initialValue: book.title || "",
-            }}
+            placeholder="Название книги"
+            required={true}
+            value={book.title}
           />
           <PrimarySelect
             title="Жанр 1"
@@ -43,11 +40,9 @@ export const AccountEditBookInfo = () => {
         </div>
       </div>
       <PrimaryTextarea
-        attributes={{
-          placeholder: "Аннотация",
-          required: true,
-          initialValue: book.annotation || "",
-        }}
+        placeholder="Аннотация"
+        required={true}
+        value={book.annotation}
       />
       <Button>Сохранить</Button>
     </PageWrapper>

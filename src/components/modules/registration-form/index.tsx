@@ -35,25 +35,22 @@ export const RegistrationForm = () => {
       <FileInput className="h-32 w-32" onChange={handleSetFile} />
       {isLoading && <p>Sending data...</p>}
       <PrimaryInput
-        attributes={{ placeholder: "Логин", required: true }}
+        placeholder="Логин"
+        required={true}
         onChange={(e) => setLogin(e?.target.value || "")}
       />
       <PrimaryInput
-        attributes={{
-          placeholder: "E-mail",
-          required: true,
-          type: "email",
-          invalid: isError,
-        }}
+        placeholder="E-mail"
+        required={true}
+        type="email"
+        invalid={isError}
         onChange={(e) => setEmail(e?.target.value || "")}
       />
       <PrimaryInput
-        attributes={{
-          placeholder: "Пароль",
-          required: true,
-          type: "password",
-          invalid: isError,
-        }}
+        placeholder="Пароль"
+        required={true}
+        type="password"
+        invalid={isError}
         onChange={(e) => setPassword(e?.target.value || "")}
       />
       <Button onClick={handleSubmitForm}>Зарегистрироваться</Button>

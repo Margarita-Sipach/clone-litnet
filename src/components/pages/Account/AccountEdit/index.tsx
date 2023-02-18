@@ -41,20 +41,19 @@ const AccountEdit = () => {
       <PageWrapper title="Редактирование профиля" isTop={true}>
         <FileInput className="h-32 w-32" onChange={handleSetFile}></FileInput>
         <PrimaryInput
-          attributes={{ placeholder: "Логин", initialValue: name }}
+          placeholder="Логин"
+          value={name}
           onChange={(e) => setName(e?.target.value || "")}
         />
         <PrimaryInput
-          attributes={{
-            placeholder: "Email",
-            initialValue: email,
-            type: "email",
-            invalid: isError,
-          }}
+          invalid={isError}
+          placeholder="Email"
+          value={email}
           onChange={(e) => setEmail(e?.target.value || "")}
         />
         <PrimaryTextarea
-          attributes={{ placeholder: "О себе", initialValue: autobiography }}
+          placeholder="О себе"
+          value={autobiography}
           onChange={(e) => setAutobiography(e?.target.value || "")}
         />
         <div className="flex flex-col">

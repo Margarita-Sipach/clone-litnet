@@ -15,17 +15,10 @@ export const AccountEditBookChapter = ({
 }: AccountEditBookChapterProps) => {
   return (
     <PageWrapper title="Добавить новую главу" isTop={true}>
-      <PrimaryInput
-        attributes={{
-          placeholder: "Название главы",
-          initialValue: chapter?.content || "",
-        }}
-      />
+      <PrimaryInput placeholder="Название главы" value={chapter?.content} />
       <PrimaryTextarea
-        attributes={{
-          placeholder: "Содержание главы",
-          initialValue: chapter?.content || "",
-        }}
+        placeholder="Содержание главы"
+        value={chapter?.content}
       ></PrimaryTextarea>
       <Button>Сохранить</Button>
     </PageWrapper>

@@ -9,12 +9,8 @@ export const AccountAddBlog = () => {
   return (
     <Wrapper>
       <PageWrapper title="Новый блог">
-        <PrimaryInput
-          attributes={{ placeholder: "Заголовок блога", required: true }}
-        />
-        <PrimaryTextarea
-          attributes={{ placeholder: "Содержание блога", required: true }}
-        />
+        <PrimaryInput placeholder="Заголовок блога" required={true} />
+        <PrimaryTextarea placeholder="Содержание блога" required={true} />
         <Button>Сохранить</Button>
       </PageWrapper>
     </Wrapper>

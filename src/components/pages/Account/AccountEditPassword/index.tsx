@@ -35,19 +35,15 @@ export const AccountEditPassword = () => {
     <Wrapper className="flex flex-col items-start">
       <PageWrapper title="Изменение пароля" isTop={true}>
         <PrimaryInput
-          attributes={{
-            placeholder: "Пароль",
-            initialValue: password,
-            type: "password",
-          }}
+          value={password}
+          placeholder="Пароль"
+          type="password"
           onChange={(e) => setPassword(e?.target.value || "")}
         />
         <PrimaryInput
-          attributes={{
-            placeholder: "Новый пароль",
-            initialValue: newPassword,
-            type: "password",
-          }}
+          placeholder="Новый пароль"
+          value={newPassword}
+          type="password"
           onChange={(e) => setNewPassword(e?.target.value || "")}
         />
         <Button onClick={handleSubmitForm}>Сохранить</Button>

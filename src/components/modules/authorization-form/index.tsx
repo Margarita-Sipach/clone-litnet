@@ -25,21 +25,19 @@ export const AuthorizationForm = () => {
     <form action="" className="items-left flex max-w-[500px] flex-col gap-y-5 ">
       {isLoading && <p>Sending data...</p>}
       <PrimaryInput
-        attributes={{
-          required: true,
-          placeholder: "E-mail",
-          type: "email",
-          invalid: isError,
-        }}
+        invalid={isError}
+        placeholder="E-mail"
+        type="email"
+        required={true}
+        value={email}
         onChange={(e) => setEmail(e?.target.value || "")}
       />
       <PrimaryInput
-        attributes={{
-          required: true,
-          placeholder: "Пароль",
-          type: "password",
-          invalid: isError,
-        }}
+        invalid={isError}
+        placeholder="Пароль"
+        type="password"
+        required={true}
+        value={password}
         onChange={(e) => setPassword(e?.target.value || "")}
       />
       <Button className="text-base" onClick={handleSubmitForm}>
