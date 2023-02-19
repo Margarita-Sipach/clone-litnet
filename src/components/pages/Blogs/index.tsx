@@ -2,24 +2,36 @@ import React from "react";
 import { PageWrapper } from "../../ui/page-wrapper";
 import { BlogElement } from "../../ui/blog-element";
 import { Wrapper } from "../../ui/wrapper";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBlogs } from "../../../api/data";
+import { createDate } from "../../../utils/utils";
 
 const Blogs = () => {
-  
+  const blogsQuery = useQuery({
+    queryFn: fetchBlogs,
+    queryKey: ["blogs"],
+  });
+  if (blogsQuery.isSuccess) {
+    console.log(blogsQuery.data);
+  }
   return (
     <Wrapper className="flex items-start">
       <PageWrapper title="Литературные блоги" isTop={true}>
-        {new Array(10).fill("").map((item) => (
-          <BlogElement
-            blog={{
-              img: "https://mirpozitiva.ru/wp-content/uploads/2019/11/1472042660_10.jpg",
-              author: "wwwwwww wwwwwwww",
-              date: "20.22.2222",
-              title: "kkkkkkkkkk",
-              text: "kkkkkkkkk kkkkkk kkkkkkkkkkk kkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk kkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkk kkkkkkkkkkkkkk kkkkkkkkkkk kkkkkkk k",
-              commentCount: 25,
-            }}
-          />
-        ))}
+        {blogsQuery.isSuccess && (
+          <>
+            {blogsQuery.data.map((blog) => (
+              <BlogElement
+                key={blog.id}
+                id={blog.id}
+                userId={blog.userId}
+                title={blog.title}
+                text={blog.text}
+                createdAt={createDate(blog.createdAt)}
+              />
+            ))}
+          </>
+        )}
+        {blogsQuery.isLoading && <p>loading blogs data...</p>}
       </PageWrapper>
     </Wrapper>
   );

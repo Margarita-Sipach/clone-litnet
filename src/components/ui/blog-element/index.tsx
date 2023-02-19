@@ -1,30 +1,46 @@
 import { Avatar } from "../avatar";
 import { ElementWrapper } from "../element-wrapper";
 import { AiFillEye } from "react-icons/ai";
+import React from "react";
+import { fetchUserData } from "../../../api/data";
+import { useQuery } from "@tanstack/react-query";
 
-interface BlogElementProps {
-  onClick?: () => void;
-  blog: {
-    img: string;
-    author: string;
-    date: string;
-    title: string;
-    text: string;
-    commentCount: number;
-  };
-}
+type BlogElementProps = {
+  id: string;
+  userId: string;
+  title: string;
+  text: string;
+  createdAt: string;
+};
 
-export const BlogElement = ({ blog }: BlogElementProps) => {
+export const BlogElement: React.FC<BlogElementProps> = ({
+  id,
+  userId,
+  title,
+  text,
+  createdAt,
+}) => {
+  const userQuery = useQuery({
+    queryFn: () => fetchUserData(userId),
+    queryKey: ["user"],
+  });
+  const userData = userQuery.data!;
   return (
-    <ElementWrapper className="flex flex-col gap-y-5 h-40 sm:h-44 relative">
-      <div className="text-xl">{blog.title}</div>
-      <Avatar image={blog.img} name={blog.author} date={blog.date}></Avatar>
-      <div className="text-sm overflow-ellipsis overflow-hidden">
-        {blog.text}
-      </div>
-      <div className="absolute right-3 top-3 text-xs flex items-center gap-1">
-        <AiFillEye className="text-indigo-400 text-sm" /> {blog.commentCount}
-      </div>
+    <ElementWrapper className="relative flex h-40 flex-col gap-y-5 sm:h-44">
+      {userQuery.isSuccess && (
+        <>
+          <div className="text-xl">{title}</div>
+          <Avatar
+            image={userData.image}
+            name={userData.name}
+            date={createdAt}
+          ></Avatar>
+          <div className="overflow-hidden overflow-ellipsis text-sm">
+            {text}
+          </div>
+        </>
+      )}
+      {userQuery.isLoading && <p>loading user data...</p>}
     </ElementWrapper>
   );
 };

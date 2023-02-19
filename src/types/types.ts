@@ -40,9 +40,13 @@ export interface UserType {
 
 export interface BlogType {
   id: string;
+  userId: string;
   title: string;
   text: string;
   createdAt: string;
+  blogComments?: {
+    id: string;
+  }[];
 }
 
 export interface BlogResponseType {
@@ -57,14 +61,24 @@ export interface AccountType extends UserType {
   contestId: null;
   updatedAt: string;
   contest: null;
-  // books: [];
-  // bookmarks: [];
-  // comments: [];
 }
 
 export type CommentType = {
-  image: string;
-  name: string;
-  date: string;
-  content: string;
+  id: string;
+  userId: string;
+  text: string;
+  createdAt: string;
+  user: {
+    id: string;
+    name: string;
+    image: string;
+  };
 };
+
+export type BlogCommentType = {
+  blogId: string;
+} & CommentType;
+
+export type BookCommentType = {
+  bookId: string;
+} & CommentType;

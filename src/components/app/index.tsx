@@ -9,7 +9,7 @@ import Contests from "../pages/Contests";
 import BookPage from "../pages/Book";
 import { PersonalAbout } from "../modules/personal-about";
 import NotFound from "../pages/NotFound";
-import AccountLibrary from "../pages/Account/AccountLibrary";
+// import AccountLibrary from "../pages/Account/AccountLibrary";
 import AccountEdit from "../pages/Account/AccountEdit";
 import { AccountEditPassword } from "../pages/Account/AccountEditPassword";
 import ContestPage from "../pages/ContestPage";
@@ -34,6 +34,8 @@ import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCheckingAuth } from "../../hooks";
+import { BooksPage } from "../pages/books";
+import AccountLibrary from "../pages/Account/AccountLibrary";
 
 const client = new QueryClient({
   logger: {
@@ -52,6 +54,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/books",
+        element: <BooksPage />,
       },
       {
         path: "/blogs",
