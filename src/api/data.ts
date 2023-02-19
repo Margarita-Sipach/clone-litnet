@@ -54,6 +54,19 @@ export const createBook = async (
   return response.data;
 };
 
+export const createBlog = async (
+  title: string,
+  text: string,
+  userId: string
+) => {
+  const response = await axios.post(`${baseUrl}/blog`, {
+    title,
+    text,
+    userId,
+  });
+  return response.data;
+};
+
 export const fetchBlogs = async () => {
   const response = await axios.get(`${baseUrl}/blog`);
   const data: BlogType[] = response.data.rows;
