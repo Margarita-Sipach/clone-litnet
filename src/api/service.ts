@@ -102,3 +102,12 @@ export const checkUser = async (oldToken: string) => {
 export const getImage = (url: string) => {
   return API.getImage(url);
 };
+
+export const addBook = async (body: any) => {
+  const response = await API.addBook(body);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot create this book"));
+  }
+};

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
+  addBook,
   checkUser,
   getBlogsByUserId,
   getBooks,
@@ -204,4 +205,22 @@ export const useFetchGenres = () => {
     isError,
     isLoading,
   };
+};
+
+export const useCreateBook = () => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
+  const {
+    mutate: createBook,
+    isError,
+    isLoading,
+  } = useMutation({
+    mutationFn: (data: any) => addBook(data),
+    mutationKey: ["users", user?.id, "books"],
+    onSuccess: () => {
+      navigate(`${Router.users}/${user?.id}/books`);
+    },
+  });
+
+  return { createBook, isError, isLoading };
 };

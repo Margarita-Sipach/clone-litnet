@@ -133,6 +133,11 @@ export class API {
     return await API.get(url, params);
   };
 
+  public static addBook = async (params: QueryParams = {}) => {
+    const url = API.URLS.BOOKS;
+    return await API.post(url, params);
+  };
+
   public static getBookById = async (id: string) => {
     const url = API.URLS.BOOKS_BY_ID.replace(":id", id);
     return await API.get(url);

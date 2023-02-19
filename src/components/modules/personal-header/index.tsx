@@ -17,7 +17,7 @@ export interface PersonalHeaderProps {
   account: AccountType;
 }
 
-const DEFAULT_STYLE = `text-indigo-800 border-indigo-800 hover:text-indigo-800 hover:border-indigo-800`;
+const DEFAULT_STYLE = `hover:text-indigo-800 hover:border-indigo-800 text-indigo-800 border-indigo-600`;
 
 export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
