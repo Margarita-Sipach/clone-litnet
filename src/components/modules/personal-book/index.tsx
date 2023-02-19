@@ -3,6 +3,7 @@ import { useFetchBooks } from "../../../hooks";
 import { BookType } from "../../../types/types";
 import { BookElement } from "../../ui/book-element";
 import { PageWrapper } from "../../ui/page-wrapper";
+import { processImage } from "../../../utils/utils";
 
 export const PersonalBook = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export const PersonalBook = () => {
         {books.map((book: BookType) => (
           <BookElement
             key={book.id}
-            img={book.img}
+            img={processImage(book.img)}
             title={book.title}
             author={book.user.name}
             annotation={book.description}
