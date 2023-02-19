@@ -1,5 +1,13 @@
+//TODO: improve typing
 import axios from "axios";
-import { BlogType, BookType, GenreType, BlogCommentType } from "../types/types";
+import {
+  BlogType,
+  BookType,
+  GenreType,
+  BlogCommentType,
+  DetailedBookType,
+  BookCommentType,
+} from "../types/types";
 
 const baseUrl = "https://litnet.herokuapp.com";
 
@@ -22,6 +30,12 @@ export const fetchGenres = async () => {
 export const fetchBooks = async () => {
   const response = await axios.get(`${baseUrl}/books`);
   const data: BookType[] = response.data.rows;
+  return data;
+};
+
+export const fetchBookById = async (bookId: string) => {
+  const response = await axios.get(`${baseUrl}/books/${bookId}`);
+  const data: DetailedBookType = response.data;
   return data;
 };
 
@@ -58,10 +72,34 @@ export const fetchBlogComments = async (blogId: string) => {
   return data;
 };
 
-export const createBlog = async (
-  title: string,
-  text: string,
-  userId: string
+export const fetchBookComments = async (bookId: string) => {
+  const response = await axios.get(`${baseUrl}/book-comments/book/${bookId}`);
+  const data: BookCommentType[] = response.data.rows;
+  return data;
+};
+
+export const postBlogComment = async (
+  blogId: string | number,
+  userId: string | number,
+  text: string
 ) => {
-  const response = await axios.post(`${baseUrl}/blogs/`, {});
+  const response = await axios.post(`${baseUrl}/blog-comment`, {
+    blogId,
+    userId,
+    text,
+  });
+  return response.data;
+};
+
+export const postBookComment = async (
+  bookId: string | number,
+  userId: string | number,
+  text: string
+) => {
+  const response = await axios.post(`${baseUrl}/book-comments`, {
+    bookId,
+    userId,
+    text,
+  });
+  return response.data;
 };

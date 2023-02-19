@@ -3,7 +3,6 @@ import { Wrapper } from "../../ui/wrapper";
 import { BookElement } from "../../ui/book-element";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBooks } from "../../../api/data";
-import defaultImage from "../../../common/assets/images/avatar.png";
 
 export const BooksPage = () => {
   const booksQuery = useQuery({
@@ -16,13 +15,14 @@ export const BooksPage = () => {
         <PageWrapper isTop={true}>
           {booksQuery.data.map((book) => (
             <BookElement
+              id={book.id}
               key={book.id}
-              img={book.img ? book.img : defaultImage}
+              img={book.img}
               title={book.title}
               author={book.user.name}
               annotation={book.description}
               rating={book.rating}
-              categories={[]}
+              categories={book.genres.map((genre) => genre.name)}
             />
           ))}
         </PageWrapper>

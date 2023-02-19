@@ -4,11 +4,8 @@ import { Wrapper } from "../../ui/wrapper";
 import { PageWrapper } from "../../ui/page-wrapper";
 import CommentSection from "../../modules/comment-section";
 import { useQuery } from "@tanstack/react-query";
-import {
-  fetchBlogById,
-  fetchBlogComments,
-  fetchUserData,
-} from "../../../api/data";
+import { fetchBlogById, fetchUserData } from "../../../api/data";
+import { useComments } from "../../../hooks";
 
 type Params = {
   id: string;
@@ -24,15 +21,9 @@ const BlogPage = () => {
   const userQuery = useQuery({
     queryFn: () => fetchUserData(blogData.userId),
     queryKey: ["user"],
-    enabled: !!blogQuery.data,
+    enabled: !!blogData,
   });
-  if (blogQuery.isSuccess) {
-    console.log(blogQuery.data);
-  }
-  const blogCommentsQuery = useQuery({
-    queryFn: () => fetchBlogComments(id!),
-    queryKey: ["blogComments"],
-  });
+  const blogComments = useComments("blog", id!, blogData);
   return (
     <Wrapper>
       <PageWrapper isTop={true}>
@@ -47,8 +38,12 @@ const BlogPage = () => {
               Добавлено: {blogData.createdAt}
             </p>
             <p>{blogData.text}</p>
-            {blogCommentsQuery.isSuccess && (
-              <CommentSection comments={blogCommentsQuery.data} />
+            {blogComments.isSuccess && (
+              <CommentSection
+                type="blog"
+                id={id!}
+                comments={blogComments.data}
+              />
             )}
           </>
         ) : (

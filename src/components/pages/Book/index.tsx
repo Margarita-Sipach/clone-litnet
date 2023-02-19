@@ -2,94 +2,91 @@ import React, { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { useParams } from "react-router-dom";
-import { CommentType } from "../../../types/types";
 import CommentSection from "../../modules/comment-section";
 import { ElementWrapper } from "../../ui/element-wrapper";
-import { Icon } from "../../ui/icon";
 import { PageWrapper } from "../../ui/page-wrapper";
 import { PrimarySelect } from "../../ui/primary-select";
 import { Rating } from "../../ui/rating";
 import Button from "../../ui/button";
 import { Wrapper } from "../../ui/wrapper";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBookById } from "../../../api/data";
+import { processImage } from "../../../utils/utils";
+import { useComments } from "../../../hooks";
 
 type Params = {
-  slug: string;
-  comments: CommentType[];
+  id: string;
 };
-
-const book = {
-  img: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-  title: "Задача выжить",
-  author: "Михаил Атаманов",
-  categories: ["Боевик", "Фантастика"],
-  annotation:
-    "Представьте, что по дороге на работу вы задремали в маршрутке. Вас разбудили крики ужаса, а вокруг творится невесть что - одна за другой взрываются машины на проспекте, люди сгорают словно свечки. А над всем этим хаосом и смертью в небе кружит таинственный боевой корабль треугольной формы. И вот очередь взлететь на воздух доходит и до вашей маршрутки... Вот именно об этом данное произведение",
-  commentAmount: 55,
-  readAmount: 234,
-  rating: 9,
-  ratingStatistic: [10, 20, 30, 40, 50],
-};
-
-const comments = [
-  {
-    image: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-    name: "kkkk k k k k ",
-    date: "20.11.2222",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio eligendi cupiditate, et aperiam ut quidem ipsum corporis harum labore veritatis sunt repellendus. Dolore quis dolorem iste repellendus sint! Sint, id!",
-  },
-];
 
 const BookPage = () => {
-  // let { slug } = useParams<Params>();
+  let { id } = useParams<Params>();
   const [addedBook, setAddedBook] = useState(false);
-
+  const bookQuery = useQuery({
+    queryFn: () => fetchBookById(id!),
+    queryKey: ["book"],
+  });
+  const bookData = bookQuery.data!;
+  const bookCommentsQuery = useComments("book", id!, bookData);
   return (
     <Wrapper>
       <PageWrapper title="" isTop={true}>
-        <ElementWrapper className="flex gap-x-5">
-          <img src={book.img} alt="" className="w-1/3" />
-          <div className="flex w-full flex-col justify-between">
-            <div className="relative flex h-full flex-grow flex-col gap-x-10">
-              <h4 className="mb-1 text-2xl">{book.title}</h4>
-              <div className="mb-4">{book.author}</div>
-              <div className="mb-6 flex flex-wrap gap-x-2">
-                {book.categories.map((item) => (
-                  <div className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base">
-                    {item}
+        {bookQuery.isSuccess && (
+          <>
+            <ElementWrapper className="flex gap-x-5">
+              <img src={processImage(bookData.img)} alt="" className="w-1/3" />
+              <div className="flex w-full flex-col justify-between">
+                <div className="relative flex h-full flex-grow flex-col gap-x-10">
+                  <h4 className="mb-1 text-2xl">{bookData.title}</h4>
+                  <div className="mb-4">{bookData.user.name}</div>
+                  <div className="mb-6 flex flex-wrap gap-x-2">
+                    {bookData.genres.map((item) => (
+                      <div
+                        key={item.id}
+                        className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base"
+                      >
+                        {item.name}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <div className="flex items-center gap-x-7">
-                <Rating rating={book.rating} statistic={book.ratingStatistic} />
-                <Icon title={book.readAmount} icon={<GiBookshelf />} />
-                <Icon title={book.commentAmount} icon={<AiOutlineComment />} />
-              </div>
-            </div>
+                  <div className="flex items-center gap-x-7">
+                    <Rating
+                      rating={Number(bookData.rating)}
+                      statistic={bookData.ratings.map((item) => item.rating)}
+                    />
+                  </div>
+                </div>
 
-            <div className="flex gap-x-5 justify-self-end">
-              <Button
-                type="secondary"
-                className="w-1/2"
-                onClick={() => setAddedBook(!addedBook)}
-              >
-                {addedBook ? "Добавлена" : "Добавить"}
-              </Button>
-              <Button className="w-1/2">Читать онлайн</Button>
-            </div>
-            <div className="my-5 h-[1px] w-full bg-slate-300"></div>
-            <PrimarySelect
-              title="Содержание"
-              options={[1, 2, 3, 4, 5, 5]}
-            ></PrimarySelect>
-          </div>
-        </ElementWrapper>
-        <ElementWrapper className="mb-5">
-          <h3 className="mb-2 text-xl">Аннотация</h3>
-          <div>{book.annotation}</div>
-        </ElementWrapper>
-        <CommentSection comments={comments} />
+                <div className="flex gap-x-5 justify-self-end">
+                  <Button
+                    type="secondary"
+                    className="w-1/2"
+                    onClick={() => setAddedBook(!addedBook)}
+                  >
+                    {addedBook ? "Добавлена" : "Добавить"}
+                  </Button>
+                  <Button className="w-1/2">Читать онлайн</Button>
+                </div>
+                <div className="my-5 h-[1px] w-full bg-slate-300"></div>
+                <PrimarySelect
+                  title="Содержание"
+                  options={[1, 2, 3, 4, 5, 5]}
+                ></PrimarySelect>
+              </div>
+            </ElementWrapper>
+            <ElementWrapper className="mb-5">
+              <h3 className="mb-2 text-xl">Аннотация</h3>
+              <div>{bookData.description}</div>
+            </ElementWrapper>
+          </>
+        )}
+        {bookCommentsQuery.isSuccess && (
+          <CommentSection
+            id={id!}
+            type="book"
+            comments={bookCommentsQuery.data}
+          />
+        )}
       </PageWrapper>
     </Wrapper>
   );

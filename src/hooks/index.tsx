@@ -21,7 +21,13 @@ import {
   UserStateType,
 } from "../types/types";
 import { useEffect, useMemo, useState } from "react";
-import { fetchGenres } from "../api/data";
+import {
+  fetchBlogComments,
+  fetchBookComments,
+  fetchGenres,
+  postBlogComment,
+  postBookComment,
+} from "../api/data";
 
 export const useRegistration = () => {
   const { setUser } = useUserContext();
@@ -114,6 +120,26 @@ export const useGenres = () => {
   return useQuery({
     queryKey: ["genres"],
     queryFn: fetchGenres,
+  });
+};
+
+export const useComments = (
+  type: "book" | "blog",
+  id: string,
+  dependentData?: any
+) => {
+  let queryFunction: (id: string) => Promise<any>;
+  if (type === "blog") {
+    queryFunction = fetchBlogComments;
+  } else if (type === "book") {
+    queryFunction = fetchBookComments;
+  } else {
+    queryFunction = fetchBlogComments;
+  }
+  return useQuery({
+    queryFn: () => queryFunction(id),
+    queryKey: ["comments", type, id],
+    [dependentData && "enabled"]: !!dependentData,
   });
 };
 

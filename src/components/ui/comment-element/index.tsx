@@ -1,23 +1,22 @@
+import React from "react";
 import { Avatar } from "../avatar";
 import { ElementWrapper } from "../element-wrapper";
+import { CommentType } from "../../../types/types";
+import { processImage } from "../../../utils/utils";
 
-interface CommentElementProps {
-  image: string;
-  name: string;
-  date: string;
-  content: string;
-}
-
-export const CommentElement = ({
-  image,
-  name,
-  date,
-  content,
-}: CommentElementProps) => {
+export const CommentElement: React.FC<CommentType> = ({
+  user,
+  text,
+  createdAt,
+}) => {
   return (
     <ElementWrapper className="flex w-full flex-col justify-center gap-y-4">
-      <Avatar image={image} name={name} date={date} />
-      <p className="text-sm">{content}</p>
+      <Avatar
+        image={processImage(user!.image)}
+        name={user!.name}
+        date={createdAt}
+      />
+      <p className="text-sm">{text}</p>
     </ElementWrapper>
   );
 };

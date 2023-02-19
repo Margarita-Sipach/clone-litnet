@@ -1,4 +1,5 @@
 export interface BookElementType {
+  id?: string | number;
   img: string;
   title: string;
   author: string;
@@ -18,6 +19,22 @@ export interface BookType {
   img: string;
   genres: GenreType[];
 }
+
+export type DetailedBookType = {
+  id: number;
+  title: string;
+  rating: string;
+  description: string;
+  img: string;
+  userId: string;
+  createdAt: string;
+  genres: GenreType[];
+  comments: BookCommentType[];
+  user: UserType;
+  ratings: {
+    rating: number;
+  }[];
+};
 
 export interface BookResponseType {
   rows: BookType[];
@@ -68,7 +85,7 @@ export type CommentType = {
   userId: string;
   text: string;
   createdAt: string;
-  user: {
+  user?: {
     id: string;
     name: string;
     image: string;
