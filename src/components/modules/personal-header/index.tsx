@@ -11,6 +11,7 @@ import { AccountType } from "../../../types/types";
 import { useImage } from "../../../hooks";
 import avatar from "../../../common/assets/images/avatar.png";
 import { Router } from "../../router";
+import { getLastPathWord } from "../../../utils/utils";
 
 export interface PersonalHeaderProps {
   account: AccountType;
@@ -20,7 +21,7 @@ const DEFAULT_STYLE = `text-indigo-800 border-indigo-800 hover:text-indigo-800 h
 
 export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
-  const [selectedButton, setSelectedButton] = useState(Router.about);
+  const [selectedButton, setSelectedButton] = useState(getLastPathWord());
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
   const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);

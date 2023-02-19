@@ -9,8 +9,9 @@ interface SidebarProps {
 export const Sidebar = ({ className, children }: SidebarProps) => {
   return (
     <ElementWrapper
-      className={`hidden md:flex md:flex-col md:w-60 md:gap-y-6 lg:w-96 ml-5 ${className}`}
+      className={`self-start ml-5 hidden max-h-full md:flex sm:hidden md:w-60 md:flex-col md:gap-y-6 lg:flex lg:w-full ${className}`}
     >
+      <h2 className=" text-xl">Литнет рекомендует</h2>
       {children}
     </ElementWrapper>
   );

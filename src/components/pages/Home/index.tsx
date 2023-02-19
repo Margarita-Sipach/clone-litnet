@@ -7,6 +7,9 @@ import { ReadOnline } from "../../modules/read-online";
 import { Slider } from "../../modules/slider";
 import { useFetchBooks, useFetchGenres } from "../../../hooks";
 import { getBooksByComments, getBooksByRating } from "../../../utils/utils";
+import { Sidebar } from "../../modules/sidebar";
+import { SidebarElement } from "../../ui/sidebar-element";
+import { SidebarContainer } from "../../modules/sibebar-container";
 
 const BOOK_COUNT = 7;
 
@@ -27,20 +30,23 @@ const Home = () => {
   return books ? (
     <div className="flex w-full flex-col items-center justify-between overflow-hidden">
       <BigSlider />
-      <Wrapper className="flex flex-col gap-y-10">
-        <PageWrapper>
-          <Categories/>
-          <div className="flex flex-col gap-16">
-            <Slider title="ТОП Книг" books={popularBooks} />
-            <Slider
-              title="Самые обсуждаемые книги"
-              books={mostCommentedBooks}
-            />
-          </div>
-        </PageWrapper>
-        <PageWrapper title="Читать онлайн">
-          <ReadOnline genres={genres} />
-        </PageWrapper>
+      <Wrapper className="grid md:grid-cols-[2fr_1fr] grid-cols-1 justify-center gap-x-8 lg:gap-x-8 xl:gap-x-20">
+        <div className="flex flex-col gap-y-10">
+          <PageWrapper className="lg:w-full">
+            <Categories />
+            <div className="flex flex-col gap-16">
+              <Slider title="ТОП Книг" books={popularBooks} />
+              <Slider
+                title="Самые обсуждаемые книги"
+                books={mostCommentedBooks}
+              />
+            </div>
+          </PageWrapper>
+          <PageWrapper title="Читать онлайн">
+            <ReadOnline genres={genres} />
+          </PageWrapper>
+        </div>
+        <SidebarContainer className="" />
       </Wrapper>
     </div>
   ) : (

@@ -33,6 +33,7 @@ export interface BookType {
   img: string;
   genres: GenreType[];
   comments: BookCommentType[];
+  bookmarks: []
 }
 
 export interface BookResponseType {

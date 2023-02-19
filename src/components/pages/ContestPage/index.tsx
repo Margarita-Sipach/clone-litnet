@@ -20,7 +20,7 @@ const ContestPage = () => {
   const { slug } = useParams<Params>();
   return (
     <Wrapper>
-      <PageWrapper isTop={true} isThereSidebar={false}>
+      <PageWrapper isTop={true}>
         <ContestHeader
           title={mockContest.title}
           description={mockContest.description}

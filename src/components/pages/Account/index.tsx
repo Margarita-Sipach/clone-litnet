@@ -9,7 +9,7 @@ const Account = () => {
   const { user } = useUserContext();
   return (
     <Wrapper>
-      <PageWrapper isTop={true} isThereSidebar={false}>
+      <PageWrapper isTop={true}>
         <h1 className=" text-3xl font-medium">Мой аккаунт</h1>
         <nav className="flex gap-4 ">
           <Link

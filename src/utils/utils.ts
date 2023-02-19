@@ -31,3 +31,15 @@ export const getBooksByComments = (
   );
   return result.splice(0, count);
 };
+
+export const getLastPathWord = () =>
+  window.location.pathname.split("/").splice(-1, 1)[0];
+
+export const getBooksByReadings = (
+  books: BookType[],
+  count: number = books.length
+) => {
+  if (count > books.length) count = books.length;
+  const result = [...books].sort((a, b) => Number(b.bookmarks.length) - Number(a.bookmarks.length));
+  return result.splice(0, count)
+};

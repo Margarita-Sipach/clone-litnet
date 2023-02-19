@@ -10,11 +10,11 @@ interface SliderElementProps {
 export const SliderElement = ({ book }: SliderElementProps) => {
   const image = useImage(book);
   return (
-    <a href="" className="flex w-40 flex-col items-start">
+    <a href="" className="flex w-28 flex-col items-start lg:w-40">
       <img
         src={image}
         alt=""
-        className="mb-3 h-60 w-full rounded-md object-cover"
+        className="mb-3 h-40 w-full rounded-md object-cover lg:h-60"
         onError={(e) => ((e.target as HTMLImageElement).src = cover)}
       />
       <div className="mb-1 max-w-full truncate rounded-md bg-slate-200 p-1 text-sm">
