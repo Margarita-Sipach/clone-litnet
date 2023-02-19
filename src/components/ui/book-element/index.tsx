@@ -2,21 +2,17 @@ import { ElementWrapper } from "../element-wrapper";
 import { AiFillStar } from "react-icons/ai";
 import { Icon } from "../icon";
 import { BookType } from "../../../types/types";
-import Button from "../button";
-import { Link } from "react-router-dom";
 import cover from "../../../common/assets/images/bookcover.png";
 import { useImage } from "../../../hooks";
+import { PrimaryLink } from "../primary-link";
 
 type BookElementProps = {
   onClick?: () => void;
-  book: BookType,
+  book: BookType;
   isUserBook?: boolean;
 };
 
-export const BookElement = ({
-  book,
-  isUserBook = false,
-}: BookElementProps) => {
+export const BookElement = ({ book, isUserBook = false }: BookElementProps) => {
   const image = useImage(book);
   return (
     <ElementWrapper className="relative flex h-60 flex-col gap-y-5 lg:h-72">
@@ -46,9 +42,12 @@ export const BookElement = ({
             <Icon title={book.rating} icon={<AiFillStar />} />
           </div>
           {isUserBook && (
-            <Link to="/account/book/1/edit-book">
-              <Button className="mt-2">Редактировать</Button>
-            </Link>
+            <PrimaryLink
+              path={`/account/book/${book.id}/edit-book`}
+              className="mt-2"
+            >
+              Редактировать
+            </PrimaryLink>
           )}
         </div>
       </div>

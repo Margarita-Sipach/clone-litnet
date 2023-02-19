@@ -2,15 +2,21 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   addBook,
+  addChapter,
   checkUser,
   getBlogsByUserId,
+  getBookById,
   getBooks,
   getBooksByUserId,
+  getChapter,
+  getChapters,
   getGenres,
   getImage,
   getUserById,
   loginUser,
   registerUser,
+  updateBook,
+  updateChapter,
   updateUserById,
   updateUserPassword,
 } from "../api/service";
@@ -22,11 +28,12 @@ import {
   BlogResponseType,
   BookResponseType,
   BookType,
+  ChaptersResponseType,
+  ChapterType,
   GenreResponseType,
   UserStateType,
 } from "../types/types";
 import { useState, useEffect, useMemo } from "react";
-import { QueryParams } from "../types/api.types";
 
 export const useRegistration = () => {
   const { setUser } = useUserContext();
@@ -218,9 +225,99 @@ export const useCreateBook = () => {
     mutationFn: (data: any) => addBook(data),
     mutationKey: ["users", user?.id, "books"],
     onSuccess: () => {
-      navigate(`${Router.users}/${user?.id}/books`);
+      navigate(`${Router.users}/${user?.id}/${Router.books}`);
     },
   });
 
   return { createBook, isError, isLoading };
+};
+
+export const useCreateChapter = () => {
+  const navigate = useNavigate();
+  const {
+    mutate: createChapter,
+    isError,
+    isLoading,
+  } = useMutation({
+    mutationFn: (data: any) => addChapter(data),
+    mutationKey: ["chapter"],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { createChapter, isError, isLoading };
+};
+
+export const useFetchBook = (id: string) => {
+  const {
+    data: book,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery<BookType>({
+    queryKey: ["book"],
+    queryFn: async () => getBookById(id),
+    staleTime: 1000 * 10,
+  });
+
+  return {
+    book,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useFetchChapters = (id: string) => {
+  const { data, isError, isLoading, isSuccess } =
+    useQuery<ChaptersResponseType>({
+      queryKey: ["chapters"],
+      queryFn: async () => getChapters(id),
+      staleTime: 1000,
+    });
+
+  return {
+    chapters: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useFetchChapter = (id: string) => {
+  const { data: chapter } = useQuery<ChapterType>({
+    queryKey: ["chapters", id],
+    queryFn: async () => getChapter(id),
+    staleTime: 1000,
+  });
+
+  return { chapter };
+};
+
+export const useEditChapter = (id: string) => {
+  const navigate = useNavigate();
+  const { mutate: editChapter, isError } = useMutation({
+    mutationFn: (data: any) => updateChapter(`${id}`, data),
+    mutationKey: ["chapters", id],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { editChapter, isError };
+};
+
+export const useEditBook = (id: string) => {
+  const navigate = useNavigate();
+  const { mutate: editBook, isError } = useMutation({
+    mutationFn: (data: any) => updateBook(`${id}`, data),
+    mutationKey: ["books", id],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { editBook, isError };
 };

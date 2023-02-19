@@ -1,4 +1,4 @@
-import { BookType } from "../types/types";
+import { BookType, ChapterType } from "../types/types";
 
 export const createDate = (string: string) => {
   const date = new Date(string);
@@ -40,6 +40,12 @@ export const getBooksByReadings = (
   count: number = books.length
 ) => {
   if (count > books.length) count = books.length;
-  const result = [...books].sort((a, b) => Number(b.bookmarks.length) - Number(a.bookmarks.length));
-  return result.splice(0, count)
+  const result = [...books].sort(
+    (a, b) => Number(b.bookmarks.length) - Number(a.bookmarks.length)
+  );
+  return result.splice(0, count);
+};
+
+export const getChapterText = (chapter: ChapterType) => {
+  return chapter.pages?.reduce((text, page) => (text += `${page.text}`), "");
 };

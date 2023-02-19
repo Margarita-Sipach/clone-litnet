@@ -19,8 +19,8 @@ export type CommentProps = {
 };
 
 export interface BookCommentType {
-  userId: number,
-  bookId: number,
+  userId: number;
+  bookId: number;
   text: string;
 }
 
@@ -33,7 +33,7 @@ export interface BookType {
   img: string;
   genres: GenreType[];
   comments: BookCommentType[];
-  bookmarks: []
+  bookmarks: [];
 }
 
 export interface BookResponseType {
@@ -90,3 +90,23 @@ export type CommentType = {
   date: string;
   content: string;
 };
+
+export interface ChapterType {
+  id: number;
+  bookId: number;
+  title: string;
+  number: number;
+  pages?: PageType[];
+}
+
+export interface ChaptersResponseType {
+  rows: ChapterType[];
+  count: number;
+}
+
+export interface PageType {
+  id: number;
+  chapterId: number;
+  number: number;
+  text: string;
+}

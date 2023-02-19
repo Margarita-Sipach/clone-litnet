@@ -1,33 +1,15 @@
 import { AiOutlineEdit } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { BookElement } from "../../../ui/book-element";
-import Button from "../../../ui/button";
+import { Link, useParams } from "react-router-dom";
+import { useFetchChapters } from "../../../../hooks";
 import { ElementWrapper } from "../../../ui/element-wrapper";
 import { PageWrapper } from "../../../ui/page-wrapper";
-
-const chapters = [
-  {
-    id: "1",
-    title: "G 1",
-  },
-  {
-    id: "2",
-    title: "G 2",
-  },
-  {
-    id: "3",
-    title: "G 3",
-  },
-  {
-    id: "4",
-    title: "G 4",
-  },
-];
+import { PrimaryLink } from "../../../ui/primary-link";
 
 export const AccountEditBook = () => {
-  return (
-    <PageWrapper title="" isTop={true}>
-      {/* <BookElement book={book} /> */}
+  const { bookId } = useParams();
+  const { chapters } = useFetchChapters(`${bookId}`);
+  return chapters ? (
+    <PageWrapper title="" isTop={false}>
       <div className="mb-5 flex flex-col gap-y-5">
         {chapters.map((item) => (
           <ElementWrapper key={item.id} className="flex justify-between">
@@ -39,13 +21,15 @@ export const AccountEditBook = () => {
         ))}
       </div>
       <div className="flex w-full gap-x-5">
-        <Link className="w-1/2" to="../chapter">
-          <Button className="w-full">Добавить новую главу</Button>
-        </Link>
-        <Link className="w-1/2" to="../book-info/1">
-          <Button className="w-full">Редактировать информацию о книге</Button>
-        </Link>
+        <PrimaryLink className="w-1/2 text-center" path="../chapter">
+          Добавить новую главу
+        </PrimaryLink>
+        <PrimaryLink className="w-1/2 text-center" path="../book-info">
+          Редактировать информацию о книге
+        </PrimaryLink>
       </div>
     </PageWrapper>
+  ) : (
+    <h1>Loading...</h1>
   );
 };

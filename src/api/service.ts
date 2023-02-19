@@ -111,3 +111,57 @@ export const addBook = async (body: any) => {
     return new Promise((res, rej) => rej("Cannot create this book"));
   }
 };
+
+export const addChapter = async (body: any) => {
+  const response = await API.createChapter(body);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot create chapter"));
+  }
+};
+
+export const getChapters = async (id: string) => {
+  const response = await API.getChapterByBookId(id);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot find chapters"));
+  }
+};
+
+export const updateChapter = async (id: string, body: any) => {
+  const response = await API.updateChapterById(id, body);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot update this chapter"));
+  }
+};
+
+export const getChapter = async (id: string) => {
+  const response = await API.getChapterById(id);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot find chapter"));
+  }
+};
+
+export const getBookById = async (id: string) => {
+  const response = await API.getBookById(id);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot find book"));
+  }
+};
+
+export const updateBook = async (id: string, body: any) => {
+  const response = await API.updateBookById(id, body);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return new Promise((res, rej) => rej("Cannot update this book"));
+  }
+};

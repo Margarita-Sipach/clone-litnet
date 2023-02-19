@@ -25,7 +25,7 @@ import BlogPage from "../pages/BlogPage";
 import ContestRules from "../pages/ContestPage/ContestRules";
 import ContestBooks from "../pages/ContestPage/ContestBooks";
 import { AccountEditBook } from "../pages/Account/AccountEditBook";
-import { AccountEditBookChapter } from "../pages/Account/AccountEditBook/AccountEditBookNewChapters";
+import { AccountAddChapter } from "../pages/Account/AccountEditBook/AccountAddChapter";
 import { AccountBook } from "../pages/Account/AccountBook";
 import { AccountAddBook } from "../pages/Account/AccountAddBook";
 import { AccountEditBookInfo } from "../pages/Account/AccountEditBook/AccountEditBookInfo";
@@ -34,6 +34,7 @@ import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCheckingAuth } from "../../hooks";
+import { AccountEditChapter } from "../pages/Account/AccountEditBook/AccountEditChapter";
 
 const client = new QueryClient({
   logger: {
@@ -168,7 +169,7 @@ const router = createBrowserRouter([
             element: <AccountAddContest />,
           },
           {
-            path: "book/:id",
+            path: "book/:bookId",
             element: <AccountBook />,
             children: [
               {
@@ -176,16 +177,16 @@ const router = createBrowserRouter([
                 element: <AccountEditBook />,
               },
               {
-                path: "book-info/:id",
+                path: "book-info",
                 element: <AccountEditBookInfo />,
               },
               {
                 path: "chapter",
-                element: <AccountEditBookChapter />,
+                element: <AccountAddChapter />,
               },
               {
-                path: "chapter/:id",
-                element: <AccountEditBookChapter />,
+                path: "chapter/:chapterId",
+                element: <AccountEditChapter />,
               },
             ],
           },

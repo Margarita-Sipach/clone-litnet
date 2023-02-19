@@ -398,12 +398,12 @@ export class API {
 
   public static createChapter = async (body: any) => {
     const url = API.URLS.CHAPTER;
-    return await API.post(url, body);
+    return await API.post(url, body, { "Content-type": "application/json" });
   };
 
   public static updateChapterById = async (id: string, body: any) => {
     const url = API.URLS.CHAPTER_BY_ID.replace(":id", id);
-    return await API.update(url, body);
+    return await API.update(url, body, { "Content-type": "application/json" });
   };
 
   public static deleteChapterById = async (id: string) => {
