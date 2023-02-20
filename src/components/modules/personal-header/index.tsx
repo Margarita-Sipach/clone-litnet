@@ -8,19 +8,24 @@ import { PrimaryButton } from "../../ui/primary-button";
 import { Link, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { AccountType } from "../../../types/types";
-import { useUserAvatar } from "../../../hooks";
+import { useImage } from "../../../hooks";
 import avatar from "../../../common/assets/images/avatar.png";
+import { Router } from "../../router";
+import { getLastPathWord } from "../../../utils/utils";
 
 export interface PersonalHeaderProps {
   account: AccountType;
 }
 
+const DEFAULT_STYLE = `hover:text-indigo-800 hover:border-indigo-800 text-indigo-800 border-indigo-600`;
+
 export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const [userModalDisplay, setUserModalDisplay] = useState(false);
+  const [selectedButton, setSelectedButton] = useState(getLastPathWord());
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
   const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);
-  const image = useUserAvatar(account);
+  const image = useImage(account);
 
   useEffect(() => {
     if (account) setSelectedUser(account);
@@ -38,21 +43,36 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
           }}
         />
         <div className="flex flex-col items-start gap-2">
-          <div className="text-lg text-white">{account.name}</div>
-          {!isPageOwner && (
-            <SecondaryButton className="">Подписаться</SecondaryButton>
-          )}
+          <div className="text-lg text-gray-900">{account.name}</div>
         </div>
       </div>
       <div className="flex w-full flex-wrap gap-2 ">
-        <Link to="books">
-          <SecondaryButton className="">Книги</SecondaryButton>
+        <Link to={Router.books} onClick={() => setSelectedButton(Router.books)}>
+          <SecondaryButton
+            className={`${
+              Router.books === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Книги
+          </SecondaryButton>
         </Link>
-        <Link to="blogs">
-          <SecondaryButton className="">Блог</SecondaryButton>
+        <Link to={Router.blogs} onClick={() => setSelectedButton(Router.blogs)}>
+          <SecondaryButton
+            className={`${
+              Router.blogs === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Блог
+          </SecondaryButton>
         </Link>
-        <Link to="about">
-          <SecondaryButton className="">Обо мне</SecondaryButton>
+        <Link to={Router.about} onClick={() => setSelectedButton(Router.about)}>
+          <SecondaryButton
+            className={`${
+              Router.about === selectedButton ? DEFAULT_STYLE : ""
+            }`}
+          >
+            Обо мне
+          </SecondaryButton>
         </Link>
         {isPageOwner && (
           <PrimaryButton

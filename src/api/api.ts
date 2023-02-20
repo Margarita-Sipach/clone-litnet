@@ -133,6 +133,11 @@ export class API {
     return await API.get(url, params);
   };
 
+  public static addBook = async (params: QueryParams = {}) => {
+    const url = API.URLS.BOOKS;
+    return await API.post(url, params);
+  };
+
   public static getBookById = async (id: string) => {
     const url = API.URLS.BOOKS_BY_ID.replace(":id", id);
     return await API.get(url);
@@ -393,12 +398,12 @@ export class API {
 
   public static createChapter = async (body: any) => {
     const url = API.URLS.CHAPTER;
-    return await API.post(url, body);
+    return await API.post(url, body, { "Content-type": "application/json" });
   };
 
   public static updateChapterById = async (id: string, body: any) => {
     const url = API.URLS.CHAPTER_BY_ID.replace(":id", id);
-    return await API.update(url, body);
+    return await API.update(url, body, { "Content-type": "application/json" });
   };
 
   public static deleteChapterById = async (id: string) => {

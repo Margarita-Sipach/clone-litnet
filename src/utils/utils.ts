@@ -1,3 +1,5 @@
+import { BookType, ChapterType } from "../types/types";
+
 export const createDate = (string: string) => {
   const date = new Date(string);
   const day = addZero(date.getDate());
@@ -8,4 +10,42 @@ export const createDate = (string: string) => {
 
 export const addZero = (number: number) => {
   return number < 10 && number > 0 ? `0${number}` : number;
+};
+
+export const getBooksByRating = (
+  books: BookType[],
+  count: number = books.length
+) => {
+  if (count > books.length) count = books.length;
+  const result = [...books].sort((a, b) => Number(b.rating) - Number(a.rating));
+  return result.splice(0, count);
+};
+
+export const getBooksByComments = (
+  books: BookType[],
+  count: number = books.length
+) => {
+  if (count > books.length) count = books.length;
+  const result = [...books].sort(
+    (a, b) => Number(b.comments.length) - Number(a.comments.length)
+  );
+  return result.splice(0, count);
+};
+
+export const getLastPathWord = () =>
+  window.location.pathname.split("/").splice(-1, 1)[0];
+
+export const getBooksByReadings = (
+  books: BookType[],
+  count: number = books.length
+) => {
+  if (count > books.length) count = books.length;
+  const result = [...books].sort(
+    (a, b) => Number(b.bookmarks.length) - Number(a.bookmarks.length)
+  );
+  return result.splice(0, count);
+};
+
+export const getChapterText = (chapter: ChapterType) => {
+  return chapter.pages?.reduce((text, page) => (text += `${page.text}`), "");
 };

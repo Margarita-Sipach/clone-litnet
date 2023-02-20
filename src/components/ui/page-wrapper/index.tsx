@@ -7,7 +7,6 @@ interface PageWrapperProps {
   children: ReactNode;
   className?: string;
   isTop?: boolean;
-  isThereSidebar?: boolean;
 }
 
 export const PageWrapper = ({
@@ -15,7 +14,6 @@ export const PageWrapper = ({
   children,
   className,
   isTop,
-  isThereSidebar = true,
 }: PageWrapperProps) => {
   return (
     <div className={`${isTop ? "mt-28" : "mt-0"} w-full ${className}`}>
@@ -24,23 +22,6 @@ export const PageWrapper = ({
         <div className="w-full flex flex-col overflow-hidden gap-y-6">
           {children}
         </div>
-        {isThereSidebar ? (
-          <Sidebar>
-            {new Array(2).fill("").map((item, index) => (
-              <SidebarElement
-                key={index}
-                book={{
-                  img: "https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg",
-                  category: "fantastyc",
-                  title: "wwwwwwwwwww",
-                  author: "wwwwwww wwwwww",
-                }}
-              ></SidebarElement>
-            ))}
-          </Sidebar>
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );

@@ -36,7 +36,7 @@ const mockContests = [
 const Contests = () => {
   return (
     <Wrapper>
-      <PageWrapper title="Конкурсы" isTop={true} isThereSidebar={false}>
+      <PageWrapper title="Конкурсы" isTop={true}>
         <div className="flex flex-col gap-6">
           {mockContests.map((contest) => (
             <ContestElement

@@ -112,7 +112,9 @@ export const Header = () => {
       </Wrapper>
       {categoriesModalDisplay && (
         <Modal displayModal={setCategoriesModalDisplay}>
-          <Categories onClick={() => setCategoriesModalDisplay(false)} />
+          <Categories
+            onClick={() => setCategoriesModalDisplay(false)}
+          />
         </Modal>
       )}
     </header>

@@ -1,30 +1,32 @@
+import { BookType } from "../../../types/types";
+import { useImage } from "../../../hooks";
+import cover from "../../../common/assets/images/bookcover.png";
+
 interface SidebarElementProps {
   onClick?: () => void;
-  book: {
-    img: string;
-    category: string;
-    title: string;
-    author: string;
-  };
+  book: BookType;
 }
 
 export const SidebarElement = ({ book }: SidebarElementProps) => {
+  const image = useImage(book);
+
   return (
-    <a href="" className="flex items-start w-full sm:h-20 lg:h-32">
+    <div className="flex w-56 items-start sm:h-20 lg:h-32">
       <img
-        src={book.img}
+        src={image}
         alt=""
-        className="w-2/5 h-full mr-2 object-cover rounded-md lg:w-1/3"
+        className="mr-2 h-full w-3/12 rounded-md object-cover lg:w-2/5"
+        onError={(e) => ((e.target as HTMLImageElement).src = cover)}
       />
-      <div className="flex flex-col items-start w-3/5 gap-y-1 lg:w-2/3">
-        <div className="truncate max-w-full text-xs p-1 bg-slate-200 rounded-md">
-          {book.category}
+      <div className="flex w-3/5 flex-col items-start gap-y-1 lg:w-2/3">
+        <div className="max-w-full truncate rounded-md bg-slate-200 p-1 text-xs">
+          {book.genres[0].name}
         </div>
-        <div className="truncate max-w-full text-sm font-bold">
+        <div className="max-w-full truncate text-sm font-bold">
           {book.title}
         </div>
-        <div className="truncate max-w-full text-xs">{book.author}</div>
+        <div className="max-w-full truncate text-xs">{book.user.name}</div>
       </div>
-    </a>
+    </div>
   );
 };
