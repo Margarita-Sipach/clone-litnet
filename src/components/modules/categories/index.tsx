@@ -6,13 +6,13 @@ interface CategoriesProps {
 }
 
 export const Categories = ({ onClick }: CategoriesProps) => {
-  const genresQuery = useGenres();
+  const { data: genres, isLoading } = useGenres();
   return (
     <div className="w-full">
-      {genresQuery.isSuccess ? (
+      {genres ? (
         <>
           <div className="grid grid-cols-2 justify-between gap-x-6 sm:grid-cols-3">
-            {genresQuery.data.map((genre) => (
+            {genres.map((genre) => (
               <Link
                 key={genre.id}
                 to={`books/${genre.name}`}
@@ -32,8 +32,10 @@ export const Categories = ({ onClick }: CategoriesProps) => {
             Посмотреть все жанры
           </Link>
         </>
-      ) : (
+      ) : isLoading ? (
         <p>loading genres...</p>
+      ) : (
+        <p>error loading genres</p>
       )}
     </div>
   );

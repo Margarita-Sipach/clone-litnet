@@ -1,9 +1,10 @@
 import { Avatar } from "../avatar";
 import { ElementWrapper } from "../element-wrapper";
-import { AiFillEye } from "react-icons/ai";
 import React from "react";
 import { fetchUserData } from "../../../api/data";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { processImage } from "../../../utils/utils";
 
 type BlogElementProps = {
   id: string;
@@ -26,21 +27,23 @@ export const BlogElement: React.FC<BlogElementProps> = ({
   });
   const userData = userQuery.data!;
   return (
-    <ElementWrapper className="relative flex h-40 flex-col gap-y-5 sm:h-44">
-      {userQuery.isSuccess && (
-        <>
-          <div className="text-xl">{title}</div>
-          <Avatar
-            image={userData.image}
-            name={userData.name}
-            date={createdAt}
-          ></Avatar>
-          <div className="overflow-hidden overflow-ellipsis text-sm">
-            {text}
-          </div>
-        </>
-      )}
-      {userQuery.isLoading && <p>loading user data...</p>}
-    </ElementWrapper>
+    <Link to={`${id}`}>
+      <ElementWrapper className="relative flex h-40 flex-col gap-y-5 sm:h-44">
+        {userQuery.isSuccess && (
+          <>
+            <div className="text-xl">{title}</div>
+            <Avatar
+              image={processImage(userData.image)}
+              name={userData.name}
+              date={createdAt}
+            ></Avatar>
+            <div className="overflow-hidden overflow-ellipsis text-sm">
+              {text}
+            </div>
+          </>
+        )}
+        {userQuery.isLoading && <p>loading user data...</p>}
+      </ElementWrapper>
+    </Link>
   );
 };

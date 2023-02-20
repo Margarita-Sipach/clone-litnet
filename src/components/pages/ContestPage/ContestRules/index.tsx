@@ -14,29 +14,6 @@ const mockRules = {
   genres: ["ЛитРПГ", "РеалРПГ", "Постапокалипсис"],
   about:
     "Друзья, «Литнет» объявляет новый литературный конкурс на лучший  роман в жанре ЛитРПГ в постапокалиптическом сеттинге. Основная цель главного героя выжить в этом непростом мире. Врагами могут быть как тяжелые жизненные условия на планете, так и представители других рас/родов/фракций/кланов/государств/племен и т.д. Действия романа могут происходить как в наше время, так и в будущем, или в недалеком прошлом, или в параллельном мире. Персонажи могут быть как людьми, так и выдуманными существами. Главный герой обязательно должен обладать уникальной положительной особенностью, которая даст ему преимущества в выживании в постапоклипсисе. Эта особенность может быть как приобретенной (например, бионическая рука, способная трансформироваться в оружие), так и врожденной (например, способность силой мысли передвигать предметы).",
-  comments: [
-    {
-      content:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. optio eligendi cupiditate, et aperiam ut quidem ipsum corporis harum labore veritatis sunt repellendus. dolore quis dolorem iste repellendus sint! sint, id!",
-      name: "John Doe",
-      date: "07.02.2023",
-      image: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio eligendi cupiditate, et aperiam ut quidem ipsum corporis harum labore veritatis sunt repellendus. Dolore quis dolorem iste repellendus sint! Sint, id!",
-      name: "John Doe",
-      date: "07.02.2023",
-      image: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio eligendi cupiditate, et aperiam ut quidem ipsum corporis harum labore veritatis sunt repellendus. Dolore quis dolorem iste repellendus sint! Sint, id!",
-      name: "John Doe",
-      date: "07.02.2023",
-      image: "https://rust.litnet.com/uploads/covers/220/1451306083_.jpg",
-    },
-  ] as CommentType[],
 };
 
 const ContestRules = () => {
@@ -108,7 +85,7 @@ const ContestRules = () => {
 
       <Button className="mb-6">Участвовать в конкурсе</Button>
 
-      <CommentSection comments={mockRules.comments} />
+      {/*<CommentSection comments={mockRules.comments} />*/}
     </div>
   );
 };

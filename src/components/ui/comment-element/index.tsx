@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar } from "../avatar";
 import { ElementWrapper } from "../element-wrapper";
 import { CommentType } from "../../../types/types";
-import { processImage } from "../../../utils/utils";
+import { createDate, processImage } from "../../../utils/utils";
 
 export const CommentElement: React.FC<CommentType> = ({
   user,
@@ -14,7 +14,7 @@ export const CommentElement: React.FC<CommentType> = ({
       <Avatar
         image={processImage(user!.image)}
         name={user!.name}
-        date={createdAt}
+        date={createDate(createdAt)}
       />
       <p className="text-sm">{text}</p>
     </ElementWrapper>

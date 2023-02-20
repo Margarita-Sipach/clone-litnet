@@ -11,15 +11,13 @@ const Blogs = () => {
     queryFn: fetchBlogs,
     queryKey: ["blogs"],
   });
-  if (blogsQuery.isSuccess) {
-    console.log(blogsQuery.data);
-  }
+  const { data: blogs, isLoading } = blogsQuery;
   return (
     <Wrapper className="flex items-start">
       <PageWrapper title="Литературные блоги" isTop={true}>
-        {blogsQuery.isSuccess && (
+        {blogs ? (
           <>
-            {blogsQuery.data.map((blog) => (
+            {blogs.map((blog) => (
               <BlogElement
                 key={blog.id}
                 id={blog.id}
@@ -30,8 +28,11 @@ const Blogs = () => {
               />
             ))}
           </>
+        ) : isLoading ? (
+          <p>loading blogs...</p>
+        ) : (
+          <p>error loading blogs</p>
         )}
-        {blogsQuery.isLoading && <p>loading blogs data...</p>}
       </PageWrapper>
     </Wrapper>
   );

@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   checkUser,
-  getBlogsBlogsId,
+  getBlogsByUserId,
   getBooksByUserId,
   getImage,
   getUserById,
@@ -18,6 +18,8 @@ import {
   AccountType,
   BlogResponseType,
   BookResponseType,
+  CommentType,
+  GenreType,
   UserStateType,
 } from "../types/types";
 import { useEffect, useMemo, useState } from "react";
@@ -25,6 +27,7 @@ import {
   fetchBlogComments,
   fetchBookComments,
   fetchGenres,
+  fetchUserData,
   postBlogComment,
   postBookComment,
 } from "../api/data";
@@ -90,7 +93,6 @@ export const useFetchBooks = (userId: string) => {
     queryFn: async () => getBooksByUserId(userId as string),
     staleTime: 1000 * 10,
   });
-
   return {
     books: data?.rows,
     count: data?.count,
@@ -100,26 +102,10 @@ export const useFetchBooks = (userId: string) => {
   };
 };
 
-export const useFetchBlogs = (userId: string) => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BlogResponseType>({
-    queryKey: ["users", userId, "blogs"],
-    queryFn: async () => getBlogsBlogsId(userId as string),
-    staleTime: 1000 * 10,
-  });
-
-  return {
-    blogs: data?.rows,
-    count: data?.count,
-    isSuccess,
-    isError,
-    isLoading,
-  };
-};
-
 export const useGenres = () => {
   return useQuery({
-    queryKey: ["genres"],
     queryFn: fetchGenres,
+    queryKey: ["genres"],
   });
 };
 
@@ -136,10 +122,17 @@ export const useComments = (
   } else {
     queryFunction = fetchBlogComments;
   }
-  return useQuery({
+  return useQuery<CommentType[] | undefined>({
     queryFn: () => queryFunction(id),
     queryKey: ["comments", type, id],
     [dependentData && "enabled"]: !!dependentData,
+  });
+};
+
+export const useUserData = (userId: string) => {
+  return useQuery({
+    queryFn: () => fetchUserData(userId),
+    queryKey: ["userData", userId],
   });
 };
 

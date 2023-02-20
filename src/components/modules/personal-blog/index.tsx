@@ -1,19 +1,24 @@
 import { useParams } from "react-router-dom";
-import { useFetchBlogs } from "../../../hooks";
 import { PageWrapper } from "../../ui/page-wrapper";
 import { PersonalBlogElement } from "../../ui/personal-blog-element";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUserBlogs } from "../../../api/data";
 
 export const PersonalBlog = () => {
   const { id } = useParams();
-  const { blogs } = useFetchBlogs(id as string);
-  return blogs ? (
+  const userBlogsQuery = useQuery({
+    queryFn: async () => fetchUserBlogs(id!),
+    queryKey: [id, "userBlogs"],
+  });
+  const blogsData = userBlogsQuery.data!;
+  return userBlogsQuery.isSuccess ? (
     <PageWrapper title="Личный блог">
       <>
-        {blogs.map(({ createdAt, title, text }, i) => {
+        {blogsData.map(({ createdAt, title, text, id }) => {
           return (
             <PersonalBlogElement
-              key={i}
-              blog={{ date: createdAt, title, text }}
+              key={id}
+              blog={{ id, date: createdAt, title, text }}
             ></PersonalBlogElement>
           );
         })}

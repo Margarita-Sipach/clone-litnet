@@ -12,13 +12,12 @@ import { createBook } from "../../../../api/data";
 
 export const AccountAddBook = () => {
   const { user } = useUserContext();
-  console.log(user);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [genre1, setGenre1] = useState("");
   const [genre2, setGenre2] = useState("");
 
-  const genresQuery = useGenres();
+  const genres = useGenres().data;
 
   const createBookMutation = useMutation({
     mutationKey: ["book"],
@@ -41,17 +40,17 @@ export const AccountAddBook = () => {
             placeholder="Название книги"
             onChange={(e) => setTitle(e?.target.value || "")}
           />
-          {genresQuery.isSuccess ? (
+          {genres ? (
             <>
               <PrimarySelect
                 onChange={(e) => setGenre1(e!.target.value)}
                 title="Жанр 1"
-                options={genresQuery.data.map((genre) => genre.name)}
+                options={genres.map((genre) => genre.name)}
               />
               <PrimarySelect
                 onChange={(e) => setGenre2(e!.target.value)}
                 title="Жанр 2"
-                options={genresQuery.data.map((genre) => genre.name)}
+                options={genres.map((genre) => genre.name)}
               />
             </>
           ) : (

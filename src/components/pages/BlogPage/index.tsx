@@ -6,6 +6,7 @@ import CommentSection from "../../modules/comment-section";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogById, fetchUserData } from "../../../api/data";
 import { useComments } from "../../../hooks";
+import { createDate } from "../../../utils/utils";
 
 type Params = {
   id: string;
@@ -13,41 +14,44 @@ type Params = {
 
 const BlogPage = () => {
   const { id } = useParams<Params>();
-  const blogQuery = useQuery({
+  const { data: blog, isLoading: blogLoading } = useQuery({
     queryFn: () => fetchBlogById(id!),
     queryKey: ["blog"],
   });
-  const blogData = blogQuery.data!;
   const userQuery = useQuery({
-    queryFn: () => fetchUserData(blogData.userId),
+    queryFn: () => fetchUserData(blog!.userId),
     queryKey: ["user"],
-    enabled: !!blogData,
+    enabled: !!blog,
   });
-  const blogComments = useComments("blog", id!, blogData);
+  const { data: comments, isLoading: commentsLoading } = useComments(
+    "blog",
+    id!,
+    blog
+  );
   return (
     <Wrapper>
       <PageWrapper isTop={true}>
-        {blogQuery.isSuccess && userQuery.isSuccess ? (
+        {blog && userQuery.isSuccess ? (
           <>
-            <h3 className="self-start text-2xl font-medium">
-              {blogData.title}
-            </h3>
+            <h3 className="self-start text-2xl font-medium">{blog.title}</h3>
             <p className="w-full bg-gray-50 py-2 px-4 text-xs">
-              Автор:{" "}
+              B Автор:{" "}
               <span className="text-blue-500">{userQuery.data.name}</span> /
-              Добавлено: {blogData.createdAt}
+              Добавлено: {createDate(blog.createdAt)}
             </p>
-            <p>{blogData.text}</p>
-            {blogComments.isSuccess && (
-              <CommentSection
-                type="blog"
-                id={id!}
-                comments={blogComments.data}
-              />
+            <p>{blog.text}</p>
+            {comments ? (
+              <CommentSection type="blog" id={id!} comments={comments} />
+            ) : commentsLoading ? (
+              <p>loading comments...</p>
+            ) : (
+              <p>error loading comments</p>
             )}
           </>
-        ) : (
+        ) : blogLoading ? (
           <p>loading blog data...</p>
+        ) : (
+          <p>error loading blog data</p>
         )}
       </PageWrapper>
     </Wrapper>

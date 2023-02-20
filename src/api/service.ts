@@ -61,7 +61,7 @@ export const getBooksByUserId = async (id: string) => {
   }
 };
 
-export const getBlogsBlogsId = async (id: string) => {
+export const getBlogsByUserId = async (id: string) => {
   const response = await API.getBlogByUserId(id);
   if (response.ok) {
     return response.json();

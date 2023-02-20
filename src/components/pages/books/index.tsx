@@ -9,11 +9,12 @@ export const BooksPage = () => {
     queryFn: fetchBooks,
     queryKey: ["books"],
   });
+  const { data: books, isLoading } = booksQuery;
   return (
     <Wrapper>
-      {booksQuery.isSuccess && (
-        <PageWrapper isTop={true}>
-          {booksQuery.data.map((book) => (
+      <PageWrapper isTop={true}>
+        {books ? (
+          books.map((book) => (
             <BookElement
               id={book.id}
               key={book.id}
@@ -24,9 +25,13 @@ export const BooksPage = () => {
               rating={book.rating}
               categories={book.genres.map((genre) => genre.name)}
             />
-          ))}
-        </PageWrapper>
-      )}
+          ))
+        ) : isLoading ? (
+          <p>loading books...</p>
+        ) : (
+          <p>error loading books</p>
+        )}
+      </PageWrapper>
     </Wrapper>
   );
 };

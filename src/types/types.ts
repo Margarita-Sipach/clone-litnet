@@ -1,3 +1,7 @@
+import { AxiosError } from "axios";
+
+export interface ErrorType extends AxiosError {}
+
 export interface BookElementType {
   id?: string | number;
   img: string;
