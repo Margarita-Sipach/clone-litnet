@@ -8,6 +8,7 @@ import slide4 from "../../../common/assets/images/big-slider/banner-light-4.png"
 import "./animation.css";
 import { Link } from "react-router-dom";
 import Button from "../../ui/button";
+import { useUserContext } from "../../context/userContext";
 
 const benefits = [
   "Все популярные жанры: боевики, фэнтези, фантастика и другие",
@@ -16,6 +17,7 @@ const benefits = [
 ];
 
 export const BigSlider = () => {
+  const { isUserLogged } = useUserContext();
   return (
     <div className="relative mb-10 flex h-[550px] w-full items-center justify-center">
       {[slide1, slide2, slide3, slide4].map((item, index) => (
@@ -42,9 +44,11 @@ export const BigSlider = () => {
             </div>
           ))}
         </div>
-        <Link to="/registration">
-          <Button className="lg:text-lg">Присоединиться</Button>
-        </Link>
+        {!isUserLogged && (
+          <Link to="/registration">
+            <Button className="lg:text-lg">Присоединиться</Button>
+          </Link>
+        )}
       </Wrapper>
     </div>
   );

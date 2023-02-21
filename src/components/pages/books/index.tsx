@@ -7,7 +7,7 @@ import { fetchBooks } from "../../../api/data";
 export const BooksPage = () => {
   const booksQuery = useQuery({
     queryFn: fetchBooks,
-    queryKey: ["books"],
+    queryKey: ["allBooks"],
   });
   const { data: books, isLoading } = booksQuery;
   return (

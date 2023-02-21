@@ -1,10 +1,10 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface PrimaryInputProps {
   title: string;
   options: (string | number)[];
   defaultOption?: string | number;
-  onChange?: (e?: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const PrimarySelect = ({
@@ -15,11 +15,9 @@ export const PrimarySelect = ({
 }: PrimaryInputProps) => {
   return (
     <select
-      onChange={(e?: ChangeEvent<HTMLSelectElement>) => {
-        if (onChange) onChange(e);
-      }}
       defaultValue={defaultOption || title}
       className="w-full border-spacing-1 rounded border border-gray-400 py-2 px-3"
+      onChange={(e) => (onChange ? onChange(e) : "")}
     >
       <option value={title} disabled>
         {title}

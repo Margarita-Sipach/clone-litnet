@@ -28,12 +28,13 @@ export interface BookType {
   user: { name: string };
   img: string;
   genres: GenreType[];
-  chapters: ChapterType[];
+  chapters?: ChapterType[];
   comments?: CommentType[];
   createdAt?: string;
   ratings?: {
     rating: number;
   }[];
+  bookmarks?: [];
 }
 
 export type DetailedBookType = {
@@ -70,6 +71,11 @@ export interface BookResponseType {
 export interface GenreType {
   id: number;
   name: string;
+}
+
+export interface GenreResponseType {
+  rows: GenreType[];
+  count: number;
 }
 
 export interface UserType {
@@ -129,3 +135,23 @@ export type BookCommentType = {
 export type ContestCommentType = {
   contestId: string;
 } & CommentType;
+
+export interface ChapterType {
+  id: number;
+  bookId: string;
+  title: string;
+  number: number;
+  pages?: PageType[];
+}
+
+export interface ChaptersResponseType {
+  rows: ChapterType[];
+  count: number;
+}
+
+export interface PageType {
+  id: number;
+  chapterId: number;
+  number: number;
+  text: string;
+}

@@ -11,7 +11,7 @@ const User = () => {
   const { id } = useParams<Params>();
   return (
     <Wrapper>
-      <PageWrapper isTop={true} isThereSidebar={false}>
+      <PageWrapper isTop={true} >
         <h1>User (id: {id}) Info</h1>
         <nav className="flex gap-4">
           <Link className="font-medium text-blue-500" to={`/users/${id}/about`}>

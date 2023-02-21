@@ -19,7 +19,7 @@ const ContestPage = () => {
   const { data: contest, isLoading } = useContest(id!);
   return (
     <Wrapper>
-      <PageWrapper isTop={true} isThereSidebar={false}>
+      <PageWrapper isTop={true}>
         {contest ? (
           <ContestHeader id={id!} />
         ) : isLoading ? (

@@ -1,10 +1,12 @@
 import { ElementWrapper } from "../element-wrapper";
-import { AiFillStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineComment } from "react-icons/ai";
+import { GiBookshelf } from "react-icons/gi";
 import { Icon } from "../icon";
 import { BookElementType } from "../../../types/types";
 import Button from "../button";
 import { Link } from "react-router-dom";
-import { processImage } from "../../../utils/utils";
+import { handleImageError, processImage } from "../../../utils/utils";
+import { PrimaryLink } from "../primary-link";
 
 type BookElementProps = {
   onClick?: () => void;
@@ -28,6 +30,7 @@ export const BookElement = ({
           <img
             src={processImage(img)}
             alt=""
+            onError={handleImageError}
             className="mr-5 h-36 w-24 rounded object-cover lg:h-44 lg:w-32"
           />
           <div className="flex flex-col items-start">
@@ -49,9 +52,12 @@ export const BookElement = ({
               <Icon title={rating} icon={<AiFillStar />} />
             </div>
             {isUserBook && (
-              <Link to="/account/book/1/edit-book">
-                <Button className="mt-2">Редактировать</Button>
-              </Link>
+              <PrimaryLink
+                path={`/account/book/${id}/edit-book`}
+                className="mt-2"
+              >
+                Редактировать
+              </PrimaryLink>
             )}
           </div>
         </div>

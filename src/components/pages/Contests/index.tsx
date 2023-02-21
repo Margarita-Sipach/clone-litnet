@@ -13,7 +13,7 @@ const Contests = () => {
   });
   return (
     <Wrapper>
-      <PageWrapper title="Конкурсы" isTop={true} isThereSidebar={false}>
+      <PageWrapper title="Конкурсы" isTop={true}>
         {contests ? (
           <div className="flex flex-col gap-6">
             {contests.map((contest) => (

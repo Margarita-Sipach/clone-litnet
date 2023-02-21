@@ -1,13 +1,22 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
+  addBook,
+  addChapter,
   checkUser,
   getBlogsByUserId,
+  getBookById,
+  getBooks,
   getBooksByUserId,
+  getChapter,
+  getChapters,
+  getGenres,
   getImage,
   getUserById,
   loginUser,
   registerUser,
+  updateBook,
+  updateChapter,
   updateUserById,
   updateUserPassword,
 } from "../api/service";
@@ -18,6 +27,10 @@ import {
   AccountType,
   BlogResponseType,
   BookResponseType,
+  BookType,
+  ChaptersResponseType,
+  ChapterType,
+  GenreResponseType,
   CommentType,
   GenreType,
   UserStateType,
@@ -88,7 +101,7 @@ export const useFetchUser = (id: string) => {
   return { account, isSuccess, isError, isLoading };
 };
 
-export const useFetchBooks = (userId: string) => {
+export const useFetchUserBooks = (userId: string) => {
   const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
     queryKey: ["users", userId, "books"],
     queryFn: async () => getBooksByUserId(userId as string),
@@ -106,7 +119,7 @@ export const useFetchBooks = (userId: string) => {
 export const useGenres = () => {
   return useQuery({
     queryFn: fetchGenres,
-    queryKey: ["genres"],
+    queryKey: ["allGenres"],
   });
 };
 
@@ -135,6 +148,21 @@ export const useContest = (contestId: string) => {
     queryFn: () => fetchContest(contestId),
     queryKey: [contestId, "contest"],
   });
+};
+
+export const useFetchUserBlogs = (userId: string) => {
+  const { data, isError, isLoading, isSuccess } = useQuery<BlogResponseType>({
+    queryKey: ["users", userId, "blogs"],
+    queryFn: async () => getBlogsByUserId(userId as string),
+    staleTime: 1000 * 10,
+  });
+  return {
+    blogs: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
 };
 
 export const useBook = (bookId: string) => {
@@ -174,10 +202,10 @@ export const useCheckingAuth = () => {
   return user;
 };
 
-export const useUserAvatar = (account: AccountType) => {
+export const useImage = (entity: AccountType | BookType) => {
   const image = useMemo(() => {
-    return getImage(`/${account.img}`);
-  }, [account]);
+    return getImage(`/${entity.img}`);
+  }, [entity]);
 
   return image;
 };
@@ -210,4 +238,143 @@ export const useEditPassword = () => {
   });
 
   return { editPassword, isError };
+};
+
+export const useFetchBooks = () => {
+  const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
+    queryKey: ["books"],
+    queryFn: async (params?: any) => getBooks(params),
+    staleTime: 1000 * 10,
+  });
+
+  return {
+    books: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useFetchGenres = () => {
+  const { data, isError, isLoading, isSuccess } = useQuery<GenreResponseType>({
+    queryKey: ["genres"],
+    queryFn: async (params?: any) => getGenres(params),
+  });
+
+  return {
+    genres: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useCreateBook = () => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
+  const {
+    mutate: createBook,
+    isError,
+    isLoading,
+  } = useMutation({
+    mutationFn: (data: any) => addBook(data),
+    mutationKey: ["users", user?.id, "books"],
+    onSuccess: () => {
+      navigate(`${Router.users}/${user?.id}/${Router.books}`);
+    },
+  });
+
+  return { createBook, isError, isLoading };
+};
+
+export const useCreateChapter = () => {
+  const navigate = useNavigate();
+  const {
+    mutate: createChapter,
+    isError,
+    isLoading,
+  } = useMutation({
+    mutationFn: (data: any) => addChapter(data),
+    mutationKey: ["chapter"],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { createChapter, isError, isLoading };
+};
+
+export const useFetchBook = (id: string) => {
+  const {
+    data: book,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery<BookType>({
+    queryKey: ["book"],
+    queryFn: async () => getBookById(id),
+    staleTime: 1000 * 10,
+  });
+
+  return {
+    book,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useFetchChapters = (id: string) => {
+  const { data, isError, isLoading, isSuccess } =
+    useQuery<ChaptersResponseType>({
+      queryKey: ["chapters"],
+      queryFn: async () => getChapters(id),
+      staleTime: 1000,
+    });
+
+  return {
+    chapters: data?.rows,
+    count: data?.count,
+    isSuccess,
+    isError,
+    isLoading,
+  };
+};
+
+export const useFetchChapter = (id: string) => {
+  const { data: chapter } = useQuery<ChapterType>({
+    queryKey: ["chapters", id],
+    queryFn: async () => getChapter(id),
+    staleTime: 1000,
+  });
+
+  return { chapter };
+};
+
+export const useEditChapter = (id: string) => {
+  const navigate = useNavigate();
+  const { mutate: editChapter, isError } = useMutation({
+    mutationFn: (data: any) => updateChapter(`${id}`, data),
+    mutationKey: ["chapters", id],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { editChapter, isError };
+};
+
+export const useEditBook = (id: string) => {
+  const navigate = useNavigate();
+  const { mutate: editBook, isError } = useMutation({
+    mutationFn: (data: any) => updateBook(`${id}`, data),
+    mutationKey: ["books", id],
+    onSuccess: () => {
+      navigate(-1);
+    },
+  });
+
+  return { editBook, isError };
 };
