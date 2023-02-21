@@ -7,6 +7,8 @@ import {
   BlogCommentType,
   DetailedBookType,
   BookCommentType,
+  ContestType,
+  ContestCommentType,
 } from "../types/types";
 
 const baseUrl = "https://litnet.herokuapp.com";
@@ -114,6 +116,48 @@ export const fetchBookComments = async (bookId: string) => {
     }
   } catch (error: any) {
     console.log(`Error: ${error.message}`);
+    throw error;
+  }
+};
+
+export const fetchContests = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/contest`);
+    if (response.status === 200) {
+      const data: ContestType[] = response.data.rows;
+      return data;
+    }
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    throw error;
+  }
+};
+
+export const fetchContest = async (contestId: string) => {
+  try {
+    const response = await axios.get(`${baseUrl}/contest/${contestId}`);
+    if (response.status === 200) {
+      const data: ContestType = response.data;
+      return data;
+    }
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    throw error;
+  }
+};
+
+export const fetchContestComments = async (contestId: string) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/contest-comment/contest/${contestId}`
+    );
+    if (response.status === 200) {
+      const data: ContestCommentType[] = response.data.rows;
+      return data;
+    }
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    throw error;
   }
 };
 
@@ -145,6 +189,23 @@ export const createBlog = async (
   return response.data;
 };
 
+export const createContest = async (formData: FormData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/contest`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    return response.data;
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    throw error;
+  }
+};
+
 export const postBlogComment = async (
   blogId: string | number,
   userId: string | number,
@@ -169,4 +230,25 @@ export const postBookComment = async (
     text,
   });
   return response.data;
+};
+
+export const postContestComment = async (
+  contestId: string | number,
+  userId: string | number,
+  text: string
+) => {
+  try {
+    const response = await axios.post(`${baseUrl}/contest-comment`, {
+      contestId,
+      userId,
+      text,
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    return response.data;
+  } catch (error: any) {
+    console.log(`Error: ${error.message}`);
+    throw error;
+  }
 };

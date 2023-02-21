@@ -4,10 +4,14 @@ import { FaTrophy } from "react-icons/fa";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import Button from "../button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DetailsElement from "../details-element";
+import { handleImageError, processImage } from "../../../utils/utils";
+import defaultImage from "../../../common/assets/images/avatar.png";
+import avatar from "../../../common/assets/images/avatar.png";
 
 type ContestElementProps = {
+  id: string;
   title: string;
   prize: string;
   imageUrl: string;
@@ -18,6 +22,7 @@ type ContestElementProps = {
 };
 
 const ContestElement: React.FC<ContestElementProps> = ({
+  id,
   title,
   prize,
   imageUrl,
@@ -26,13 +31,15 @@ const ContestElement: React.FC<ContestElementProps> = ({
   resultsDate,
   booksAmount = 0,
 }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex w-full gap-6 pb-6">
         <img
-          className="aspect-[6.5/10] max-w-[175px]"
-          src={imageUrl}
+          className="aspect-[6.5/10] w-full max-w-[175px] object-contain"
+          src={processImage(imageUrl)}
           alt="contest image"
+          onError={handleImageError}
         />
         <div className="flex flex-1 flex-col">
           <div className="mb-2 flex justify-between lg:mb-6 ">
@@ -43,7 +50,7 @@ const ContestElement: React.FC<ContestElementProps> = ({
           <div className="flex justify-between rounded-md border border-slate-300 p-2 lg:gap-12 lg:p-6">
             <DetailsElement
               title="Приз"
-              description={prize}
+              description={`3 победителя получат: выплаты от ${prize} руб.; рекламную поддержку; коммерческий статус.`}
               icon={FaTrophy}
               className="flex shrink-0 grow-0 basis-2/5"
             />
@@ -61,10 +68,14 @@ const ContestElement: React.FC<ContestElementProps> = ({
             />
           </div>
           <div className="mt-auto flex gap-4">
-            <Link to="/contests/1">
-              <Button>Перейти к работам</Button>
+            <Link to="1">
+              <Button onClick={() => navigate(`${id}`)}>
+                Перейти к работам
+              </Button>
             </Link>
-            <Button>Правила конкурса</Button>
+            <Button onClick={() => navigate(`${id}/rules`)}>
+              Правила конкурса
+            </Button>
           </div>
         </div>
       </div>

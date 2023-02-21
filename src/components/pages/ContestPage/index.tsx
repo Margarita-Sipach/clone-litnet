@@ -3,31 +3,31 @@ import { Outlet, useParams } from "react-router-dom";
 import { Wrapper } from "../../ui/wrapper";
 import { PageWrapper } from "../../ui/page-wrapper";
 import ContestHeader from "../../modules/contest-header";
+import { useContest } from "../../../hooks";
+import { ContestType } from "../../../types/types";
 
 type Params = {
-  slug: string;
+  id: string;
 };
 
-const mockContest = {
-  title: "Народная комедия",
-  description: "Конкурс на лучшую комедийную историю",
-  prize:
-    "3 победителя получат: выплаты от 20 до 50 тыс. руб.; шанс на экранизацию",
-  image: "https://litnet.com/uploads/contests/saver_1671034577.png",
+export type ContestContextType = {
+  contest: ContestType;
 };
 
 const ContestPage = () => {
-  const { slug } = useParams<Params>();
+  const { id } = useParams<Params>();
+  const { data: contest, isLoading } = useContest(id!);
   return (
     <Wrapper>
       <PageWrapper isTop={true} isThereSidebar={false}>
-        <ContestHeader
-          title={mockContest.title}
-          description={mockContest.description}
-          prize={mockContest.prize}
-          image={mockContest.image}
-        />
-        <Outlet />
+        {contest ? (
+          <ContestHeader id={id!} />
+        ) : isLoading ? (
+          <p>loading contest data...</p>
+        ) : (
+          <p>error loading contest</p>
+        )}
+        <Outlet context={{ contest }} />
       </PageWrapper>
     </Wrapper>
   );

@@ -25,11 +25,12 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import {
   fetchBlogComments,
+  fetchBookById,
   fetchBookComments,
+  fetchContest,
+  fetchContestComments,
   fetchGenres,
   fetchUserData,
-  postBlogComment,
-  postBookComment,
 } from "../api/data";
 
 export const useRegistration = () => {
@@ -110,7 +111,7 @@ export const useGenres = () => {
 };
 
 export const useComments = (
-  type: "book" | "blog",
+  type: "book" | "blog" | "contest",
   id: string,
   dependentData?: any
 ) => {
@@ -119,13 +120,27 @@ export const useComments = (
     queryFunction = fetchBlogComments;
   } else if (type === "book") {
     queryFunction = fetchBookComments;
-  } else {
-    queryFunction = fetchBlogComments;
+  } else if (type === "contest") {
+    queryFunction = fetchContestComments;
   }
   return useQuery<CommentType[] | undefined>({
     queryFn: () => queryFunction(id),
     queryKey: ["comments", type, id],
     [dependentData && "enabled"]: !!dependentData,
+  });
+};
+
+export const useContest = (contestId: string) => {
+  return useQuery({
+    queryFn: () => fetchContest(contestId),
+    queryKey: [contestId, "contest"],
+  });
+};
+
+export const useBook = (bookId: string) => {
+  return useQuery({
+    queryFn: () => fetchBookById(bookId),
+    queryKey: [bookId, "book"],
   });
 };
 

@@ -98,7 +98,7 @@ const router = createBrowserRouter([
         element: <Contests />,
       },
       {
-        path: "/contests/:slug",
+        path: "/contests/:id",
         element: <ContestPage />,
         children: [
           {

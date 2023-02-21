@@ -14,6 +14,12 @@ export interface BookElementType {
   rating: string | number;
 }
 
+export interface ChapterType {
+  title: string;
+  text: string;
+  bookId: string;
+}
+
 export interface BookType {
   id: number;
   title: string;
@@ -22,22 +28,38 @@ export interface BookType {
   user: { name: string };
   img: string;
   genres: GenreType[];
+  chapters: ChapterType[];
+  comments?: CommentType[];
+  createdAt?: string;
+  ratings?: {
+    rating: number;
+  }[];
 }
 
 export type DetailedBookType = {
-  id: number;
-  title: string;
-  rating: string;
-  description: string;
-  img: string;
-  userId: string;
-  createdAt: string;
-  genres: GenreType[];
-  comments: BookCommentType[];
   user: UserType;
   ratings: {
     rating: number;
   }[];
+  chapters: ChapterType[];
+} & BookType;
+
+export type ContestType = {
+  id: string;
+  title: string;
+  description: string;
+  prize: number | string;
+  img: string;
+  date: string;
+  countCharacters: number;
+  userId: string;
+  createdAt: string;
+  books: ContestBook[];
+};
+
+export type ContestBook = {
+  id: string;
+  bookId: string;
 };
 
 export interface BookResponseType {
@@ -102,4 +124,8 @@ export type BlogCommentType = {
 
 export type BookCommentType = {
   bookId: string;
+} & CommentType;
+
+export type ContestCommentType = {
+  contestId: string;
 } & CommentType;

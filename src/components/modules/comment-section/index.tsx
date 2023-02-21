@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { CommentType, ErrorType } from "../../../types/types";
 import { CommentElement } from "../../ui/comment-element";
 import Button from "../../ui/button";
-import { postBlogComment, postBookComment } from "../../../api/data";
+import {
+  postBlogComment,
+  postBookComment,
+  postContestComment,
+} from "../../../api/data";
 import { useUserContext } from "../../context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { useComments } from "../../../hooks";
 
 type CommentSectionProps = {
   comments: CommentType[];
-  type: "blog" | "book";
+  type: "blog" | "book" | "contest";
   id: string | number;
 };
 
@@ -27,8 +31,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
     mutationFunction = postBlogComment;
   } else if (type === "book") {
     mutationFunction = postBookComment;
-  } else {
-    mutationFunction = postBlogComment;
+  } else if (type === "contest") {
+    mutationFunction = postContestComment;
   }
   const { data: comments, refetch } = useComments(type, id.toString());
   const commentMutation = useMutation({
@@ -58,14 +62,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
           {isError && <p>You already commented!</p>}
           {isActive && (
             <div className="mb-4 flex gap-4">
-              <Button
-                onClick={() => {
-                  commentMutation.mutate();
-                  console.log(`id: ${id}, userId: ${user!.id}, text: ${text}`);
-                }}
-              >
-                Добавить
-              </Button>
+              <Button onClick={() => commentMutation.mutate()}>Добавить</Button>
               <Button onClick={() => setIsActive(false)}>Отменить</Button>
             </div>
           )}

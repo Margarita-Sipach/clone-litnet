@@ -1,79 +1,36 @@
 import React from "react";
 import ContestsBook from "../../../ui/contests-book";
+import { useBook, useContest } from "../../../../hooks";
+import { useParams } from "react-router-dom";
 
-type Book = {
-  title: string;
-  author: string;
-  img: string;
-  favorites: number;
-  pages: number;
-  genres: string[];
+type Params = {
+  id: string;
 };
 
-const mockBooks: Book[] = [
-  {
-    title: "Book title",
-    author: "John Doe",
-    img: "https://rust.litnet.com/uploads/covers/220/1675762220_68.png",
-    favorites: 5,
-    pages: 42,
-    genres: ["action", "drama", "kys"],
-  },
-  {
-    title: "Book title",
-    author: "John Doe",
-    img: "https://rust.litnet.com/uploads/covers/220/1675762220_68.png",
-    favorites: 5,
-    pages: 42,
-    genres: ["action", "drama", "kys"],
-  },
-  {
-    title: "Book title",
-    author: "John Doe",
-    img: "https://rust.litnet.com/uploads/covers/220/1675762220_68.png",
-    favorites: 5,
-    pages: 42,
-    genres: ["action", "drama", "kys"],
-  },
-  {
-    title: "Book title",
-    author: "John Doe",
-    img: "https://rust.litnet.com/uploads/covers/220/1675762220_68.png",
-    favorites: 5,
-    pages: 42,
-    genres: ["action", "drama", "kys"],
-  },
-  {
-    title: "Book title",
-    author: "John Doe",
-    img: "https://rust.litnet.com/uploads/covers/220/1675762220_68.png",
-    favorites: 5,
-    pages: 42,
-    genres: ["action", "drama", "kys"],
-  },
-];
-
 const ContestBooks = () => {
+  const { id } = useParams();
+  const { data: contest, isLoading } = useContest(id!);
   return (
     <div className="lg:mt-4">
-      <p className="mb-6 font-medium">
-        Работы участников
-        <span className="ml-4 rounded-md bg-gray-700 px-3 py-1 text-sm font-medium text-white">
-          {mockBooks.length}
-        </span>
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {mockBooks.map((book) => (
-          <ContestsBook
-            title={book.title}
-            author={book.author}
-            img={book.img}
-            favorites={book.favorites}
-            pages={book.pages}
-            genres={book.genres}
-          />
-        ))}
-      </div>
+      {contest ? (
+        <>
+          <p className="mb-6 font-medium">
+            Работы участников
+            <span className="ml-4 rounded-md bg-gray-700 px-3 py-1 text-sm font-medium text-white">
+              {contest.books.length}
+            </span>
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {contest.books.map((book) => (
+              <ContestsBook id={book.id} />
+            ))}
+          </div>
+        </>
+      ) : isLoading ? (
+        <p>loading contest data</p>
+      ) : (
+        <p>error loading data</p>
+      )}
     </div>
   );
 };
