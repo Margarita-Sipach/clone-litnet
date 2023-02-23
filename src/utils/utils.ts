@@ -1,8 +1,9 @@
 import defaultImage from "../common/assets/images/avatar.png";
 import React from "react";
-const baseUrl = "https://litnet.herokuapp.com/";
 
 import { BookType, ChapterType } from "../types/types";
+
+export const baseUrl = "https://litnet.herokuapp.com";
 
 export const createDate = (string: string) => {
   const date = new Date(string);
