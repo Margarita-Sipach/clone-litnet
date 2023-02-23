@@ -13,15 +13,10 @@ import {
 import { useUserContext } from "../components/context/userContext";
 import { Router } from "../components/router";
 import { LocalStorage } from "../components/storage";
-import {
-  AccountType,
-  BookResponseType,
-  BookType,
-  GenreResponseType,
-  UserStateType,
-} from "../types/types";
+import { AccountType, BookType, UserStateType } from "../types/types";
 import { useEffect, useMemo, useState } from "react";
 import { fetchUserData } from "../api/data";
+import { BookListType, GenreListType } from "../types/list.types";
 
 export const useFetchUser = (id: string) => {
   const {
@@ -107,7 +102,7 @@ export const useEditPassword = () => {
 };
 
 export const useFetchBooks = () => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<BookListType>({
     queryKey: ["books"],
     queryFn: async (params?: any) => getBooks(params),
     staleTime: 1000 * 10,
@@ -123,7 +118,7 @@ export const useFetchBooks = () => {
 };
 
 export const useFetchGenres = () => {
-  const { data, isError, isLoading, isSuccess } = useQuery<GenreResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<GenreListType>({
     queryKey: ["genres"],
     queryFn: async (params?: any) => getGenres(params),
   });

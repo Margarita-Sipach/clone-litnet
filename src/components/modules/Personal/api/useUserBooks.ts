@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { BookResponseType } from "../../../../types/types";
 import { getBooksByUserId } from "../../../../api/service";
+import { BookListType } from "../../../../types/list.types";
 
 const useFetchUserBooks = (userId: string) => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<BookListType>({
     queryKey: ["users", userId, "books"],
     queryFn: async () => getBooksByUserId(userId as string),
     staleTime: 1000 * 10,
