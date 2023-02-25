@@ -29,23 +29,19 @@ export interface BookType {
   img: string;
   genres: GenreType[];
   chapters?: ChapterType[];
-  comments?: CommentType[];
+  comments?: BookCommentType[];
   createdAt?: string;
-  ratings?: {
-    rating: number;
-  }[];
-  bookmarks?: [];
+  ratings?: RatingType[];
+  bookmarks?: BookmarkType[];
 }
 
 export type DetailedBookType = {
   user: UserType;
-  ratings: {
-    rating: number;
-  }[];
+  ratings: RatingType[];
   chapters: ChapterType[];
 } & BookType;
 
-export type ContestType = {
+export interface ContestType {
   id: string;
   title: string;
   description: string;
@@ -56,26 +52,16 @@ export type ContestType = {
   userId: string;
   createdAt: string;
   books: ContestBook[];
-};
+}
 
-export type ContestBook = {
+export interface ContestBook {
   id: string;
   bookId: string;
-};
-
-export interface BookResponseType {
-  rows: BookType[];
-  count: number;
 }
 
 export interface GenreType {
   id: number;
   name: string;
-}
-
-export interface GenreResponseType {
-  rows: GenreType[];
-  count: number;
 }
 
 export interface UserType {
@@ -93,26 +79,25 @@ export interface BlogType {
   title: string;
   text: string;
   createdAt: string;
-  blogComments?: {
-    id: string;
-  }[];
-}
-
-export interface BlogResponseType {
-  rows: BlogType[];
-  count: number;
+  blogComments?: BlogCommentType[];
 }
 
 export type UserStateType = UserType | null | undefined;
 
 export interface AccountType extends UserType {
   createdAt: string;
-  contestId: null;
   updatedAt: string;
-  contest: null;
+  contestId?: number | null;
+  contest?: ContestType | null;
+  bookmarks?: BookmarkType[];
+  blogs?: BlogType[];
+  ratings?: RatingType[];
+  bookComments?: BookCommentType[];
+  blogComments?: BlogCommentType[];
+  contestComments?: ContestCommentType[];
 }
 
-export type CommentType = {
+export interface CommentType {
   id: string;
   userId: string;
   text: string;
@@ -122,19 +107,19 @@ export type CommentType = {
     name: string;
     image: string;
   };
-};
+}
 
-export type BlogCommentType = {
+export interface BlogCommentType extends CommentType {
   blogId: string;
-} & CommentType;
+}
 
-export type BookCommentType = {
+export interface BookCommentType extends CommentType {
   bookId: string;
-} & CommentType;
+}
 
-export type ContestCommentType = {
+export interface ContestCommentType extends CommentType {
   contestId: string;
-} & CommentType;
+}
 
 export interface ChapterType {
   id: number;
@@ -144,14 +129,30 @@ export interface ChapterType {
   pages?: PageType[];
 }
 
-export interface ChaptersResponseType {
-  rows: ChapterType[];
-  count: number;
-}
-
 export interface PageType {
   id: number;
   chapterId: number;
   number: number;
   text: string;
+}
+
+export interface RatingType {
+  id: number;
+  bookId: number;
+  userId: number;
+  rating: number;
+}
+
+export interface BookmarkType {
+  id: number;
+  bookId: number;
+  userId: number;
+  progressId: number;
+  progress: ProgressType;
+}
+
+export interface ProgressType {
+  id: number;
+  chapterId: number;
+  pageId: number;
 }
