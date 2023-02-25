@@ -2,8 +2,9 @@ import React from "react";
 import { FaTrophy } from "react-icons/fa";
 import Button from "../../../../ui/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { handleImageError, processImage } from "../../../../../utils/utils";
+import { handleImageError } from "../../../../../utils/utils";
 import useContest from "../../api/useContest";
+import contestBackground from "../../../../../common/assets/images/contestBackground1.png";
 
 type ContestHeaderProps = {
   id: string;
@@ -18,17 +19,13 @@ const ContestHeader: React.FC<ContestHeaderProps> = ({ id, isRulesPage }) => {
     isRulesPage = true;
   }
   const { data: contest, isLoading } = useContest(id);
-  // XDXDXDXDXDXD i cannot handle the issue where the image does not exist on the server when it appears as the background image
-  //TODO: fix this issue
   return (
     <>
       {contest ? (
         <div
           className="flex aspect-[3.8/1] w-full items-center bg-cover bg-no-repeat py-6 px-8"
           style={{
-            background: `linear-gradient(rgba(51,51,51,.6), rgba(51,51,51,.6)), url(${processImage(
-              contest.img
-            )}) center`,
+            background: `linear-gradient(rgba(51,51,51,.6), rgba(51,51,51,.6)), url(${contestBackground}) center`,
           }}
           onError={handleImageError}
         >
@@ -54,7 +51,6 @@ const ContestHeader: React.FC<ContestHeaderProps> = ({ id, isRulesPage }) => {
                     type="secondary"
                     className="border-white text-[#ffffff] hover:text-white"
                   >
-                    {/* wtf? why does text-white not work?*/}
                     Участвовать в конкурсе
                   </Button>
                 </>

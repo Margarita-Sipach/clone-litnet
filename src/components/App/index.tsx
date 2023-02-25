@@ -33,6 +33,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCheckingAuth } from "../../hooks";
 import { AccountEditChapter } from "../modules/Account/pages/AccountEditBook/AccountEditChapter";
 import { BooksPage } from "../modules/Books/pages/Books";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const client = new QueryClient({
   logger: {
@@ -190,6 +192,7 @@ function App() {
   return user !== undefined ? (
     <QueryClientProvider client={client}>
       <UserContextProvider defaultUser={user}>
+        <ToastContainer />
         <RouterProvider router={router} />
       </UserContextProvider>
     </QueryClientProvider>

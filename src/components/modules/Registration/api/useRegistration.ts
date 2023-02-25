@@ -20,6 +20,7 @@ const useRegistration = () => {
       LocalStorage.setUserToken(token);
       navigate(Router.main);
     },
+    onError: (error) => console.log(error),
   });
   return { register, isError, isLoading };
 };

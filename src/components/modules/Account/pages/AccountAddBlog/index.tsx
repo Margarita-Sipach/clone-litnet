@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../../../ui/Button";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Textarea } from "../../../../ui/Textarea";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { useUserContext } from "../../../../context/userContext";
-import { useMutation } from "@tanstack/react-query";
-import { createBlog } from "../../../../../api/data";
+import { notifyError, notifySuccess } from "../../../../../hooks";
+import useAddBlog from "../../api/useAddBlog";
+import Spinner from "../../../../ui/Spinner";
 
 export const AccountAddBlog = () => {
   const { user } = useUserContext();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const blogMutation = useMutation({
-    mutationFn: () => createBlog(title, text, user!.id.toString()),
-    mutationKey: ["blog"],
+  const { mutate, error, isError, isLoading, status, isSuccess } = useAddBlog({
+    userId: user!.id.toString(),
+    text,
+    title,
   });
+  useEffect(() => {
+    if (isSuccess) {
+      notifySuccess("blog created!");
+    } else if (isError) {
+      notifyError(error.response!.data.message);
+    }
+  }, [status]);
   return (
     <Wrapper>
       <PageWrapper title="Новый блог">
@@ -31,8 +40,11 @@ export const AccountAddBlog = () => {
           placeholder="Содержание блога"
           required={true}
         />
-        <Button onClick={() => blogMutation.mutate()}>Сохранить</Button>
-        {blogMutation.isSuccess && <p>blog created!</p>}
+        {isLoading ? (
+          <Spinner className="flex w-full justify-center" />
+        ) : (
+          <Button onClick={() => mutate()}>Сохранить</Button>
+        )}
       </PageWrapper>
     </Wrapper>
   );

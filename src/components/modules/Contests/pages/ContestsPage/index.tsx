@@ -8,6 +8,7 @@ import {
   getImagePath,
   processImage,
 } from "../../../../../utils/utils";
+import Spinner from "../../../../ui/Spinner";
 
 const Contests = () => {
   const { data: contests, isLoading } = useContests();
@@ -31,7 +32,7 @@ const Contests = () => {
             ))}
           </div>
         ) : isLoading ? (
-          <p>loading contests data...</p>
+          <Spinner className="flex w-full justify-center" />
         ) : (
           <p>error loading contests</p>
         )}

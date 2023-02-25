@@ -5,6 +5,7 @@ import { Wrapper } from "../../../../ui/Wrapper";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogs } from "../../../../../api/data";
 import { createDate } from "../../../../../utils/utils";
+import Spinner from "../../../../ui/Spinner";
 
 const Blogs = () => {
   const blogsQuery = useQuery({
@@ -29,7 +30,7 @@ const Blogs = () => {
             ))}
           </>
         ) : isLoading ? (
-          <p>loading blogs...</p>
+          <Spinner className="flex w-full justify-center" />
         ) : (
           <p>error loading blogs</p>
         )}

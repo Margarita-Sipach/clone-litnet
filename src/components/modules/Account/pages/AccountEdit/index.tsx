@@ -37,52 +37,50 @@ const AccountEdit = () => {
   };
 
   return (
-    <Wrapper className="flex flex-col items-start">
-      <PageWrapper title="Редактирование профиля" isTop={true}>
-        <FileInput className="h-32 w-32" onChange={handleSetFile}></FileInput>
-        <Input
-          placeholder="Логин"
-          value={name}
-          onChange={(e) => setName(e?.target.value || "")}
-        />
-        <Input
-          invalid={isError}
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e?.target.value || "")}
-        />
-        <Textarea
-          placeholder="О себе"
-          value={autobiography}
-          onChange={(e) => setAutobiography(e?.target.value || "")}
-        />
-        <div className="flex flex-col">
-          <p className="mb-2 text-lg">Вид чтения: разбить на страницы?</p>
-          <div className="flex gap-x-2">
-            <input
-              type="radio"
-              name="view"
-              value="yes"
-              id="yes"
-              defaultChecked
-              onClick={() => setReadingView("pages")}
-            />
-            <label htmlFor="yes">Да</label>
-          </div>
-          <div className="flex gap-x-2">
-            <input
-              type="radio"
-              name="view"
-              value="no"
-              id="no"
-              onClick={() => setReadingView("chapters")}
-            />
-            <label htmlFor="no">Нет</label>
-          </div>
+    <PageWrapper title="Редактирование профиля">
+      <FileInput className="h-32 w-32" onChange={handleSetFile}></FileInput>
+      <Input
+        placeholder="Логин"
+        value={name}
+        onChange={(e) => setName(e?.target.value || "")}
+      />
+      <Input
+        invalid={isError}
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e?.target.value || "")}
+      />
+      <Textarea
+        placeholder="О себе"
+        value={autobiography}
+        onChange={(e) => setAutobiography(e?.target.value || "")}
+      />
+      <div className="flex flex-col">
+        <p className="mb-2 text-lg">Вид чтения: разбить на страницы?</p>
+        <div className="flex gap-x-2">
+          <input
+            type="radio"
+            name="view"
+            value="yes"
+            id="yes"
+            defaultChecked
+            onClick={() => setReadingView("pages")}
+          />
+          <label htmlFor="yes">Да</label>
         </div>
-        <Button onClick={handleSubmitForm}>Сохранить</Button>
-      </PageWrapper>
-    </Wrapper>
+        <div className="flex gap-x-2">
+          <input
+            type="radio"
+            name="view"
+            value="no"
+            id="no"
+            onClick={() => setReadingView("chapters")}
+          />
+          <label htmlFor="no">Нет</label>
+        </div>
+      </div>
+      <Button onClick={handleSubmitForm}>Сохранить</Button>
+    </PageWrapper>
   );
 };
 

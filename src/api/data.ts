@@ -21,8 +21,8 @@ export const fetchBlogs = async () => {
       const data: BlogType[] = response.data.rows;
       return data;
     }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -33,37 +33,7 @@ export const fetchBlogById = async (blogId: string) => {
       const data: BlogType = response.data;
       return data;
     }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-  }
-};
-
-export const createBlog = async (
-  title: string,
-  text: string,
-  userId: string
-) => {
-  const response = await axios.post(`${baseUrl}/blog`, {
-    title,
-    text,
-    userId,
-  });
-  return response.data;
-};
-
-export const createContest = async (formData: FormData) => {
-  try {
-    const response = await axios.post(`${baseUrl}/contest`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (response.status === 200) {
-      return response.data;
-    }
-    return response.data;
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
+  } catch (error) {
     throw error;
   }
 };

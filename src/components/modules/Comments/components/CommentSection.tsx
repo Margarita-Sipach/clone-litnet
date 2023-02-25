@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { CommentType, ErrorType } from "../../../../types/types";
+import React, { useEffect, useState } from "react";
+import { CommentType } from "../../../../types/types";
 import { CommentElement } from "./CommentElement";
 import Button from "../../../ui/Button";
 import { useUserContext } from "../../../context/userContext";
-import { useMutation } from "@tanstack/react-query";
 import useComments from "../api/useComments";
 import usePostComment from "../api/usePostComment";
+import { notifyError } from "../../../../hooks";
+import Spinner from "../../../ui/Spinner";
 
 type CommentSectionProps = {
   comments: CommentType[];
@@ -16,38 +17,24 @@ type CommentSectionProps = {
 const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
   const { user } = useUserContext();
   const [isActive, setIsActive] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [text, setText] = useState("");
-  const { data: comments } = useComments(type, id.toString());
-  const commentMutation = usePostComment({
+  const { data: comments, isLoading } = useComments(type, id.toString());
+  const {
+    mutate,
+    error,
+    isLoading: loadingMutation,
+    isError,
+  } = usePostComment({
     id: id.toString(),
     userId: user!.id.toString(),
     commentType: type,
     text,
   });
-  // let mutationFunction: (
-  //   id: string | number,
-  //   userId: string | number,
-  //   text: string
-  // ) => Promise<any>;
-  // if (type === "blog") {
-  //   mutationFunction = postBlogComment;
-  // } else if (type === "book") {
-  //   mutationFunction = postBookComment;
-  // } else if (type === "contest") {
-  //   mutationFunction = postContestComment;
-  // }
-  // const { data: comments, refetch } = useComments(type, id.toString());
-  // const commentMutation = useMutation({
-  //   mutationFn: () => mutationFunction(id, user!.id, text),
-  //   mutationKey: ["comment"],
-  //   onSuccess: () => refetch(),
-  //   onError: (error: ErrorType) => {
-  //     if (error.response?.status === 400) {
-  //       setIsError(true);
-  //     }
-  //   },
-  // });
+  useEffect(() => {
+    if (isError && error.response!.status === 400) {
+      notifyError(error.response!.data.message);
+    }
+  }, [isError]);
   return (
     <div className="w-full border p-6">
       {comments ? (
@@ -62,10 +49,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
             onClick={() => setIsActive(true)}
             placeholder="Напишите свой комментарий..."
           />
-          {isError && <p>You already commented!</p>}
           {isActive && (
             <div className="mb-4 flex gap-4">
-              <Button onClick={() => commentMutation.mutate()}>Добавить</Button>
+              {loadingMutation ? (
+                <Spinner />
+              ) : (
+                <Button
+                  onClick={() => {
+                    mutate();
+                  }}
+                >
+                  Добавить
+                </Button>
+              )}
               <Button onClick={() => setIsActive(false)}>Отменить</Button>
             </div>
           )}
@@ -75,8 +71,10 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
             ))}
           </div>
         </>
+      ) : isLoading ? (
+        <Spinner className="flex w-full justify-center" />
       ) : (
-        <p>loading comments...</p>
+        <p>error loading comments</p>
       )}
     </div>
   );
