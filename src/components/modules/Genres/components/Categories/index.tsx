@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import useGenres from "../../api/useGenres";
+import Spinner from "../../../../ui/Spinner";
 
 interface CategoriesProps {
   onClick?: () => void;
@@ -33,7 +34,7 @@ const Categories = ({ onClick }: CategoriesProps) => {
           </Link>
         </>
       ) : isLoading ? (
-        <p>loading genres...</p>
+        <Spinner className="flex w-full justify-center" />
       ) : (
         <p>error loading genres</p>
       )}

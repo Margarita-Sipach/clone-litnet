@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { baseUrl } from "../../../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import useComments from "./useComments";
+import { ErrorResponse } from "../../../../types/types";
 
 type CommentParams = {
   commentType: "blog" | "book" | "contest";
@@ -23,7 +24,6 @@ const postBlogComment = async (
     });
     return response.data;
   } catch (error: any) {
-    console.log(`Error: ${error.message}`);
     throw error;
   }
 };
@@ -43,7 +43,6 @@ const postBookComment = async (
       return response.data;
     }
   } catch (error: any) {
-    console.log(`Error: ${error.message}`);
     throw error;
   }
 };
@@ -62,8 +61,7 @@ const postContestComment = async (
     if (response.status === 200) {
       return response.data;
     }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
+  } catch (error) {
     throw error;
   }
 };
@@ -86,6 +84,9 @@ const usePostComment = ({ id, userId, commentType, text }: CommentParams) => {
     mutationFn: () => mutationFunction(id, userId, text),
     mutationKey: [id, commentType],
     onSuccess: refetch,
+    onError: (error: AxiosError<ErrorResponse>) => {
+      throw error;
+    },
   });
 };
 

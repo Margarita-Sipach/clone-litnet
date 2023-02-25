@@ -32,19 +32,19 @@ const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   }, []);
 
   return (
-    <Wrapper className="gradient mb-10 flex h-72 w-full flex-col justify-between bg-indigo-400 pt-24 sm:pt-24">
+    <Wrapper className="mb-10 flex h-72 w-full flex-col justify-between rounded-md bg-slate-100 p-4 pt-24 sm:pt-24">
       <div className="flex w-full gap-x-5">
         <img
           src={image}
           alt=""
-          className="h-32 w-32 rounded object-cover"
+          className="h-32 w-32 rounded border object-cover"
           onError={(e) => {
             (e.target as HTMLImageElement).src = avatar;
           }}
         />
-        <div className="flex flex-col items-start gap-2">
-          <div className="text-lg text-gray-900">{account.name}</div>
-        </div>
+        <h3 className="flex items-center text-lg text-gray-900">
+          {account.name}
+        </h3>
       </div>
       <div className="flex w-full flex-wrap gap-2 ">
         <Button

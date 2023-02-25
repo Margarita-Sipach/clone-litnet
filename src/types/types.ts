@@ -1,6 +1,6 @@
-import { AxiosError } from "axios";
-
-export interface ErrorType extends AxiosError {}
+export interface ErrorResponse {
+  message: string;
+}
 
 export interface BookElementType {
   id?: string | number;

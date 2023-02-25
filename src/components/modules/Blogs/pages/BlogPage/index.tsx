@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import CommentSection from "../../../Comments/components/CommentSection";
@@ -35,9 +35,14 @@ const BlogPage = () => {
           <>
             <h3 className="self-start text-2xl font-medium">{blog.title}</h3>
             <p className="w-full bg-gray-50 py-2 px-4 text-xs">
-              B Автор:{" "}
-              <span className="text-blue-500">{userQuery.data.name}</span> /
-              Добавлено: {createDate(blog.createdAt)}
+              Автор:{" "}
+              <Link
+                to={`/users/${userQuery.data.id}`}
+                className="text-blue-500"
+              >
+                {userQuery.data.name}
+              </Link>{" "}
+              / Добавлено: {createDate(blog.createdAt)}
             </p>
             <p>{blog.text}</p>
             {comments ? (

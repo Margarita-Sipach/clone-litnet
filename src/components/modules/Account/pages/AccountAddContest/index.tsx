@@ -1,13 +1,14 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import Button from "../../../../ui/Button";
 import { FileInput } from "../../../../ui/FileInput";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Textarea } from "../../../../ui/Textarea";
 import useGenres from "../../../Genres/api/useGenres";
-import { createContest } from "../../../../../api/data";
-import { useMutation } from "@tanstack/react-query";
 import { useUserContext } from "../../../../context/userContext";
+import useCreateContest from "../../api/useCreateContest";
+import { notifyError, notifySuccess } from "../../../../../hooks";
+import Spinner from "../../../../ui/Spinner";
 
 export const AccountAddContest = () => {
   const { user } = useUserContext();
@@ -41,10 +42,15 @@ export const AccountAddContest = () => {
 
   const { data: genresData, isLoading: genresLoading } = useGenres();
 
-  const contestMutation = useMutation({
-    mutationFn: () => createContest(createFormData()),
-    mutationKey: ["contest"],
-  });
+  const { mutate, status, isLoading, error, isSuccess, isError } =
+    useCreateContest(createFormData());
+  useEffect(() => {
+    if (isSuccess) {
+      notifySuccess("Contest created!");
+    } else if (isError) {
+      notifyError(error.response!.data.message);
+    }
+  }, [status]);
   return (
     <PageWrapper title="Новый конкурс" className="gap-y-10">
       <div className="flex gap-x-5">
@@ -107,10 +113,11 @@ export const AccountAddContest = () => {
         onChange={(e) => setCountCharacters(e!.target.value)}
         placeholder="Количество символов"
       />
-      <Button onClick={() => contestMutation.mutate()}>Сохранить</Button>
-      {contestMutation.isLoading && <p>mutating...</p>}
-      {contestMutation.isSuccess && <p>mutation successful</p>}
-      {contestMutation.isError && <p>error</p>}
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={() => mutate()}>Сохранить</Button>
+      )}
     </PageWrapper>
   );
 };
