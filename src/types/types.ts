@@ -70,6 +70,7 @@ export interface UserType {
   name: string;
   autobiography: string;
   readingView: string | null;
+  bookmarks: BookmarkType[];
   img: string | null;
 }
 
@@ -89,7 +90,6 @@ export interface AccountType extends UserType {
   updatedAt: string;
   contestId?: number | null;
   contest?: ContestType | null;
-  bookmarks?: BookmarkType[];
   blogs?: BlogType[];
   ratings?: RatingType[];
   bookComments?: BookCommentType[];
@@ -148,7 +148,7 @@ export interface BookmarkType {
   bookId: number;
   userId: number;
   progressId: number;
-  progress: ProgressType;
+  progress?: ProgressType;
 }
 
 export interface ProgressType {

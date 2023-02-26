@@ -35,6 +35,7 @@ import { AccountEditChapter } from "../modules/Account/pages/AccountEditBook/Acc
 import { BooksPage } from "../modules/Books/pages/Books";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ReaderPage } from "../modules/Reader/pages";
 
 const client = new QueryClient({
   logger: {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
       {
         path: "/books/:id",
         element: <BookPage />,
+      },
+      {
+        path: "/reader/:id",
+        element: <ReaderPage />
       },
       {
         path: "/users/:id",

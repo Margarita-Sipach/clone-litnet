@@ -17,7 +17,7 @@ import { AccountType, BookType, UserStateType } from "../types/types";
 import { useEffect, useMemo, useState } from "react";
 import { fetchUserData } from "../api/data";
 import { BookListType, GenreListType } from "../types/list.types";
-import { toast } from "react-toastify";\
+import { toast } from "react-toastify";
 
 export const useFetchUser = (id: string) => {
   const {
