@@ -24,7 +24,7 @@ export const BookElement = ({
   isUserBook = false,
 }: BookElementProps) => {
   return (
-    <Link to={`${id}`}>
+    <Link to={`/books/${id}`}>
       <ElementWrapper className="relative flex h-60 flex-col gap-y-5 lg:h-72">
         <div className="flex">
           <img
