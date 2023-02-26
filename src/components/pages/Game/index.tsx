@@ -3,9 +3,9 @@ import { FaBaseballBall } from "react-icons/fa";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import Button from "../../ui/Button";
 import { Modal } from "../../ui/Modal";
+import { PrimaryLink } from "../../ui/PrimaryLink";
 
 import "./game.css";
-import { Link } from "react-router-dom";
 
 const images = [
   "https://klike.net/uploads/posts/2020-02/1581928363_1.jpg",
@@ -72,11 +72,8 @@ export const Game = () => {
   };
 
   return (
-    <div
-      className="absolute top-0 left-0 h-screen w-screen bg-teal-200"
-      onClick={() => {}}
-    >
-      <span className="absolute bottom-2 right-2 text-5xl font-bold text-indigo-400">
+    <div className="absolute top-0 left-0 h-full w-full bg-teal-200">
+      <span className="absolute bottom-7 right-7 text-5xl font-bold text-indigo-400">
         {timer}
       </span>
       {gameLevel[0] && (
@@ -127,7 +124,17 @@ export const Game = () => {
               переутомлении зрения, которую вы можете оказать себе
               самостоятельно.
             </p>
-            <Button onClick={handleStartGame}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartGame}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -135,7 +142,17 @@ export const Game = () => {
         <Modal displayModal={setStartDisplayModal}>
           <div className="flex flex-col ">
             <p className="mb-5 max-w-[300px]">Следите за движущимся объектом</p>
-            <Button onClick={handleStartLevel}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartLevel}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -143,7 +160,17 @@ export const Game = () => {
         <Modal displayModal={setStartDisplayModal}>
           <div className="flex flex-col ">
             <p className="mb-5 max-w-[300px]">Быстро моргайте</p>
-            <Button onClick={handleStartLevel}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartLevel}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -151,7 +178,17 @@ export const Game = () => {
         <Modal displayModal={setStartDisplayModal}>
           <div className="flex flex-col ">
             <p className="mb-5 max-w-[300px]">Следите за движущимся объектом</p>
-            <Button onClick={handleStartLevel}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartLevel}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -169,7 +206,17 @@ export const Game = () => {
               смотрите как бы сквозь него. Если вы смогли рассмотреть
               зашифрованное изображение нажмите в любую точку картинки
             </p>
-            <Button onClick={handleStartLevel}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartLevel}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -177,7 +224,17 @@ export const Game = () => {
         <Modal displayModal={setStartDisplayModal}>
           <div className="flex flex-col ">
             <p className="mb-5 max-w-[300px]">Следите за движущимся объектом</p>
-            <Button onClick={handleStartLevel}>Начать</Button>
+            <div className="flex w-full gap-x-5">
+              <Button className="w-1/2" onClick={handleStartLevel}>
+                Начать
+              </Button>
+              <PrimaryLink
+                path="/"
+                className="flex w-1/2 items-center justify-center"
+              >
+                Выйти
+              </PrimaryLink>
+            </div>
           </div>
         </Modal>
       )}
@@ -190,9 +247,9 @@ export const Game = () => {
               <p className="mb-5 max-w-[300px]">
                 Зарядка выполнена. Поздравляю!
               </p>
-              <Link to="/">
-                <Button>Выйти</Button>
-              </Link>
+              <PrimaryLink className="flex items-center justify-center" path="/">
+                Выйти
+              </PrimaryLink>
             </div>
           </Modal>
         )}
