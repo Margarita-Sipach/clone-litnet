@@ -7,6 +7,7 @@ const defaultBookmark = {
   progress: {
     chapterId: 1,
     pageId: 1,
+    default: true,
   },
 };
 
