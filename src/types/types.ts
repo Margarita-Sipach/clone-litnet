@@ -1,6 +1,9 @@
-export interface TestInterface {}
+export interface ErrorResponse {
+  message: string;
+}
 
 export interface BookElementType {
+  id?: string | number;
   img: string;
   title: string;
   author: string;
@@ -11,17 +14,10 @@ export interface BookElementType {
   rating: string | number;
 }
 
-export type CommentProps = {
-  image: string;
-  name: string;
-  date: string;
-  content: string;
-};
-
-export interface BookCommentType {
-  userId: number;
-  bookId: number;
+export interface ChapterType {
+  title: string;
   text: string;
+  bookId: string;
 }
 
 export interface BookType {
@@ -32,23 +28,40 @@ export interface BookType {
   user: { name: string };
   img: string;
   genres: GenreType[];
-  comments: BookCommentType[];
-  bookmarks: [];
+  chapters?: ChapterType[];
+  comments?: BookCommentType[];
+  createdAt?: string;
+  ratings?: RatingType[];
+  bookmarks?: BookmarkType[];
 }
 
-export interface BookResponseType {
-  rows: BookType[];
-  count: number;
+export type DetailedBookType = {
+  user: UserType;
+  ratings: RatingType[];
+  chapters: ChapterType[];
+} & BookType;
+
+export interface ContestType {
+  id: string;
+  title: string;
+  description: string;
+  prize: number | string;
+  img: string;
+  date: string;
+  countCharacters: number;
+  userId: string;
+  createdAt: string;
+  books: ContestBook[];
+}
+
+export interface ContestBook {
+  id: string;
+  bookId: string;
 }
 
 export interface GenreType {
   id: number;
   name: string;
-}
-
-export interface GenreResponseType {
-  rows: GenreType[];
-  count: number;
 }
 
 export interface UserType {
@@ -62,46 +75,58 @@ export interface UserType {
 
 export interface BlogType {
   id: string;
+  userId: string;
   title: string;
   text: string;
   createdAt: string;
-}
-
-export interface BlogResponseType {
-  rows: BlogType[];
-  count: number;
+  blogComments?: BlogCommentType[];
 }
 
 export type UserStateType = UserType | null | undefined;
 
 export interface AccountType extends UserType {
   createdAt: string;
-  contestId: null;
   updatedAt: string;
-  contest: null;
-  // books: [];
-  // bookmarks: [];
-  // comments: [];
+  contestId?: number | null;
+  contest?: ContestType | null;
+  bookmarks?: BookmarkType[];
+  blogs?: BlogType[];
+  ratings?: RatingType[];
+  bookComments?: BookCommentType[];
+  blogComments?: BlogCommentType[];
+  contestComments?: ContestCommentType[];
 }
 
-export type CommentType = {
-  image: string;
-  name: string;
-  date: string;
-  content: string;
-};
+export interface CommentType {
+  id: string;
+  userId: string;
+  text: string;
+  createdAt: string;
+  user?: {
+    id: string;
+    name: string;
+    image: string;
+  };
+}
+
+export interface BlogCommentType extends CommentType {
+  blogId: string;
+}
+
+export interface BookCommentType extends CommentType {
+  bookId: string;
+}
+
+export interface ContestCommentType extends CommentType {
+  contestId: string;
+}
 
 export interface ChapterType {
   id: number;
-  bookId: number;
+  bookId: string;
   title: string;
   number: number;
   pages?: PageType[];
-}
-
-export interface ChaptersResponseType {
-  rows: ChapterType[];
-  count: number;
 }
 
 export interface PageType {
@@ -109,4 +134,25 @@ export interface PageType {
   chapterId: number;
   number: number;
   text: string;
+}
+
+export interface RatingType {
+  id: number;
+  bookId: number;
+  userId: number;
+  rating: number;
+}
+
+export interface BookmarkType {
+  id: number;
+  bookId: number;
+  userId: number;
+  progressId: number;
+  progress: ProgressType;
+}
+
+export interface ProgressType {
+  id: number;
+  chapterId: number;
+  pageId: number;
 }
