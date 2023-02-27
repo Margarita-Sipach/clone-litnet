@@ -40,8 +40,11 @@ export const AccountAddBook = () => {
 
   return genres ? (
     <PageWrapper title="Новая книга">
-      <div className="flex gap-x-5">
-        <FileInput className="h-52 w-40" onChange={handleSetFile} />
+      <div className="flex flex-col gap-x-5 sm:flex-row">
+        <FileInput
+          className="mb-5 h-52 w-40 sm:mb-0"
+          onChange={handleSetFile}
+        />
         <div className="flex flex-grow flex-col gap-y-5">
           <Input
             placeholder="Название книги"
