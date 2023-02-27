@@ -14,6 +14,7 @@ import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
+import { Link } from "react-router-dom";
 
 export type Params = {
   id: string;
@@ -40,7 +41,7 @@ const BookPage = () => {
                   <h4 className="mb-1 text-2xl">{book.title}</h4>
                   <Link
                     to={`/users/${book.userId}`}
-                    className="mb-4 text-blue-800"
+                    className="mb-4 text-indigo-500"
                   >
                     {book.user.name}
                   </Link>
