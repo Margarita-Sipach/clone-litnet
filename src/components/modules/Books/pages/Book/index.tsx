@@ -33,8 +33,8 @@ const BookPage = () => {
       <PageWrapper title="" isTop={true}>
         {book ? (
           <>
-            <ElementWrapper className="flex gap-x-5">
-              <img src={processImage(book.img)} alt="" className="w-1/3" />
+            <ElementWrapper className="flex flex-col sm:flex-row gap-x-5">
+              <img src={processImage(book.img)} alt="" className="w-full h-80 sm:w-1/3 object-cover" />
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
                   <h4 className="mb-1 text-2xl">{book.title}</h4>
