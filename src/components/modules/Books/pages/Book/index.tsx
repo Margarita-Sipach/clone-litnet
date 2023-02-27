@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { Link, useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Rating } from "../../../../ui/Rating";
 import Button from "../../../../ui/Button";
 import { Wrapper } from "../../../../ui/Wrapper";
-import { processImage } from "../../../../../utils/utils";
+import { baseUrl, processImage } from "../../../../../utils/utils";
 import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
@@ -17,6 +17,27 @@ import { Router } from "../../../../router";
 import { useUserContext } from "../../../../context/userContext";
 import { usePostBookmark } from "../../../Reader/api/usePostBookmark";
 import useChapters from "../../../Account/api/useChapters";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { ErrorResponse } from "../../../../../types/types";
+import { notifyError, notifySuccess } from "../../../../../hooks";
+
+const rateBook = async (
+  userId: string | number,
+  bookId: string,
+  rating: number
+) => {
+  try {
+    const response = await axios.post(`${baseUrl}/ratings/`, {
+      userId,
+      bookId,
+      rating,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
 
 export type Params = {
   id: string;
@@ -32,12 +53,14 @@ const BookPage = () => {
   const addedBook = useMemo(() => !!userBookmark, [userBookmark]);
   const { mutate: addBookmark } = usePostBookmark();
   const { chapters } = useChapters(id!);
-  const { data: book, isLoading: bookLoading } = useBook(id!);
+  const { data: book, isLoading: bookLoading, refetch } = useBook(id!);
+  const [rating, setRating] = useState<number | string>("");
   const { data: comments, isLoading: commentsLoading } = useComments(
     "book",
     id!,
     book
   );
+  
   const pageId = useMemo(() => {
     if (!book || !chapters) return 1;
     const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
@@ -53,6 +76,22 @@ const BookPage = () => {
     });
   };
 
+  const ratingMutation = useMutation({
+    mutationFn: () => rateBook(user!.id, id!, Number(rating)),
+    mutationKey: ["rateBook"],
+    onError: (error: AxiosError<ErrorResponse>) => {
+      throw error;
+    },
+  });
+  useEffect(() => {
+    if (ratingMutation.status === "success") {
+      notifySuccess("success");
+      refetch();
+    } else if (ratingMutation.status === "error") {
+      notifyError(ratingMutation.error.response!.data.message);
+    }
+  }, [ratingMutation.status]);
+  
   return (
     <Wrapper>
       <PageWrapper title="" isTop={true}>
@@ -79,12 +118,24 @@ const BookPage = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center gap-x-7">
-                    <Rating
-                      rating={Number(book.rating)}
-                      statistic={book.ratings.map((item) => item.rating)}
-                    />
-                  </div>
+                  <Rating
+                    rating={Number(book.rating)}
+                    statistic={book.ratings.map((item) => item.rating)}
+                  />
+                  {user && (
+                    <div className="mt-2 flex gap-2">
+                      <input
+                        value={rating!}
+                        onChange={(e) => setRating(Number(e.target.value))}
+                        type="number"
+                        placeholder="Оценка"
+                        className="border p-1"
+                      />
+                      <Button size="sm" onClick={() => ratingMutation.mutate()}>
+                        Оценить
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-x-5 justify-self-end">
                   <Button

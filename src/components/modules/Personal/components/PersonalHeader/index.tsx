@@ -11,6 +11,7 @@ import avatar from "../../../../../common/assets/images/avatar.png";
 import { Router } from "../../../../router";
 import { getLastPathWord } from "../../../../../utils/utils";
 import Button from "../../../../ui/Button";
+import NewModal from "../../../../ui/NewModal";
 
 export interface PersonalHeaderProps {
   account: AccountType;
@@ -20,7 +21,7 @@ const DEFAULT_STYLE = `hover:text-indigo-800 hover:border-indigo-800 text-indigo
 
 const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const navigate = useNavigate();
-  const [userModalDisplay, setUserModalDisplay] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState(getLastPathWord());
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
@@ -78,16 +79,15 @@ const PersonalHeader = ({ account }: PersonalHeaderProps) => {
           Обо мне
         </Button>
         {isPageOwner && (
-          <Button className="" onClick={() => setUserModalDisplay(true)}>
+          <Button className="" onClick={() => setModalIsOpen(true)}>
             Другое
           </Button>
         )}
       </div>
-      {userModalDisplay && (
-        <Modal displayModal={setUserModalDisplay}>
-          <UserMenu />
-        </Modal>
-      )}
+
+      <NewModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <UserMenu />
+      </NewModal>
     </Wrapper>
   );
 };

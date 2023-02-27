@@ -3,13 +3,13 @@ import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
 import { Burger } from "../../ui/Burger";
 import { CloseButton } from "../../ui/CloseButton";
-import { Modal } from "../../ui/Modal";
 import Categories from "../Genres/components/Categories";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { Router } from "../../router";
 import { CircleUserAvatar } from "../../ui/CircleAvatar";
 import Button from "../../ui/Button";
+import NewModal from "../../ui/NewModal";
 
 const navItems = [
   {
@@ -37,7 +37,7 @@ const navItems = [
 const Header = () => {
   const { user, isUserLogged, logout } = useUserContext();
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
-  const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -63,7 +63,7 @@ const Header = () => {
                 key={item.title}
                 className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
                 onClick={() => {
-                  item.title === "Книги" && setCategoriesModalDisplay(true);
+                  item.title === "Книги" && setModalIsOpen(true);
                 }}
               >
                 {item.title}
@@ -106,11 +106,9 @@ const Header = () => {
           ></Burger>
         </div>
       </Wrapper>
-      {categoriesModalDisplay && (
-        <Modal displayModal={setCategoriesModalDisplay}>
-          <Categories onClick={() => setCategoriesModalDisplay(false)} />
-        </Modal>
-      )}
+      <NewModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <Categories onClick={() => setModalIsOpen(false)} />
+      </NewModal>
     </header>
   );
 };

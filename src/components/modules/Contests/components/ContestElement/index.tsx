@@ -34,7 +34,7 @@ const ContestElement: React.FC<ContestElementProps> = ({
     <div>
       <div className="flex w-full gap-6 pb-6">
         <img
-          className="aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-contain"
+          className="hidden aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-contain sm:block"
           src={processImage(imageUrl)}
           alt="contest image"
           onError={handleImageError}
@@ -45,7 +45,7 @@ const ContestElement: React.FC<ContestElementProps> = ({
             <p className="font-medium">{booksAmount} книг</p>
           </div>
 
-          <div className="flex justify-between rounded-md border border-slate-300 p-2 lg:gap-12 lg:p-6">
+          <div className="flex flex-col justify-between gap-4 rounded-md border border-slate-300 p-2 sm:flex-row lg:gap-12 lg:p-6">
             <DetailsElement
               title="Приз"
               description={`3 победителя получат: выплаты от ${prize} руб.; рекламную поддержку; коммерческий статус.`}
@@ -65,7 +65,7 @@ const ContestElement: React.FC<ContestElementProps> = ({
               icon={AiOutlineClockCircle}
             />
           </div>
-          <div className="mt-auto flex gap-4">
+          <div className="mt-4 flex gap-4 sm:mt-auto">
             <Link to="1">
               <Button onClick={() => navigate(`${id}`)}>
                 Перейти к работам
