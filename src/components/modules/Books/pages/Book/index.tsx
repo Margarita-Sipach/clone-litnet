@@ -15,7 +15,7 @@ import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
 
-type Params = {
+export type Params = {
   id: string;
 };
 
