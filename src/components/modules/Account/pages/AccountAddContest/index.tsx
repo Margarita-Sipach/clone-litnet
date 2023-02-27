@@ -53,8 +53,8 @@ export const AccountAddContest = () => {
   }, [status]);
   return (
     <PageWrapper title="Новый конкурс" className="gap-y-10">
-      <div className="flex gap-x-5">
-        <FileInput className="h-72 w-52" onChange={handleSetFile} />
+      <div className="flex flex-col sm:flex-row gap-x-5">
+        <FileInput className="h-72 w-52 mb-5 sm:mb-0" onChange={handleSetFile} />
         <div className="flex flex-grow flex-col gap-y-5">
           <Input
             value={title}
