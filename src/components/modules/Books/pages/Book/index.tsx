@@ -14,7 +14,6 @@ import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
-import { Link } from "react-router-dom";
 
 export type Params = {
   id: string;
