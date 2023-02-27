@@ -17,12 +17,12 @@ export const addZero = (number: number) => {
   return number < 10 && number > 0 ? `0${number}` : number;
 };
 
-export const getImagePath = (img: string) => {
-  return `${baseUrl}${img}`;
+const getImagePath = (img: string) => {
+  return `${baseUrl}/${img}`;
 };
 
 export const processImage = (image: string | null | undefined) => {
-  return image ? image : defaultImage;
+  return image ? getImagePath(image) : defaultImage;
 };
 
 export const handleImageError = (

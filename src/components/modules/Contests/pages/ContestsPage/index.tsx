@@ -3,11 +3,7 @@ import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import ContestElement from "../../components/ContestElement/";
 import useContests from "../../api/useContests";
-import {
-  createDate,
-  getImagePath,
-  processImage,
-} from "../../../../../utils/utils";
+import { createDate, processImage } from "../../../../../utils/utils";
 import Spinner from "../../../../ui/Spinner";
 
 const Contests = () => {
@@ -23,7 +19,7 @@ const Contests = () => {
                 id={contest.id}
                 title={contest.title}
                 prize={contest.prize as string}
-                imageUrl={processImage(getImagePath(contest.img))}
+                imageUrl={processImage(contest.img)}
                 startDate={createDate(contest.createdAt)}
                 endDate={createDate(contest.date)}
                 resultsDate={createDate(contest.date)}

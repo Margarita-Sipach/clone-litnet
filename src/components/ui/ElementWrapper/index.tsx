@@ -11,7 +11,7 @@ export const ElementWrapper = ({
 }: ElementWrapperProps) => {
   return (
     <div
-      className={`rounded-md border border-slate-200 p-3 shadow shadow-md ${className}`}
+      className={`rounded-md border border-gray-100 p-3 shadow ${className}`}
     >
       {children}
     </div>

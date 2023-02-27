@@ -31,7 +31,7 @@ export const BookElement = ({
           src={processImage(img)}
           alt=""
           onError={handleImageError}
-          className="mr-5 hidden rounded border object-cover sm:block"
+          className="mr-5 hidden aspect-square rounded border object-cover sm:block"
         />
         <div className="flex h-full flex-col items-start justify-center self-center">
           <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
