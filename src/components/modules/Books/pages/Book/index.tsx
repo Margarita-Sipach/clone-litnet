@@ -14,6 +14,7 @@ import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
+import { Link } from "react-router-dom";
 
 export type Params = {
   id: string;
@@ -38,7 +39,12 @@ const BookPage = () => {
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
                   <h4 className="mb-1 text-2xl">{book.title}</h4>
-                  <div className="mb-4">{book.user.name}</div>
+                  <Link
+                    to={`/users/${book.userId}`}
+                    className="mb-4 text-indigo-500"
+                  >
+                    {book.user.name}
+                  </Link>
                   <div className="mb-6 flex flex-wrap gap-x-2">
                     {book.genres.map((item) => (
                       <div
@@ -66,7 +72,12 @@ const BookPage = () => {
                   >
                     {addedBook ? "Добавлена" : "Добавить"}
                   </Button>
-                  <PrimaryLink path={`${Router.reader}/${id}`} className="w-1/2 text-center">Читать онлайн</PrimaryLink>
+                  <PrimaryLink
+                    path={`${Router.reader}/${id}`}
+                    className="w-1/2 text-center"
+                  >
+                    Читать онлайн
+                  </PrimaryLink>
                 </div>
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect

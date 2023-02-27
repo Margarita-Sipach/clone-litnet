@@ -23,6 +23,7 @@ const PersonalBooks = () => {
                   categories={book.genres.map((genre) => genre.name)}
                   annotation={book.description}
                   {...book}
+									authorId={book.userId}
                   key={book.id}
                   isUserBook={Number(id) === user?.id}
                 ></BookElement>
