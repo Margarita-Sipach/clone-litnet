@@ -6,7 +6,7 @@ const useUserBlogs = (userId: string) => {
   const { data, isError, isLoading, isSuccess } = useQuery<BlogListType>({
     queryKey: ["users", userId, "blogs"],
     queryFn: async () => getBlogsByUserId(userId as string),
-    staleTime: 1000 * 10,
+    staleTime: 1000 * 0,
   });
   return {
     blogs: data?.rows,

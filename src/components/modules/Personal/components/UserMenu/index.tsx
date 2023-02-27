@@ -6,6 +6,10 @@ const navItems = [
     link: "/account/edit",
   },
   {
+    title: "Сменить пароль",
+    link: "/account/edit-password",
+  },
+  {
     title: "Моя библиотека",
     link: "/account/library",
   },

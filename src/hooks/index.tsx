@@ -73,13 +73,14 @@ export const useImage = (entity: AccountType | BookType) => {
 };
 
 export const useEditUserPage = () => {
-  const { user, setUser } = useUserContext();
+  const { user, setUser, setSelectedUser } = useUserContext();
   const navigate = useNavigate();
   const { mutate: edit, isError } = useMutation({
     mutationFn: (data: any) => updateUserById(`${user?.id}`, data),
     mutationKey: ["user", "edit-page", user?.id],
     onSuccess: (user: any) => {
       setUser(user);
+      setSelectedUser(user);
       navigate(`${Router.users}/${user.id}`);
     },
   });

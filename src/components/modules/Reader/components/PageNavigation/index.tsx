@@ -1,22 +1,22 @@
 import { ChapterType } from "../../../../../types/types";
 import Button from "../../../../ui/Button";
 
-export interface ReaderNavigationProps {
+export interface ReaderContentProps {
   readingView: string;
   chapter: Required<ChapterType>;
   pageNumber: number;
   setPageNumber: (n: number) => void;
 }
 
-export const ReaderNavigation = ({
+export const ReaderContent = ({
   readingView,
   chapter,
   pageNumber,
   setPageNumber,
-}: ReaderNavigationProps) => {
+}: ReaderContentProps) => {
   return readingView === "pages" ? (
     <div>
-      <div className="mb-2 flex flex-row gap-2">
+      <div className="mb-2 flex flex-row gap-2 break-all">
         {chapter?.pages.map((p) => (
           <Button
             key={p.id}
@@ -31,7 +31,7 @@ export const ReaderNavigation = ({
           >{`${p.number}`}</Button>
         ))}
       </div>
-      <div className="">{chapter.pages[pageNumber].text}</div>
+      <div className="break-all">{chapter.pages[pageNumber].text}</div>
     </div>
   ) : (
     <div>{chapter.pages.map((p) => p.text)}</div>
