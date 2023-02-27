@@ -32,20 +32,20 @@ const ContestElement: React.FC<ContestElementProps> = ({
   const navigate = useNavigate();
   return (
     <div>
-      <div className="flex w-full gap-6 pb-6">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start w-full gap-6 pb-6">
         <img
           className="aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-contain"
           src={processImage(imageUrl)}
           alt="contest image"
           onError={handleImageError}
         />
-        <div className="flex flex-1 flex-col">
+        <div className="flex w-full flex-col">
           <div className="mb-2 flex justify-between lg:mb-6 ">
             <p className="text-xl font-medium">{title}</p>
             <p className="font-medium">{booksAmount} книг</p>
           </div>
 
-          <div className="flex justify-between rounded-md border border-slate-300 p-2 lg:gap-12 lg:p-6">
+          <div className="flex justify-between mb-5 rounded-md border border-slate-300 p-2 lg:gap-12 lg:p-6">
             <DetailsElement
               title="Приз"
               description={`3 победителя получат: выплаты от ${prize} руб.; рекламную поддержку; коммерческий статус.`}
