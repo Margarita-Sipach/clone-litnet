@@ -18,7 +18,7 @@ export const ReaderPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading: bookLoading } = useBook(id!);
   const bookmarkId = useMemo(
-    () => user?.bookmarks.find((b) => b.bookId === +id!)?.id,
+    () => user?.bookmarks ? user?.bookmarks.find((b) => b.bookId === +id!)?.id : undefined,
     [id, user]
   );
   const { data: bookmark, isLoading: bookmarkLoading } =

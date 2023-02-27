@@ -5,7 +5,9 @@
 /.pnp
 .pnp.js
 
+tz.md
 # testing
+
 /coverage
 
 # production
