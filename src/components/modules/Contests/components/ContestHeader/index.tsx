@@ -8,15 +8,18 @@ import contestBackground from "../../../../../common/assets/images/contestBackgr
 
 type ContestHeaderProps = {
   id: string;
-  isRulesPage?: boolean;
+  back?: boolean;
 };
 
-const ContestHeader: React.FC<ContestHeaderProps> = ({ id, isRulesPage }) => {
+const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname.split("/");
-  if (path[path.length - 1] === "rules") {
-    isRulesPage = true;
+  if (
+    path[path.length - 1] === "rules" ||
+    path[path.length - 1] === "participate"
+  ) {
+    back = true;
   }
   const { data: contest, isLoading } = useContest(id);
   return (
@@ -37,7 +40,7 @@ const ContestHeader: React.FC<ContestHeaderProps> = ({ id, isRulesPage }) => {
               {contest.description}
             </p>
             <div className="mt-auto flex gap-4">
-              {isRulesPage ? (
+              {back ? (
                 <Button onClick={() => navigate(-1)}>Назад</Button>
               ) : (
                 <>
@@ -48,6 +51,7 @@ const ContestHeader: React.FC<ContestHeaderProps> = ({ id, isRulesPage }) => {
                     </Button>
                   </Link>
                   <Button
+                    onClick={() => navigate("participate")}
                     type="secondary"
                     className="border-white text-[#ffffff] hover:text-white"
                   >

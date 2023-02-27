@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CommentSection from "../../../Comments/components/CommentSection";
 import { ElementWrapper } from "../../../../ui/ElementWrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";

@@ -34,7 +34,7 @@ export const BookElement = ({
           className="mr-5 hidden aspect-square rounded border object-cover sm:block"
         />
         <div className="flex h-full flex-col items-start justify-center self-center">
-          <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
+          <p className="mt-auto pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
             {title}
           </p>
           <Link
@@ -63,8 +63,9 @@ export const BookElement = ({
           </p>
           {isUserBook && (
             <Button
+              size="sm"
               onClick={() => navigate(`/account/book/${id}/edit-book`)}
-              className="mt-2 text-sm sm:text-sm"
+              className="mt-auto"
             >
               Редактировать
             </Button>
