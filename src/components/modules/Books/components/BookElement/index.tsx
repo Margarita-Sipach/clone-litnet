@@ -4,9 +4,8 @@ import { GiBookshelf } from "react-icons/gi";
 import { Icon } from "../../../../ui/Icon";
 import { BookElementType } from "../../../../../types/types";
 import Button from "../../../../ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleImageError, processImage } from "../../../../../utils/utils";
-import { PrimaryLink } from "../../../../ui/PrimaryLink";
 
 type BookElementProps = {
   onClick?: () => void;
@@ -17,51 +16,60 @@ export const BookElement = ({
   id,
   title,
   author,
+  authorId,
   img,
   rating,
   categories,
   annotation,
   isUserBook = false,
 }: BookElementProps) => {
+  const navigate = useNavigate();
   return (
     <Link to={`/books/${id}`}>
-      <ElementWrapper className="relative flex h-60 flex-col gap-y-5 lg:h-72">
-        <div className="flex">
-          <img
-            src={processImage(img)}
-            alt=""
-            onError={handleImageError}
-            className="mr-5 h-36 w-24 rounded object-cover lg:h-44 lg:w-32"
-          />
-          <div className="flex flex-col items-start">
-            <div className="mb-3 text-xl font-bold leading-5">{title}</div>
-
-            <div className="mb-2 flex flex-wrap gap-x-3 ">
-              {categories.map((item) => (
-                <div
-                  key={item}
-                  className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-
-            <div className="mb-2 text-sm">{author}</div>
-            <div className="flex items-center gap-x-3">
-              <Icon title={rating} icon={<AiFillStar />} />
-            </div>
-            {isUserBook && (
-              <PrimaryLink
-                path={`/account/book/${id}/edit-book`}
-                className="mt-2"
+      <ElementWrapper className="flex h-60 gap-6 lg:h-72">
+        <img
+          src={processImage(img)}
+          alt=""
+          onError={handleImageError}
+          className="mr-5 hidden rounded border object-cover sm:block"
+        />
+        <div className="flex h-full flex-col items-start justify-center self-center">
+          <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
+            {title}
+          </p>
+          <Link
+            to={`/users/${authorId}`}
+            className="mb-2 text-sm font-medium text-blue-800"
+          >
+            {author}
+          </Link>
+          <div className="mb-2 flex flex-wrap gap-x-3 ">
+            {categories.map((item) => (
+              <div
+                key={item}
+                className="truncate rounded-md bg-gray-100 py-1 px-2 text-xs "
               >
-                Редактировать
-              </PrimaryLink>
-            )}
+                {item}
+              </div>
+            ))}
           </div>
+          <div className="flex items-center gap-x-3">
+            <Icon title={rating} icon={<AiFillStar />} />
+          </div>
+          <p className="overflow-ellipsis whitespace-pre-wrap text-sm text-gray-800 lg:text-base">
+            {annotation.length > 120
+              ? `${annotation.substring(0, 120)}...`
+              : annotation}
+          </p>
+          {isUserBook && (
+            <Button
+              onClick={() => navigate(`/account/book/${id}/edit-book`)}
+              className="mt-2 text-sm sm:text-sm"
+            >
+              Редактировать
+            </Button>
+          )}
         </div>
-        <div className="h-28 overflow-hidden">{annotation}</div>
       </ElementWrapper>
     </Link>
   );

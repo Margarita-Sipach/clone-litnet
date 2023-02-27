@@ -13,14 +13,16 @@ const PersonalBlogs = () => {
       {blogs ? (
         <MotionWrapper>
           {blogs.length ? (
-            blogs.map(({ createdAt, title, text, id }, i) => {
-              return (
-                <PersonalBlogElement
-                  key={i}
-                  blog={{ date: createdAt, title, text, id }}
-                ></PersonalBlogElement>
-              );
-            })
+            <div className="flex flex-col gap-4">
+              {blogs.map(({ createdAt, title, text, id }, i) => {
+                return (
+                  <PersonalBlogElement
+                    key={i}
+                    blog={{ date: createdAt, title, text, id }}
+                  ></PersonalBlogElement>
+                );
+              })}
+            </div>
           ) : (
             <h1>Пользователь пока не завел личный блог</h1>
           )}

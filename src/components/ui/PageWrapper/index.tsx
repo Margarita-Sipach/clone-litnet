@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
+import MotionWrapper from "../MotionWrapper";
 
 interface PageWrapperProps {
   title?: string;
@@ -15,10 +16,7 @@ export const PageWrapper = ({
   isTop,
 }: PageWrapperProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.15 }}
+    <MotionWrapper
       className={`${isTop ? "mt-28" : "mt-0"} w-full ${className}`}
     >
       <h1 className="mb-9 text-3xl">{title}</h1>
@@ -27,6 +25,6 @@ export const PageWrapper = ({
           {children}
         </div>
       </div>
-    </motion.div>
+    </MotionWrapper>
   );
 };

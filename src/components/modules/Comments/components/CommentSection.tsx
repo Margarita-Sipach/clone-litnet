@@ -28,6 +28,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
   useEffect(() => {
     if (commentMutation?.status === "error") {
       notifyError(commentMutation.error.response!.data.message);
+    } else if (commentMutation?.status === "success") {
+      setText("");
     }
   }, [commentMutation?.status]);
   return (
@@ -64,7 +66,14 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
                   Добавить
                 </Button>
               )}
-              <Button onClick={() => setIsActive(false)}>Отменить</Button>
+              <Button
+                onClick={() => {
+                  setIsActive(false);
+                  setText("");
+                }}
+              >
+                Отменить
+              </Button>
             </div>
           )}
           <div className="flex flex-col gap-6">

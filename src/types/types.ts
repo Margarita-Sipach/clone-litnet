@@ -7,6 +7,7 @@ export interface BookElementType {
   img: string;
   title: string;
   author: string;
+  authorId?: string;
   categories: string[];
   annotation: string;
   commentAmount?: number;
@@ -26,6 +27,7 @@ export interface BookType {
   rating: string;
   description: string;
   user: { name: string };
+  userId: string;
   img: string;
   genres: GenreType[];
   chapters?: ChapterType[];
