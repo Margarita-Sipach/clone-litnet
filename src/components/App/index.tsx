@@ -36,6 +36,7 @@ import { BooksPage } from "../modules/Books/pages/Books";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReaderPage } from "../modules/Reader/pages";
+import ContestParticipate from "../modules/Contests/pages/ContestPage/ContestParticipate";
 
 const client = new QueryClient({
   logger: {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
             path: "rules",
             element: <ContestRules />,
           },
+          {
+            path: "participate",
+            element: <ContestParticipate />,
+          },
         ],
       },
       {
@@ -103,7 +108,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/reader/:id",
-        element: <ReaderPage />
+        element: <ReaderPage />,
       },
       {
         path: "/users/:id",

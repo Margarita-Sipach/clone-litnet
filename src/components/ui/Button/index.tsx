@@ -5,11 +5,13 @@ type ButtonProps = {
   type?: "primary" | "secondary";
   onClick?: (e: FormEvent<HTMLButtonElement>) => void;
   className?: string;
+  size?: "sm" | "md";
 };
 
 const Button: React.FC<ButtonProps> = ({
   children,
   type = "primary",
+  size = "md",
   onClick,
   className = "",
 }) => {
@@ -27,7 +29,9 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`rounded-md border-2 border-indigo-400 py-1 px-1 text-sm font-medium hover:border-indigo-500 sm:px-3 sm:text-base ${conditionalStyles} ${className}`}
+      className={`rounded-md border-2 border-indigo-400 py-1 px-1 text-sm font-medium hover:border-indigo-500 sm:px-3 sm:${
+        size === "md" && "text-base"
+      } ${conditionalStyles} ${className}`}
       onClick={handleClick}
     >
       {children}

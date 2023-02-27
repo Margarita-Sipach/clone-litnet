@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
 import Button from "../../../../ui/Button";
 import useBook from "../../../Books/api/useBook";
 import { processImage } from "../../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../../../ui/Spinner";
+import useParticipateInContest from "../../api/useParticipateInContest";
+import { notifyError, notifySuccess } from "../../../../../hooks";
 
 type ContestBookProps = {
   id: string;
+  contestId?: string;
+  participate?: boolean;
 };
 
-const ContestBook: React.FC<ContestBookProps> = ({ id }) => {
+const ContestBook: React.FC<ContestBookProps> = ({
+  id,
+  contestId,
+  participate = false,
+}) => {
   const { data: book, isLoading } = useBook(id);
   const navigate = useNavigate();
+  const mutation = useParticipateInContest(contestId!, id);
+  useEffect(() => {
+    if (mutation.status === "success") {
+      notifySuccess("Книга успешно зарегистрирована на конкурс");
+    } else if (mutation.status === "error") {
+      notifyError(mutation.error.response!.data.message);
+    }
+  }, [mutation.status]);
 
   return (
     <div className="flex gap-4 border p-4">
@@ -43,16 +60,27 @@ const ContestBook: React.FC<ContestBookProps> = ({ id }) => {
                   .join(", ")}`}
               </span>
             </p>
-            <Button
-              onClick={() => navigate(`/books/${book.id}`)}
-              className="mt-auto self-start"
-            >
-              Читать
-            </Button>
+            {participate && mutation.isLoading ? (
+              <Spinner className="mt-auto self-start" />
+            ) : (
+              <Button
+                size="sm"
+                onClick={() => {
+                  if (participate) {
+                    mutation.mutate();
+                  } else {
+                    navigate(`/books/${book.id}`);
+                  }
+                }}
+                className="mt-auto self-start"
+              >
+                {participate ? "Участвовать" : "Читать"}
+              </Button>
+            )}
           </div>
         </>
       ) : isLoading ? (
-        <p>loading book data...</p>
+        <Spinner className="flex w-full justify-center" />
       ) : (
         <p>error loading book data</p>
       )}

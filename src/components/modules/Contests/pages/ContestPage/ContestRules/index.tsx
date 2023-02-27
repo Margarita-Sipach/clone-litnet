@@ -2,22 +2,16 @@ import React from "react";
 import { TiSortAlphabetically } from "react-icons/ti";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { CommentType } from "../../../../../../types/types";
 import CommentSection from "../../../../Comments/components/CommentSection";
 import Button from "../../../../../ui/Button";
 import DetailsElement from "../../../components/DetailsElement";
-import { useOutletContext, useParams } from "react-router-dom";
-import { ContestContextType } from "../index";
+import { useParams } from "react-router-dom";
 import useContest from "../../../api/useContest";
 import { createDate } from "../../../../../../utils/utils";
 import useComments from "../../../../Comments/api/useComments";
-import { type } from "os";
 
 const mockRules = {
   genres: ["ЛитРПГ", "РеалРПГ", "Постапокалипсис"],
-};
-type Params = {
-  id: string;
 };
 
 const ContestRules = () => {
