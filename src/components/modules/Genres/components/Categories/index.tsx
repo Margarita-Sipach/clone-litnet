@@ -9,29 +9,28 @@ interface CategoriesProps {
 const Categories = ({ onClick }: CategoriesProps) => {
   const { data: genres, isLoading } = useGenres();
   return (
-    <div className="w-full">
+    <div>
       {genres ? (
         <>
-          <div className="grid grid-cols-2 justify-between gap-x-6 sm:grid-cols-3">
+          <div className="flex flex-col items-center gap-6">
             {genres.map((genre) => (
               <Link
                 key={genre.id}
                 to={`books/genre/${genre.name}`}
-                className="mb-3 text-sm hover:text-indigo-400 sm:text-base lg:text-lg"
+                className="text-sm hover:text-indigo-400 sm:text-base lg:text-lg"
                 onClick={onClick}
               >
                 {genre.name}
               </Link>
             ))}
+            <Link
+              to="/books/genre/all"
+              className="flex justify-center font-medium text-indigo-400 sm:text-base lg:text-lg"
+              onClick={onClick}
+            >
+              Все книги
+            </Link>
           </div>
-          <div className="my-1 h-[1px] w-full bg-black"></div>
-          <Link
-            to="/books/genre/all"
-            className="block w-full text-right font-bold text-indigo-400 sm:text-base lg:text-lg"
-            onClick={onClick}
-          >
-            Все книги
-          </Link>
         </>
       ) : isLoading ? (
         <Spinner className="flex w-full justify-center" />

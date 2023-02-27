@@ -3,7 +3,6 @@ import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
 import { Burger } from "../../ui/Burger";
 import { CloseButton } from "../../ui/CloseButton";
-import { Modal } from "../../ui/Modal";
 import Categories from "../Genres/components/Categories";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
@@ -58,12 +57,6 @@ const Header = () => {
           } absolute top-0 left-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
-            <p
-              onClick={() => setModalIsOpen(true)}
-              className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
-            >
-              newModal
-            </p>
             {navItems.map((item) => (
               <Link
                 to={item.link}
