@@ -10,6 +10,7 @@ import { useUserContext } from "../../context/userContext";
 import { Router } from "../../router";
 import { CircleUserAvatar } from "../../ui/CircleAvatar";
 import Button from "../../ui/Button";
+import NewModal from "../../ui/NewModal";
 
 const navItems = [
   {
@@ -37,7 +38,7 @@ const navItems = [
 const Header = () => {
   const { user, isUserLogged, logout } = useUserContext();
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
-  const [categoriesModalDisplay, setCategoriesModalDisplay] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -57,13 +58,19 @@ const Header = () => {
           } absolute top-0 left-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
+            <p
+              onClick={() => setModalIsOpen(true)}
+              className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
+            >
+              newModal
+            </p>
             {navItems.map((item) => (
               <Link
                 to={item.link}
                 key={item.title}
                 className="my-2 w-full text-center hover:text-indigo-400 sm:my-0 sm:w-auto sm:text-sm lg:text-lg"
                 onClick={() => {
-                  item.title === "Книги" && setCategoriesModalDisplay(true);
+                  item.title === "Книги" && setModalIsOpen(true);
                 }}
               >
                 {item.title}
@@ -106,11 +113,9 @@ const Header = () => {
           ></Burger>
         </div>
       </Wrapper>
-      {categoriesModalDisplay && (
-        <Modal displayModal={setCategoriesModalDisplay}>
-          <Categories onClick={() => setCategoriesModalDisplay(false)} />
-        </Modal>
-      )}
+      <NewModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <Categories onClick={() => setModalIsOpen(false)} />
+      </NewModal>
     </header>
   );
 };
