@@ -6,7 +6,6 @@ import { FileInput } from "../../../../ui/FileInput";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Textarea } from "../../../../ui/Textarea";
-import { Wrapper } from "../../../../ui/Wrapper";
 
 const AccountEdit = () => {
   const { user } = useUserContext();

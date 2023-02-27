@@ -3,6 +3,7 @@ export class Router {
   public static login = "/authorization";
   public static register = "/registration";
   public static users = "/users";
+  public static reader = "/reader";
   public static user = "/users/:id";
   public static edit = "/account/edit";
   public static editPassword = "/account/edit-password";

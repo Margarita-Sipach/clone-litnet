@@ -12,13 +12,15 @@ import { Wrapper } from "../../../../ui/Wrapper";
 import { processImage } from "../../../../../utils/utils";
 import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
+import { PrimaryLink } from "../../../../ui/PrimaryLink";
+import { Router } from "../../../../router";
 
 type Params = {
   id: string;
 };
 
 const BookPage = () => {
-  let { id } = useParams<Params>();
+  const { id } = useParams<Params>();
   const [addedBook, setAddedBook] = useState(false);
   const { data: book, isLoading: bookLoading } = useBook(id!);
   const { data: comments, isLoading: commentsLoading } = useComments(
@@ -64,7 +66,7 @@ const BookPage = () => {
                   >
                     {addedBook ? "Добавлена" : "Добавить"}
                   </Button>
-                  <Button className="w-1/2">Читать онлайн</Button>
+                  <PrimaryLink path={`${Router.reader}/${id}`} className="w-1/2 text-center">Читать онлайн</PrimaryLink>
                 </div>
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
