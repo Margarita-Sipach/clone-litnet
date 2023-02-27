@@ -47,7 +47,10 @@ const BookPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<Params>();
   const userBookmark = useMemo(
-    () => user?.bookmarks.find((b) => b.bookId === Number(id)),
+    () =>
+      user?.bookmarks
+        ? user?.bookmarks.find((b) => b.bookId === Number(id))
+        : undefined,
     [id, user?.bookmarks]
   );
   const addedBook = useMemo(() => !!userBookmark, [userBookmark]);
@@ -60,7 +63,7 @@ const BookPage = () => {
     id!,
     book
   );
-  
+
   const pageId = useMemo(() => {
     if (!book || !chapters) return 1;
     const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
@@ -91,7 +94,7 @@ const BookPage = () => {
       notifyError(ratingMutation.error.response!.data.message);
     }
   }, [ratingMutation.status]);
-  
+
   return (
     <Wrapper>
       <PageWrapper title="" isTop={true}>
