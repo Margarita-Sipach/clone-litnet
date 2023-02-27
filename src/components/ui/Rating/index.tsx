@@ -6,11 +6,12 @@ interface RatingProps {
 }
 
 export const Rating = ({ rating, statistic }: RatingProps) => {
+	console.log(statistic)
   return (
     <div
       className="flex items-center gap-x-1"
-      title={`Статистика оценок\n${statistic
-        .map((item, index) => `${"★".repeat(index + 1)} - ${item}`)
+      title={`Статистика оценок\n${(new Array(10)).fill('')
+        .map((item, index) => `${"★".repeat(index + 1)} - ${statistic.filter(star => star === index + 1).length}`)
         .join("\n")}`}
     >
       <div className="flex">
