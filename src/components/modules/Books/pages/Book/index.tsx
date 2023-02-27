@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { Link, useParams } from "react-router-dom";
@@ -14,20 +14,45 @@ import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
+import { useUserContext } from "../../../../context/userContext";
+import { usePostBookmark } from "../../../Reader/api/usePostBookmark";
+import useChapters from "../../../Account/api/useChapters";
 
 export type Params = {
   id: string;
 };
 
 const BookPage = () => {
+  const { user } = useUserContext();
   const { id } = useParams<Params>();
-  const [addedBook, setAddedBook] = useState(false);
+  const userBookmark = useMemo(
+    () => user?.bookmarks.find((b) => b.bookId === Number(id)),
+    [id, user?.bookmarks]
+  );
+  const addedBook = useMemo(() => !!userBookmark, [userBookmark]);
+  const { mutate: addBookmark } = usePostBookmark();
+  const { chapters } = useChapters(id!);
   const { data: book, isLoading: bookLoading } = useBook(id!);
   const { data: comments, isLoading: commentsLoading } = useComments(
     "book",
     id!,
     book
   );
+  const pageId = useMemo(() => {
+    if (!book || !chapters) return 1;
+    const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
+    return chapter && chapter.pages ? chapter.pages[0].id : 1;
+  }, [chapters, book]);
+
+  const handleAddBookmark = () => {
+    addBookmark({
+      userId: user!.id,
+      bookId: Number(id),
+      chapterId: book!.chapters[0].id,
+      pageId: pageId,
+    });
+  };
+
   return (
     <Wrapper>
       <PageWrapper title="" isTop={true}>
@@ -54,7 +79,6 @@ const BookPage = () => {
                       </div>
                     ))}
                   </div>
-
                   <div className="flex items-center gap-x-7">
                     <Rating
                       rating={Number(book.rating)}
@@ -62,12 +86,17 @@ const BookPage = () => {
                     />
                   </div>
                 </div>
-
                 <div className="flex gap-x-5 justify-self-end">
                   <Button
                     type="secondary"
-                    className="w-1/2"
-                    onClick={() => setAddedBook(!addedBook)}
+                    className={`w-1/2 ${
+                      addedBook &&
+                      " border-indigo-500 text-indigo-500 hover:cursor-default"
+                    }`}
+                    onClick={() => {
+                      if (addedBook) return;
+                      handleAddBookmark();
+                    }}
                   >
                     {addedBook ? "Добавлена" : "Добавить"}
                   </Button>
@@ -81,7 +110,7 @@ const BookPage = () => {
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
                   title="Содержание"
-                  options={[1, 2, 3, 4, 5, 6]}
+                  options={chapters?.map((ch) => ch.title) as string[]}
                 ></PrimarySelect>
               </div>
             </ElementWrapper>
