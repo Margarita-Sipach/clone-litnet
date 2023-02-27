@@ -26,14 +26,14 @@ export const BookElement = ({
   const navigate = useNavigate();
   return (
     <Link to={`/books/${id}`}>
-      <ElementWrapper className="flex h-60 gap-6 lg:h-72">
+      <ElementWrapper className="flex flex-col gap-6 sm:h-60 sm:flex-row lg:h-72">
         <img
           src={processImage(img)}
           alt=""
           onError={handleImageError}
-          className="mr-5 hidden aspect-square rounded border object-cover sm:block"
+          className="aspect-square h-full rounded border object-cover sm:mr-5"
         />
-        <div className="flex h-full flex-col items-start justify-center self-center">
+        <div className="flex h-full w-full flex-col items-start justify-center self-center sm:w-auto">
           <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
             {title}
           </p>
