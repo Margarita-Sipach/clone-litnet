@@ -7,7 +7,7 @@ import { ErrorResponse } from "../../../../types/types";
 type CommentParams = {
   commentType: "blog" | "book" | "contest";
   id: string;
-  userId: string;
+  userId: string | null | undefined;
   text: string;
 };
 
@@ -80,14 +80,15 @@ const usePostComment = ({ id, userId, commentType, text }: CommentParams) => {
   } else if (commentType === "contest") {
     mutationFunction = postContestComment;
   }
-  return useMutation({
-    mutationFn: () => mutationFunction(id, userId, text),
+  const mutation = useMutation({
+    mutationFn: () => mutationFunction(id, userId!, text),
     mutationKey: [id, commentType],
     onSuccess: refetch,
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
     },
   });
+  return userId ? mutation : null;
 };
 
 export default usePostComment;

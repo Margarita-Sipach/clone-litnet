@@ -19,22 +19,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
   const [isActive, setIsActive] = useState(false);
   const [text, setText] = useState("");
   const { data: comments, isLoading } = useComments(type, id.toString());
-  const {
-    mutate,
-    error,
-    isLoading: loadingMutation,
-    isError,
-  } = usePostComment({
+  const commentMutation = usePostComment({
     id: id.toString(),
-    userId: user!.id.toString(),
+    userId: user?.id.toString(),
     commentType: type,
     text,
   });
   useEffect(() => {
-    if (isError && error.response!.status === 400) {
-      notifyError(error.response!.data.message);
+    if (commentMutation?.status === "error") {
+      notifyError(commentMutation.error.response!.data.message);
+    } else if (commentMutation?.status === "success") {
+      setText("");
     }
-  }, [isError]);
+  }, [commentMutation?.status]);
   return (
     <div className="w-full border p-6">
       {comments ? (
@@ -46,23 +43,37 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
             className={`mb-4 flex w-full items-start rounded border bg-gray-50 px-2 py-1 transition-all focus:outline-none ${
               isActive ? "h-44" : ""
             }`}
-            onClick={() => setIsActive(true)}
-            placeholder="Напишите свой комментарий..."
+            onClick={() => {
+              if (user) setIsActive(true);
+            }}
+            placeholder={
+              user
+                ? "Напишите свой комментарий"
+                : "Авторизуйтесь чтобы оставлять комментарии"
+            }
+            disabled={!user}
           />
-          {isActive && (
+          {isActive && commentMutation && (
             <div className="mb-4 flex gap-4">
-              {loadingMutation ? (
+              {commentMutation.isLoading ? (
                 <Spinner />
               ) : (
                 <Button
                   onClick={() => {
-                    mutate();
+                    commentMutation.mutate();
                   }}
                 >
                   Добавить
                 </Button>
               )}
-              <Button onClick={() => setIsActive(false)}>Отменить</Button>
+              <Button
+                onClick={() => {
+                  setIsActive(false);
+                  setText("");
+                }}
+              >
+                Отменить
+              </Button>
             </div>
           )}
           <div className="flex flex-col gap-6">

@@ -16,7 +16,7 @@ export const CommentElement: React.FC<CommentType> = ({
         name={user!.name}
         date={createDate(createdAt)}
       />
-      <p className="text-sm">{text}</p>
+      <p className="break-all text-sm">{text}</p>
     </ElementWrapper>
   );
 };

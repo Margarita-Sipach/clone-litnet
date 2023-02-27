@@ -10,18 +10,21 @@ export const BooksPage = () => {
     <Wrapper>
       <PageWrapper title="Все жанры" isTop={true}>
         {books ? (
-          books.map((book) => (
-            <BookElement
-              id={book.id}
-              key={book.id}
-              img={book.img}
-              title={book.title}
-              author={book.user.name}
-              annotation={book.description}
-              rating={book.rating}
-              categories={book.genres.map((genre) => genre.name)}
-            />
-          ))
+          <div className="flex flex-col gap-4">
+            {books.map((book) => (
+              <BookElement
+                id={book.id}
+                key={book.id}
+                img={book.img}
+                title={book.title}
+                author={book.user.name}
+                authorId={book.userId}
+                annotation={book.description}
+                rating={book.rating}
+                categories={book.genres.map((genre) => genre.name)}
+              />
+            ))}
+          </div>
         ) : isLoading ? (
           <Spinner className="flex w-full items-center justify-center" />
         ) : (

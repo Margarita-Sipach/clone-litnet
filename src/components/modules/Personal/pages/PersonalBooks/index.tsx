@@ -16,16 +16,18 @@ const PersonalBooks = () => {
       {books ? (
         <MotionWrapper>
           {books.length ? (
-            books.map((book: BookType) => (
-              <BookElement
-                author={book.user.name}
-                categories={book.genres.map((genre) => genre.name)}
-                annotation={book.description}
-                {...book}
-                key={book.id}
-                isUserBook={Number(id) === user?.id}
-              ></BookElement>
-            ))
+            <div className="flex flex-col gap-4">
+              {books.map((book: BookType) => (
+                <BookElement
+                  author={book.user.name}
+                  categories={book.genres.map((genre) => genre.name)}
+                  annotation={book.description}
+                  {...book}
+                  key={book.id}
+                  isUserBook={Number(id) === user?.id}
+                ></BookElement>
+              ))}
+            </div>
           ) : (
             <h1>Пользователь пока не добавил книги</h1>
           )}

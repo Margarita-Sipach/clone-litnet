@@ -9,5 +9,11 @@ export const ElementWrapper = ({
   children,
   className,
 }: ElementWrapperProps) => {
-  return <div className={`rounded p-3 shadow ${className}`}>{children}</div>;
+  return (
+    <div
+      className={`rounded-md border border-gray-100 p-3 shadow ${className}`}
+    >
+      {children}
+    </div>
+  );
 };
