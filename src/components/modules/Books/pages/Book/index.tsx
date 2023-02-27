@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CommentSection from "../../../Comments/components/CommentSection";
 import { ElementWrapper } from "../../../../ui/ElementWrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
@@ -38,7 +38,12 @@ const BookPage = () => {
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
                   <h4 className="mb-1 text-2xl">{book.title}</h4>
-                  <div className="mb-4">{book.user.name}</div>
+                  <Link
+                    to={`/users/${book.userId}`}
+                    className="mb-4 text-blue-800"
+                  >
+                    {book.user.name}
+                  </Link>
                   <div className="mb-6 flex flex-wrap gap-x-2">
                     {book.genres.map((item) => (
                       <div
@@ -66,7 +71,12 @@ const BookPage = () => {
                   >
                     {addedBook ? "Добавлена" : "Добавить"}
                   </Button>
-                  <PrimaryLink path={`${Router.reader}/${id}`} className="w-1/2 text-center">Читать онлайн</PrimaryLink>
+                  <PrimaryLink
+                    path={`${Router.reader}/${id}`}
+                    className="w-1/2 text-center"
+                  >
+                    Читать онлайн
+                  </PrimaryLink>
                 </div>
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
