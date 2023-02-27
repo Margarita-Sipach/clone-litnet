@@ -16,7 +16,7 @@ const Categories = ({ onClick }: CategoriesProps) => {
             {genres.map((genre) => (
               <Link
                 key={genre.id}
-                to={`books/${genre.name}`}
+                to={`books/genre/${genre.name}`}
                 className="mb-3 text-sm hover:text-indigo-400 sm:text-base lg:text-lg"
                 onClick={onClick}
               >
@@ -26,11 +26,11 @@ const Categories = ({ onClick }: CategoriesProps) => {
           </div>
           <div className="my-1 h-[1px] w-full bg-black"></div>
           <Link
-            to="/books"
+            to="/books/genre/all"
             className="block w-full text-right font-bold text-indigo-400 sm:text-base lg:text-lg"
             onClick={onClick}
           >
-            Посмотреть все жанры
+            Все книги
           </Link>
         </>
       ) : isLoading ? (

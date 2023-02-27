@@ -32,7 +32,7 @@ import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCheckingAuth } from "../../hooks";
 import { AccountEditChapter } from "../modules/Account/pages/AccountEditBook/AccountEditChapter";
-import { BooksPage } from "../modules/Books/pages/Books";
+import { BooksPage } from "../modules/Books/pages/BooksPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReaderPage } from "../modules/Reader/pages";
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/books",
+        path: "/books/genre/:genreName",
         element: <BooksPage />,
       },
       {
