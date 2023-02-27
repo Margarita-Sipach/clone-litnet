@@ -100,8 +100,12 @@ const BookPage = () => {
       <PageWrapper title="" isTop={true}>
         {book ? (
           <>
-            <ElementWrapper className="flex gap-x-5">
-              <img src={processImage(book.img)} alt="" className="w-1/3" />
+            <ElementWrapper className="flex flex-col gap-x-5 sm:flex-row">
+              <img
+                src={processImage(book.img)}
+                alt=""
+                className="h-80 w-full object-cover sm:w-1/3"
+              />
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
                   <h4 className="mb-1 text-2xl">{book.title}</h4>
@@ -126,13 +130,13 @@ const BookPage = () => {
                     statistic={book.ratings.map((item) => item.rating)}
                   />
                   {user && (
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 mb-4 flex items-center gap-2">
                       <input
                         value={rating!}
                         onChange={(e) => setRating(Number(e.target.value))}
                         type="number"
                         placeholder="Оценка"
-                        className="border p-1"
+                        className="w-40 self-start border p-1"
                       />
                       <Button size="sm" onClick={() => ratingMutation.mutate()}>
                         Оценить
