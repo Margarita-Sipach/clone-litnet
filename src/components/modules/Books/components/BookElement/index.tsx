@@ -34,7 +34,11 @@ export const BookElement = ({
           className="mr-5 hidden aspect-square rounded border object-cover sm:block"
         />
         <div className="flex h-full flex-col items-start justify-center self-center">
-          <p className="mt-auto pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
+          <p
+            className={`${
+              isUserBook && "mt-auto"
+            } pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl`}
+          >
             {title}
           </p>
           <Link
