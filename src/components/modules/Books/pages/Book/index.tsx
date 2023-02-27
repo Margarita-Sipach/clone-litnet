@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { Link, useParams } from "react-router-dom";
@@ -15,6 +15,8 @@ import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
 import { Router } from "../../../../router";
 import { useUserContext } from "../../../../context/userContext";
+import { usePostBookmark } from "../../../Reader/api/usePostBookmark";
+import useChapters from "../../../Account/api/useChapters";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { ErrorResponse } from "../../../../../types/types";
@@ -42,16 +44,38 @@ export type Params = {
 };
 
 const BookPage = () => {
-  const { id } = useParams<Params>();
   const { user } = useUserContext();
-  const [addedBook, setAddedBook] = useState(false);
-  const [rating, setRating] = useState<number | string>("");
+  const { id } = useParams<Params>();
+  const userBookmark = useMemo(
+    () => user?.bookmarks.find((b) => b.bookId === Number(id)),
+    [id, user?.bookmarks]
+  );
+  const addedBook = useMemo(() => !!userBookmark, [userBookmark]);
+  const { mutate: addBookmark } = usePostBookmark();
+  const { chapters } = useChapters(id!);
   const { data: book, isLoading: bookLoading, refetch } = useBook(id!);
+  const [rating, setRating] = useState<number | string>("");
   const { data: comments, isLoading: commentsLoading } = useComments(
     "book",
     id!,
     book
   );
+  
+  const pageId = useMemo(() => {
+    if (!book || !chapters) return 1;
+    const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
+    return chapter && chapter.pages ? chapter.pages[0].id : 1;
+  }, [chapters, book]);
+
+  const handleAddBookmark = () => {
+    addBookmark({
+      userId: user!.id,
+      bookId: Number(id),
+      chapterId: book!.chapters[0].id,
+      pageId: pageId,
+    });
+  };
+
   const ratingMutation = useMutation({
     mutationFn: () => rateBook(user!.id, id!, Number(rating)),
     mutationKey: ["rateBook"],
@@ -67,6 +91,7 @@ const BookPage = () => {
       notifyError(ratingMutation.error.response!.data.message);
     }
   }, [ratingMutation.status]);
+  
   return (
     <Wrapper>
       <PageWrapper title="" isTop={true}>
@@ -93,7 +118,6 @@ const BookPage = () => {
                       </div>
                     ))}
                   </div>
-
                   <Rating
                     rating={Number(book.rating)}
                     statistic={book.ratings.map((item) => item.rating)}
@@ -113,12 +137,17 @@ const BookPage = () => {
                     </div>
                   )}
                 </div>
-
                 <div className="flex gap-x-5 justify-self-end">
                   <Button
                     type="secondary"
-                    className="w-1/2"
-                    onClick={() => setAddedBook(!addedBook)}
+                    className={`w-1/2 ${
+                      addedBook &&
+                      " border-indigo-500 text-indigo-500 hover:cursor-default"
+                    }`}
+                    onClick={() => {
+                      if (addedBook) return;
+                      handleAddBookmark();
+                    }}
                   >
                     {addedBook ? "Добавлена" : "Добавить"}
                   </Button>
@@ -132,7 +161,7 @@ const BookPage = () => {
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
                   title="Содержание"
-                  options={[1, 2, 3, 4, 5, 6]}
+                  options={chapters?.map((ch) => ch.title) as string[]}
                 ></PrimarySelect>
               </div>
             </ElementWrapper>
