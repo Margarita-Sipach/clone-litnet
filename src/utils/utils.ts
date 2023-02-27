@@ -1,7 +1,7 @@
 import defaultImage from "../common/assets/images/avatar.png";
 import React from "react";
 
-import { BookType, ChapterType } from "../types/types";
+import { BlogType, BookType, ChapterType } from "../types/types";
 
 export const baseUrl = "https://litnet.herokuapp.com";
 
@@ -68,3 +68,12 @@ export const getBooksByReadings = (
 export const getChapterText = (chapter: ChapterType) => {
   return chapter.pages?.reduce((text, page) => (text += `${page.text}`), "");
 };
+
+export const sortByTime = (blogs: BlogType[]) =>
+  [...blogs].sort((a, b) => {
+    const aSeconds = new Date(a.createdAt);
+    const bSeconds = new Date(b.createdAt);
+
+    if (aSeconds > bSeconds) return -1;
+    else return 1;
+  });

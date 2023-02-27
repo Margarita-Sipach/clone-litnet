@@ -4,16 +4,8 @@ import { PageWrapper } from "../../../../ui/PageWrapper";
 import { PersonalBlogElement } from "../../components/PersonalBlogElement";
 import Spinner from "../../../../ui/Spinner";
 import MotionWrapper from "../../../../ui/MotionWrapper";
-import { BlogType } from "../../../../../types/types";
+import { sortByTime } from "../../../../../utils/utils";
 
-const sortByTime = (blogs: BlogType[]) =>
-  [...blogs].sort((a, b) => {
-    const aSeconds = new Date(a.createdAt);
-    const bSeconds = new Date(b.createdAt);
-
-    if (aSeconds > bSeconds) return -1;
-    else return 1;
-  });
 const PersonalBlogs = () => {
   const { id } = useParams();
   const { blogs, isLoading } = useUserBlogs(id as string);
@@ -27,7 +19,7 @@ const PersonalBlogs = () => {
                 <PersonalBlogElement
                   key={i}
                   blog={{ date: createdAt, title, text, id }}
-               />
+                />
               );
             })
           ) : (
