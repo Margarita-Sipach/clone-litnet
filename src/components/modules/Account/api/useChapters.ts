@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { ChaptersResponseType } from "../../../../types/types";
 import { getChapters } from "../../../../api/service";
+import { ChaptersListType } from "../../../../types/list.types";
 
 const useChapters = (id: string) => {
-  const { data, isError, isLoading, isSuccess } =
-    useQuery<ChaptersResponseType>({
-      queryKey: ["chapters"],
-      queryFn: async () => getChapters(id),
-      staleTime: 1000,
-    });
+  const { data, isError, isLoading, isSuccess } = useQuery<ChaptersListType>({
+    queryKey: ["chapters"],
+    queryFn: async () => getChapters(id),
+    staleTime: 1000,
+  });
 
   return {
     chapters: data?.rows,

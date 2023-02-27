@@ -4,6 +4,7 @@ import { PageWrapper } from "../../../../ui/PageWrapper";
 import { PersonalBlogElement } from "../../components/PersonalBlogElement";
 import Spinner from "../../../../ui/Spinner";
 import MotionWrapper from "../../../../ui/MotionWrapper";
+import { sortByTime } from "../../../../../utils/utils";
 
 const PersonalBlogs = () => {
   const { id } = useParams();
@@ -14,12 +15,12 @@ const PersonalBlogs = () => {
         <MotionWrapper>
           {blogs.length ? (
             <div className="flex flex-col gap-4">
-              {blogs.map(({ createdAt, title, text, id }, i) => {
+              {sortByTime(blogs).map(({ createdAt, title, text, id }, i) => {
                 return (
                   <PersonalBlogElement
                     key={i}
                     blog={{ date: createdAt, title, text, id }}
-                  ></PersonalBlogElement>
+                  />
                 );
               })}
             </div>

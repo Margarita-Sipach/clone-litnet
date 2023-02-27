@@ -18,6 +18,7 @@ export const AccountAddBlog = () => {
     text,
     title,
   });
+  
   useEffect(() => {
     if (isSuccess) {
       notifySuccess("blog created!");
@@ -25,6 +26,7 @@ export const AccountAddBlog = () => {
       notifyError(error.response!.data.message);
     }
   }, [status]);
+
   return (
     <Wrapper>
       <PageWrapper title="Новый блог">

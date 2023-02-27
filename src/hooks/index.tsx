@@ -13,15 +13,10 @@ import {
 import { useUserContext } from "../components/context/userContext";
 import { Router } from "../components/router";
 import { LocalStorage } from "../components/storage";
-import {
-  AccountType,
-  BookResponseType,
-  BookType,
-  GenreResponseType,
-  UserStateType,
-} from "../types/types";
+import { AccountType, BookType, UserStateType } from "../types/types";
 import { useEffect, useMemo, useState } from "react";
 import { fetchUserData } from "../api/data";
+import { BookListType, GenreListType } from "../types/list.types";
 import { toast } from "react-toastify";
 
 export const useFetchUser = (id: string) => {
@@ -78,13 +73,14 @@ export const useImage = (entity: AccountType | BookType) => {
 };
 
 export const useEditUserPage = () => {
-  const { user, setUser } = useUserContext();
+  const { user, setUser, setSelectedUser } = useUserContext();
   const navigate = useNavigate();
   const { mutate: edit, isError } = useMutation({
     mutationFn: (data: any) => updateUserById(`${user?.id}`, data),
     mutationKey: ["user", "edit-page", user?.id],
     onSuccess: (user: any) => {
       setUser(user);
+      setSelectedUser(user);
       navigate(`${Router.users}/${user.id}`);
     },
   });
@@ -108,7 +104,7 @@ export const useEditPassword = () => {
 };
 
 export const useFetchBooks = () => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BookResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<BookListType>({
     queryKey: ["books"],
     queryFn: async (params?: any) => getBooks(params),
     staleTime: 1000 * 10,
@@ -124,7 +120,7 @@ export const useFetchBooks = () => {
 };
 
 export const useFetchGenres = () => {
-  const { data, isError, isLoading, isSuccess } = useQuery<GenreResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<GenreListType>({
     queryKey: ["genres"],
     queryFn: async (params?: any) => getGenres(params),
   });

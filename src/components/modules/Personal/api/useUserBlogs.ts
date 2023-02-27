@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { BlogResponseType } from "../../../../types/types";
 import { getBlogsByUserId } from "../../../../api/service";
+import { BlogListType } from "../../../../types/list.types";
 
 const useUserBlogs = (userId: string) => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BlogResponseType>({
+  const { data, isError, isLoading, isSuccess } = useQuery<BlogListType>({
     queryKey: ["users", userId, "blogs"],
     queryFn: async () => getBlogsByUserId(userId as string),
-    staleTime: 1000 * 10,
+    staleTime: 1000 * 0,
   });
   return {
     blogs: data?.rows,

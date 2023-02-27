@@ -1,8 +1,7 @@
 //TODO: improve typing
 import axios from "axios";
 import { BlogType } from "../types/types";
-
-const baseUrl = "https://litnet.herokuapp.com";
+import { baseUrl } from "../utils/utils";
 
 export const fetchUserData = async (userId: string) => {
   const response = await axios.get(`${baseUrl}/users/${userId}`);

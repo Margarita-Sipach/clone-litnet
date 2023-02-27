@@ -1,8 +1,8 @@
 .circle{
 	animation: circle 10s infinite;
 	position: relative;
-	top: calc(50vh - 1em);
-	left: calc(50vw - 1em);
+	top: calc(50vh - 1.5rem);
+	left: calc(50vw - 1.5rem);
 	animation-timing-function: linear;
 	animation-direction: alternate;
 }
@@ -24,31 +24,49 @@
 		transform: translate(0, 64px);
 	}
 	25%{
-		transform: translate(calc(25vw - 1em), calc(100vh - 1em));
+		transform: translate(calc(25vw - 3rem), calc(100vh - 3rem));
 	}
 	50%{
-		transform: translate(calc(50vw - 1em), 64px);
+		transform: translate(calc(50vw - 3rem), 64px);
 	}
 	75%{
-		transform: translate(calc(75vw - 1em),calc(100vh - 1em));		
+		transform: translate(calc(75vw - 3rem),calc(100vh - 3rem));		
 	}
 	100%{
-		transform: translate(calc(100vw - 1em),64px);
+		transform: translate(calc(100vw - 3rem),64px);
 	}
 }
 
-@keyframes circle{
-  0%{
-    transform:rotate(0deg)
-              translate(-300px)
-              rotate(0deg);
-  
-  }
-  100%{
-    transform:rotate(360deg)
-              translate(-300px)
-              rotate(-360deg);
-  }
+@media (max-width: 640px){
+	@keyframes circle{
+		0%{
+			transform:rotate(0deg)
+								translate(-30vw)
+								rotate(0deg);
+		
+		}
+		100%{
+			transform:rotate(360deg)
+								translate(-30vw)
+								rotate(-360deg);
+		}
+	}
+}
+
+@media (min-width: 640px){
+	@keyframes circle{
+		0%{
+			transform:rotate(0deg)
+								translate(-30vh)
+								rotate(0deg);
+		
+		}
+		100%{
+			transform:rotate(360deg)
+								translate(-30vh)
+								rotate(-360deg);
+		}
+	}
 }
 
 @keyframes figure{
@@ -56,15 +74,19 @@
 		transform: translate(0, 64px);
 	}
 	30%{
-		transform: translate(calc(100vw - 1em), 64px);
+		transform: translate(calc(100vw - 3rem), 64px);
 	}
 	50%{
-		transform: translate(calc(100vw - 1em), calc(100vh - 1em));
+		transform: translate(calc(100vw - 3rem), calc(100vh - 3rem));
 	}
 	80%{
-		transform: translate(0,calc(100vh - 1em));		
+		transform: translate(0,calc(100vh - 3rem));		
 	}
 	100%{
 		transform: translate(0, 64px);
 	}
+}
+
+body::-webkit-scrollbar{
+	width: 0;
 }
