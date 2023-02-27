@@ -16,7 +16,7 @@ const DetailsElement: React.FC<DetailsElementProps> = ({
   className = "",
 }) => {
   return (
-    <div className={`flex flex-1 ${className}`}>
+    <div className={`flex flex-1 gap-1 ${className}`}>
       <DetailsIcon icon={icon} />
       <div>
         <p className="mb-1 text-xs uppercase text-slate-500">{title}</p>

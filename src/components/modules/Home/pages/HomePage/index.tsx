@@ -33,7 +33,6 @@ const HomePage = () => {
       <Wrapper className="grid grid-cols-1 justify-center gap-x-8 md:grid-cols-[2fr_1fr] lg:gap-x-8 xl:gap-x-20">
         <div className="flex flex-col gap-y-10">
           <PageWrapper className="lg:w-full">
-            <Categories />
             <div className="flex flex-col gap-16">
               <Slider title="ТОП Книг" books={popularBooks} />
               <Slider
