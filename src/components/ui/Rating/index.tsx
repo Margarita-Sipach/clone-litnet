@@ -6,7 +6,6 @@ interface RatingProps {
 }
 
 export const Rating = ({ rating, statistic }: RatingProps) => {
-	console.log(statistic)
   return (
     <div
       className="flex items-center gap-x-1"
@@ -23,14 +22,14 @@ export const Rating = ({ rating, statistic }: RatingProps) => {
             +ratingStr > index
           )
             return (
-              <BsStarHalf className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+              <BsStarHalf key={index} className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
             );
           if (+ratingStr > index)
             return (
-              <BsStarFill className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+              <BsStarFill key={index} className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
             );
           return (
-            <BsStar className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
+            <BsStar key={index} className="cursor-pointer text-lg text-indigo-400 hover:text-indigo-500" />
           );
         })}
       </div>

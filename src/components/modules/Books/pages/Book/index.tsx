@@ -65,7 +65,7 @@ const BookPage = () => {
   );
 
   const pageId = useMemo(() => {
-    if (!book || !chapters) return 1;
+    if (!book || !chapters || !book.chapters[0]) return 1;
     const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
     return chapter && chapter.pages ? chapter.pages[0].id : 1;
   }, [chapters, book]);
@@ -144,27 +144,33 @@ const BookPage = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-x-5 justify-self-end">
-                  <Button
-                    type="secondary"
-                    className={`w-1/2 ${
-                      addedBook &&
-                      " border-indigo-500 text-indigo-500 hover:cursor-default"
-                    }`}
-                    onClick={() => {
-                      if (addedBook) return;
-                      handleAddBookmark();
-                    }}
-                  >
-                    {addedBook ? "Добавлена" : "Добавить"}
-                  </Button>
-                  <PrimaryLink
-                    path={`${Router.reader}/${id}`}
-                    className="w-1/2 text-center"
-                  >
-                    Читать онлайн
-                  </PrimaryLink>
-                </div>
+                {chapters && chapters?.length > 0 ? (
+                  <div className="flex gap-x-5 justify-self-end">
+                    <Button
+                      type="secondary"
+                      className={`w-1/2 ${
+                        addedBook &&
+                        " border-indigo-500 text-indigo-500 hover:cursor-default"
+                      }`}
+                      onClick={() => {
+                        if (addedBook) return;
+                        handleAddBookmark();
+                      }}
+                    >
+                      {addedBook ? "Добавлена" : "Добавить"}
+                    </Button>
+                    <PrimaryLink
+                      path={`${Router.reader}/${id}`}
+                      className="w-1/2 text-center"
+                    >
+                      Читать онлайн
+                    </PrimaryLink>
+                  </div>
+                ) : (
+                  <div className="text-center w-full">
+                    В книге недостаточно глав для чтения
+                  </div>
+                )}
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
                   title="Содержание"
