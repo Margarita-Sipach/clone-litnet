@@ -8,7 +8,7 @@ export const fetchUserData = async (userId: string) => {
   const data: {
     id: string;
     name: string;
-    image: string;
+    img: string;
   } = response.data;
   return data;
 };

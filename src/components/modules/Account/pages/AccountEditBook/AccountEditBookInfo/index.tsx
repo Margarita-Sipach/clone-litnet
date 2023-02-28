@@ -9,6 +9,7 @@ import { Input } from "../../../../../ui/Input";
 import { PrimarySelect } from "../../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../../ui/Textarea";
 import Spinner from "../../../../../ui/Spinner";
+import { processImage } from "../../../../../../utils/utils";
 
 export const AccountEditBookInfo = () => {
   const { bookId } = useParams();
@@ -20,8 +21,10 @@ export const AccountEditBookInfo = () => {
   const [firstSelectedGenre, setFirstSelectedGenre] = useState("");
   const [secondSelectedGenre, setSecondSelectedGenre] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [defFile, setDefFile] = useState<string | null>(null);
 
   useEffect(() => book && setTitle(book.title), [book]);
+  useEffect(() => book && setDefFile(book.img), [book]);
   useEffect(
     () =>
       book &&
@@ -53,11 +56,14 @@ export const AccountEditBookInfo = () => {
   const handleSubmitForm = () => {
     editBook(createFormData());
   };
-
   return book && genres ? (
     <PageWrapper title="Редактировать информацию о книге">
       <div className="flex gap-x-5">
-        <FileInput className="h-52 w-40" onChange={handleSetFile} />
+        <FileInput
+          className="h-52 w-40"
+          onChange={handleSetFile}
+          defaultImage={processImage(defFile)}
+        />
         <div className="flex flex-grow flex-col gap-y-5">
           <Input
             value={title}

@@ -33,7 +33,7 @@ export const BlogElement: React.FC<BlogElementProps> = ({
           <>
             <div className="text-xl">{title}</div>
             <Avatar
-              image={processImage(userData.image)}
+              image={processImage(userData.img)}
               name={userData.name}
               date={createdAt}
             ></Avatar>
