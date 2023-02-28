@@ -17,7 +17,6 @@ export const BooksPage = () => {
         : books.filter((book) => {
             return book.genres.map((genre) => genre.name).includes(genreName!);
           });
-    console.log(filteredBooks);
   }
 
   return (

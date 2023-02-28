@@ -6,12 +6,13 @@ import Button from "../../../../ui/Button";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Wrapper } from "../../../../ui/Wrapper";
+import Spinner from "../../../../ui/Spinner";
 
 export const AccountEditPassword = () => {
   const { user } = useUserContext();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const { editPassword } = useEditPassword();
+  const { editPassword, isLoading } = useEditPassword();
 
   const createFormData = () => {
     if (!user) return;
@@ -46,7 +47,11 @@ export const AccountEditPassword = () => {
           type="password"
           onChange={(e) => setNewPassword(e?.target.value || "")}
         />
-        <Button onClick={handleSubmitForm}>Сохранить</Button>
+        {isLoading ? (
+          <Spinner className="flex w-full justify-center" />
+        ) : (
+          <Button onClick={handleSubmitForm}>Сохранить</Button>
+        )}
       </PageWrapper>
     </Wrapper>
   );

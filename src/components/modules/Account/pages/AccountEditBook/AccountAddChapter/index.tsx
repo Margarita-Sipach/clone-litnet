@@ -6,12 +6,13 @@ import Button from "../../../../../ui/Button";
 import { PageWrapper } from "../../../../../ui/PageWrapper";
 import { Input } from "../../../../../ui/Input";
 import { Textarea } from "../../../../../ui/Textarea";
+import Spinner from "../../../../../ui/Spinner";
 
 export const AccountAddChapter = () => {
   const { bookId } = useParams();
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
-  const { createChapter } = useCreateChapter();
+  const { createChapter, isLoading } = useCreateChapter();
   const { book } = useFetchBook(`${bookId}`);
 
   const createRequestBody = () => {
@@ -38,7 +39,11 @@ export const AccountAddChapter = () => {
         value={text}
         onChange={(e) => setText(e?.target.value || "")}
       ></Textarea>
-      <Button onClick={handleSubmitForm}>Сохранить</Button>
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmitForm}>Сохранить</Button>
+      )}
     </PageWrapper>
   ) : (
     <h1>Loading....</h1>
