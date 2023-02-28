@@ -8,6 +8,7 @@ import { Input } from "../../../../ui/Input";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../ui/Textarea";
 import useCreateBook from "../../api/useCreateBook";
+import Spinner from "../../../../ui/Spinner";
 
 export const AccountAddBook = () => {
   const { user } = useUserContext();
@@ -17,7 +18,7 @@ export const AccountAddBook = () => {
   const [secondSelectedGenre, setSecondSelectedGenre] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const { genres } = useFetchGenres();
-  const { createBook } = useCreateBook();
+  const { createBook, isLoading } = useCreateBook();
 
   const createFormData = () => {
     const formData = new FormData();
@@ -68,7 +69,11 @@ export const AccountAddBook = () => {
         placeholder="Аннотация"
         onChange={(e) => setDescription(e?.target.value || "")}
       />
-      <Button onClick={handleSubmitForm}>Сохранить</Button>
+        {isLoading ? (
+          <Spinner className="flex w-full justify-center" />
+        ) : (
+          <Button onClick={handleSubmitForm}>Сохранить</Button>
+        )}
     </PageWrapper>
   ) : (
     <h1>Loading...</h1>

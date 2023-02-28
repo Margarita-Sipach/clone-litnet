@@ -8,13 +8,14 @@ import { PageWrapper } from "../../../../../ui/PageWrapper";
 import { Input } from "../../../../../ui/Input";
 import { PrimarySelect } from "../../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../../ui/Textarea";
+import Spinner from "../../../../../ui/Spinner";
 import { processImage } from "../../../../../../utils/utils";
 
 export const AccountEditBookInfo = () => {
   const { bookId } = useParams();
   const { book } = useFetchBook(`${bookId}`);
   const { genres } = useFetchGenres();
-  const { editBook } = useEditBook(`${bookId}`);
+  const { editBook, isLoading } = useEditBook(`${bookId}`);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [firstSelectedGenre, setFirstSelectedGenre] = useState("");
@@ -90,7 +91,11 @@ export const AccountEditBookInfo = () => {
         value={description}
         onChange={(e) => setDescription(e?.target.value || "")}
       />
-      <Button onClick={handleSubmitForm}>Сохранить</Button>
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmitForm}>Сохранить</Button>
+      )}
     </PageWrapper>
   ) : (
     <h1>Loading...</h1>

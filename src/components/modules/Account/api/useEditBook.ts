@@ -4,7 +4,11 @@ import { updateBook } from "../../../../api/service";
 
 const useEditBook = (id: string) => {
   const navigate = useNavigate();
-  const { mutate: editBook, isError } = useMutation({
+  const {
+    mutate: editBook,
+    isError,
+    isLoading,
+  } = useMutation({
     mutationFn: (data: any) => updateBook(`${id}`, data),
     mutationKey: ["books", id],
     onSuccess: () => {
@@ -12,7 +16,7 @@ const useEditBook = (id: string) => {
     },
   });
 
-  return { editBook, isError };
+  return { editBook, isError, isLoading };
 };
 
 export default useEditBook;

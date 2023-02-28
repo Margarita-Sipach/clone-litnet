@@ -91,7 +91,11 @@ export const useEditUserPage = () => {
 export const useEditPassword = () => {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
-  const { mutate: editPassword, isError } = useMutation({
+  const {
+    mutate: editPassword,
+    isError,
+    isLoading,
+  } = useMutation({
     mutationFn: (data: any) => updateUserPassword(data),
     mutationKey: ["user", "edit-password", user?.id],
     onSuccess: ({ user }: any) => {
@@ -100,7 +104,7 @@ export const useEditPassword = () => {
     },
   });
 
-  return { editPassword, isError };
+  return { editPassword, isError, isLoading };
 };
 
 export const useFetchBooks = () => {

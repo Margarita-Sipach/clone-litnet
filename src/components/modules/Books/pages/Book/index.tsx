@@ -174,7 +174,7 @@ const BookPage = () => {
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
                   title="Содержание"
-                  options={chapters?.map((ch) => ch.title) as string[]}
+                  options={chapters ? chapters?.map((ch) => ch.title) as string[] : []}
                 ></PrimarySelect>
               </div>
             </ElementWrapper>

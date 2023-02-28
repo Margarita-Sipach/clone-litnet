@@ -8,7 +8,6 @@ import { useLibrary } from "../../api/useLibrary";
 const AccountLibrary = () => {
   const { user } = useUserContext();
   const { data: library } = useLibrary(user!.id);
-  console.log(user?.id);
   return library ? (
     <PageWrapper title="Библиотека пользователя">
       {library.map((book) => (

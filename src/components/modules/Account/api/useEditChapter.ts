@@ -4,7 +4,7 @@ import { updateChapter } from "../../../../api/service";
 
 const useEditChapter = (id: string) => {
   const navigate = useNavigate();
-  const { mutate: editChapter, isError } = useMutation({
+  const { mutate: editChapter, isError, isLoading } = useMutation({
     mutationFn: (data: any) => updateChapter(`${id}`, data),
     mutationKey: ["chapters", id],
     onSuccess: () => {
@@ -12,7 +12,7 @@ const useEditChapter = (id: string) => {
     },
   });
 
-  return { editChapter, isError };
+  return { editChapter, isError, isLoading };
 };
 
 export default useEditChapter;
