@@ -1,6 +1,6 @@
 import { BookType } from "../../../types/types";
 import { useImage } from "../../../hooks";
-import cover from "../../../common/assets/images/bookcover.png";
+import cover from "../../../common/assets/images/avatar.png";
 import { Link } from "react-router-dom";
 
 interface SidebarElementProps {
@@ -12,7 +12,10 @@ export const SidebarElement = ({ book }: SidebarElementProps) => {
   const image = useImage(book);
 
   return (
-    <Link to={`books/${book.id}`} className="flex w-56 items-start sm:h-20 lg:h-32">
+    <Link
+      to={`books/${book.id}`}
+      className="flex w-56 items-start sm:h-20 lg:h-32"
+    >
       <img
         src={image}
         alt=""

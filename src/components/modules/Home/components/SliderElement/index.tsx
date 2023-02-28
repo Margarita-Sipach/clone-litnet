@@ -1,6 +1,6 @@
 import { useImage } from "../../../../../hooks";
 import { BookType } from "../../../../../types/types";
-import cover from "../../../../../common/assets/images/bookcover.png";
+import cover from "../../../../../common/assets/images/avatar.png";
 import { Link } from "react-router-dom";
 
 interface SliderElementProps {
