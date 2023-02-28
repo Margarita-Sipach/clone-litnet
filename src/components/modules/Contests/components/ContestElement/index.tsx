@@ -7,6 +7,7 @@ import Button from "../../../../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import DetailsElement from "../DetailsElement";
 import { handleImageError, processImage } from "../../../../../utils/utils";
+import avatar from "../../../../../common/assets/images/avatar.png";
 
 type ContestElementProps = {
   id: string;
@@ -34,8 +35,8 @@ const ContestElement: React.FC<ContestElementProps> = ({
     <div>
       <div className="flex w-full gap-6 pb-6">
         <img
-          className="hidden aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-contain sm:block"
-          src={processImage(imageUrl)}
+          className="hidden aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-cover sm:block"
+          src={imageUrl || avatar}
           alt="contest image"
           onError={handleImageError}
         />
