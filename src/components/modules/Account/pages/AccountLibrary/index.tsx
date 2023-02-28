@@ -7,12 +7,11 @@ import { useLibrary } from "../../api/useLibrary";
 
 const AccountLibrary = () => {
   const { user } = useUserContext();
-  const { data: library, isLoading, isError } = useLibrary(user!.id);
-  return isLoading && !isError ? (
-    <Spinner />
-  ) : (
+  const { data: library } = useLibrary(user!.id);
+  console.log(user?.id);
+  return library ? (
     <PageWrapper title="Библиотека пользователя">
-      {library!.map((book) => (
+      {library.map((book) => (
         <BookElement
           key={book.id}
           author={book.user.name}
@@ -23,6 +22,8 @@ const AccountLibrary = () => {
         ></BookElement>
       ))}
     </PageWrapper>
+  ) : (
+    <Spinner />
   );
 };
 
