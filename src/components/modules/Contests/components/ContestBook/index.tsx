@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
 import Button from "../../../../ui/Button";
 import useBook from "../../../Books/api/useBook";
-import { processImage } from "../../../../../utils/utils";
+import { handleImageError, processImage } from "../../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../../ui/Spinner";
 import useParticipateInContest from "../../api/useParticipateInContest";
@@ -38,6 +38,7 @@ const ContestBook: React.FC<ContestBookProps> = ({
           <img
             className="aspect-[2/3] w-[100px] object-contain"
             src={processImage(book.img)}
+            onError={handleImageError}
             alt="book image"
           />
           <div className="flex flex-col">
