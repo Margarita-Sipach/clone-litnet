@@ -9,7 +9,11 @@ import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Rating } from "../../../../ui/Rating";
 import Button from "../../../../ui/Button";
 import { Wrapper } from "../../../../ui/Wrapper";
-import { baseUrl, processImage } from "../../../../../utils/utils";
+import {
+  baseUrl,
+  handleImageError,
+  processImage,
+} from "../../../../../utils/utils";
 import useComments from "../../../Comments/api/useComments";
 import useBook from "../../api/useBook";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";
@@ -105,6 +109,7 @@ const BookPage = () => {
                 src={processImage(book.img)}
                 alt=""
                 className="h-80 w-full object-cover sm:w-1/3"
+                onError={handleImageError}
               />
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
@@ -167,14 +172,18 @@ const BookPage = () => {
                     </PrimaryLink>
                   </div>
                 ) : (
-                  <div className="text-center w-full">
+                  <div className="w-full text-center">
                     В книге недостаточно глав для чтения
                   </div>
                 )}
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
                 <PrimarySelect
                   title="Содержание"
-                  options={chapters ? chapters?.map((ch) => ch.title) as string[] : []}
+                  options={
+                    chapters
+                      ? (chapters?.map((ch) => ch.title) as string[])
+                      : []
+                  }
                 ></PrimarySelect>
               </div>
             </ElementWrapper>
