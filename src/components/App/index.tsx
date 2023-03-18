@@ -37,6 +37,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReaderPage } from "../modules/Reader/pages";
 import ContestParticipate from "../modules/Contests/pages/ContestPage/ContestParticipate";
+import AdminHomePage from "../pages/Admin/AdminHomePage";
+import AdminRoot from "../pages/Admin/AdminRoot";
+import { AdminBooksPage } from "../pages/Admin/AdminBooksPage";
+import { AdminBlogsPage } from "../pages/Admin/AdminBlogsPage";
+import { AdminContestsPage } from "../pages/Admin/AdminContestsPage";
 
 const client = new QueryClient({
   logger: {
@@ -47,6 +52,29 @@ const client = new QueryClient({
 });
 
 const router = createBrowserRouter([
+  {
+    path: "/admin",
+    element: <AdminRoot />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <AdminHomePage />,
+      },
+      {
+        path: "books/",
+        element: <AdminBooksPage />,
+      },
+      {
+        path: "contests/",
+        element: <AdminContestsPage />,
+      },
+      {
+        path: "blogs/",
+        element: <AdminBlogsPage />,
+      },
+    ],
+  },
   {
     path: "/",
     element: <Root />,
