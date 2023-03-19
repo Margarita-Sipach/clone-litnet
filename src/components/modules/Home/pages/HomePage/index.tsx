@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import HeroSection from "../../components/HeroSection";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import Categories from "../../../Genres/components/Categories";
-import ReadOnline from "../../components/ReadOnline";
+import { ReadOnline } from "../../components/ReadOnline";
 import { Slider } from "../../components/Slider";
 import { useFetchBooks } from "../../../../../hooks";
 import {
@@ -14,7 +13,7 @@ import { SidebarContainer } from "../../../SidebarContainer";
 
 const BOOK_COUNT = 7;
 
-const HomePage = () => {
+export const HomePage = () => {
   const { books } = useFetchBooks();
 
   const popularBooks = useMemo(
@@ -52,5 +51,3 @@ const HomePage = () => {
     <h1>Loading...</h1>
   );
 };
-
-export default HomePage;

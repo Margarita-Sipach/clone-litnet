@@ -1,7 +1,6 @@
 import { Wrapper } from "../../../../ui/Wrapper";
 import "./gradient.css";
-import { Modal } from "../../../../ui/Modal";
-import UserMenu from "../UserMenu";
+import { UserMenu } from "../UserMenu";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../../../context/userContext";
@@ -10,8 +9,8 @@ import { useImage } from "../../../../../hooks";
 import avatar from "../../../../../common/assets/images/avatar.png";
 import { Router } from "../../../../router";
 import { getLastPathWord } from "../../../../../utils/utils";
-import Button from "../../../../ui/Button";
-import NewModal from "../../../../ui/NewModal";
+import { Button } from "../../../../ui/Button";
+import { Modal } from "../../../../ui/NewModal";
 
 export interface PersonalHeaderProps {
   account: AccountType;
@@ -19,7 +18,7 @@ export interface PersonalHeaderProps {
 
 const DEFAULT_STYLE = `hover:text-indigo-800 hover:border-indigo-800 text-indigo-800 border-indigo-600`;
 
-const PersonalHeader = ({ account }: PersonalHeaderProps) => {
+export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState(getLastPathWord());
@@ -85,9 +84,9 @@ const PersonalHeader = ({ account }: PersonalHeaderProps) => {
         )}
       </div>
 
-      <NewModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+      <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
         <UserMenu />
-      </NewModal>
+      </Modal>
     </Wrapper>
   );
 };

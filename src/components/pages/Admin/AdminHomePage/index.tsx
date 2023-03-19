@@ -31,7 +31,7 @@ const data = [
   },
 ];
 
-const AdminHomePage = () => {
+export const AdminHomePage = () => {
   return (
     <div className="flex w-full flex-col items-center justify-between overflow-hidden">
       <Wrapper className="">
@@ -52,5 +52,3 @@ const AdminHomePage = () => {
     </div>
   );
 };
-
-export default AdminHomePage;

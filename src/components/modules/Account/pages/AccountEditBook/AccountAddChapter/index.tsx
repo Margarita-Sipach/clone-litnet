@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchBook } from "../../../../../../hooks";
 import useCreateChapter from "../../../api/useCreateChapter";
-import Button from "../../../../../ui/Button";
+import { Button } from "../../../../../ui/Button";
 import { PageWrapper } from "../../../../../ui/PageWrapper";
 import { Input } from "../../../../../ui/Input";
 import { Textarea } from "../../../../../ui/Textarea";
-import Spinner from "../../../../../ui/Spinner";
+import { Spinner } from "../../../../../ui/Spinner";
 
 export const AccountAddChapter = () => {
   const { bookId } = useParams();

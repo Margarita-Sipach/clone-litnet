@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTrophy } from "react-icons/fa";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { handleImageError } from "../../../../../utils/utils";
 import useContest from "../../api/useContest";
@@ -11,7 +11,7 @@ type ContestHeaderProps = {
   back?: boolean;
 };
 
-const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
+export const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname.split("/");
@@ -81,5 +81,3 @@ const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
     </>
   );
 };
-
-export default ContestHeader;

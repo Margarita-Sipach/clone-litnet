@@ -4,10 +4,10 @@ import { BookType } from "../../../../../types/types";
 import { useUserContext } from "../../../../context/userContext";
 import { BookElement } from "../../../Books/components/BookElement";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import Spinner from "../../../../ui/Spinner";
-import MotionWrapper from "../../../../ui/MotionWrapper";
+import { Spinner } from "../../../../ui/Spinner";
+import { MotionWrapper } from "../../../../ui/MotionWrapper";
 
-const PersonalBooks = () => {
+export const PersonalBooks = () => {
   const { id } = useParams();
   const { user } = useUserContext();
   const { books, isLoading } = useUserBooks(id as string);
@@ -23,7 +23,7 @@ const PersonalBooks = () => {
                   categories={book.genres.map((genre) => genre.name)}
                   annotation={book.description}
                   {...book}
-									authorId={book.userId}
+                  authorId={book.userId}
                   key={book.id}
                   isUserBook={Number(id) === user?.id}
                 ></BookElement>
@@ -41,5 +41,3 @@ const PersonalBooks = () => {
     </PageWrapper>
   );
 };
-
-export default PersonalBooks;

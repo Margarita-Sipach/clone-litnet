@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { checkUserPassword } from "../../../../../api/service";
 import { useEditPassword } from "../../../../../hooks";
 import { useUserContext } from "../../../../context/userContext";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Wrapper } from "../../../../ui/Wrapper";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountEditPassword = () => {
   const { user } = useUserContext();

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { CommentType } from "../../../../types/types";
 import { CommentElement } from "./CommentElement";
-import Button from "../../../ui/Button";
+import { Button } from "../../../ui/Button";
 import { useUserContext } from "../../../context/userContext";
 import useComments from "../api/useComments";
 import usePostComment from "../api/usePostComment";
 import { notifyError } from "../../../../hooks";
-import Spinner from "../../../ui/Spinner";
+import { Spinner } from "../../../ui/Spinner";
 
 type CommentSectionProps = {
   comments: CommentType[];
@@ -14,7 +14,7 @@ type CommentSectionProps = {
   id: string | number;
 };
 
-const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
+export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
   const { user } = useUserContext();
   const [isActive, setIsActive] = useState(false);
   const [text, setText] = useState("");
@@ -90,5 +90,3 @@ const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
     </div>
   );
 };
-
-export default CommentSection;

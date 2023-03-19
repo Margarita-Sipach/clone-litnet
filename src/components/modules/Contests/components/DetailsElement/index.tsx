@@ -1,6 +1,6 @@
 import React from "react";
 import { IconType } from "react-icons/lib";
-import DetailsIcon from "./DetailsIcon";
+import { DetailsIcon } from "./DetailsIcon";
 
 type DetailsElementProps = {
   title: string;
@@ -9,7 +9,7 @@ type DetailsElementProps = {
   className?: string;
 };
 
-const DetailsElement: React.FC<DetailsElementProps> = ({
+export const DetailsElement: React.FC<DetailsElementProps> = ({
   title,
   description,
   icon,
@@ -25,5 +25,3 @@ const DetailsElement: React.FC<DetailsElementProps> = ({
     </div>
   );
 };
-
-export default DetailsElement;

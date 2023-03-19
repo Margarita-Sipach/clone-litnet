@@ -3,13 +3,13 @@ import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
 import { Burger } from "../../ui/Burger";
 import { CloseButton } from "../../ui/CloseButton";
-import Categories from "../Genres/components/Categories";
+import { Categories } from "../Genres/components/Categories";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { Router } from "../../router";
 import { CircleUserAvatar } from "../../ui/CircleAvatar";
-import Button from "../../ui/Button";
-import NewModal from "../../ui/NewModal";
+import { Button } from "../../ui/Button";
+import { Modal } from "../../ui/NewModal";
 
 const navItems = [
   {
@@ -34,7 +34,7 @@ const navItems = [
   },
 ];
 
-const Header = () => {
+export const Header = () => {
   const { user, isUserLogged, logout } = useUserContext();
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -106,11 +106,9 @@ const Header = () => {
           ></Burger>
         </div>
       </Wrapper>
-      <NewModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+      <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
         <Categories onClick={() => setModalIsOpen(false)} />
-      </NewModal>
+      </Modal>
     </header>
   );
 };
-
-export default Header;

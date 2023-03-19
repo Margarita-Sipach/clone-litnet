@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useState } from "react";
 import { useFetchGenres } from "../../../../../hooks";
 import { useUserContext } from "../../../../context/userContext";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { FileInput } from "../../../../ui/FileInput";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../ui/Textarea";
 import useCreateBook from "../../api/useCreateBook";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountAddBook = () => {
   const { user } = useUserContext();
@@ -69,11 +69,11 @@ export const AccountAddBook = () => {
         placeholder="Аннотация"
         onChange={(e) => setDescription(e?.target.value || "")}
       />
-        {isLoading ? (
-          <Spinner className="flex w-full justify-center" />
-        ) : (
-          <Button onClick={handleSubmitForm}>Сохранить</Button>
-        )}
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmitForm}>Сохранить</Button>
+      )}
     </PageWrapper>
   ) : (
     <h1>Loading...</h1>

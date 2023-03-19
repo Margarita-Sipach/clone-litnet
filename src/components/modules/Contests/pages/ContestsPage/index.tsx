@@ -1,12 +1,12 @@
 import React from "react";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import ContestElement from "../../components/ContestElement/";
+import { ContestElement } from "../../components/ContestElement/";
 import useContests from "../../api/useContests";
 import { createDate, processImage } from "../../../../../utils/utils";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
-const Contests = () => {
+export const Contests = () => {
   const { data: contests, isLoading } = useContests();
   return (
     <Wrapper>
@@ -36,5 +36,3 @@ const Contests = () => {
     </Wrapper>
   );
 };
-
-export default Contests;

@@ -8,7 +8,7 @@ type ButtonProps = {
   size?: "sm" | "md";
 };
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   children,
   type = "primary",
   size = "md",
@@ -38,5 +38,3 @@ const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-
-export default Button;

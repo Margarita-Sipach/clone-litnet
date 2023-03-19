@@ -1,11 +1,11 @@
 import React from "react";
 import { useUserContext } from "../../../../context/userContext";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 import { BookElement } from "../../../Books/components/BookElement";
 import { useLibrary } from "../../api/useLibrary";
 
-const AccountLibrary = () => {
+export const AccountLibrary = () => {
   const { user } = useUserContext();
   const { data: library } = useLibrary(user!.id);
   return library ? (
@@ -25,5 +25,3 @@ const AccountLibrary = () => {
     <Spinner />
   );
 };
-
-export default AccountLibrary;

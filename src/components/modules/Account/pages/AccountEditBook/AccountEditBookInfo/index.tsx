@@ -2,13 +2,13 @@ import { useParams } from "react-router-dom";
 import { useFetchBook, useFetchGenres } from "../../../../../../hooks";
 import useEditBook from "../../../api/useEditBook";
 import { useState, ChangeEvent, useEffect } from "react";
-import Button from "../../../../../ui/Button";
+import { Button } from "../../../../../ui/Button";
 import { FileInput } from "../../../../../ui/FileInput";
 import { PageWrapper } from "../../../../../ui/PageWrapper";
 import { Input } from "../../../../../ui/Input";
 import { PrimarySelect } from "../../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../../ui/Textarea";
-import Spinner from "../../../../../ui/Spinner";
+import { Spinner } from "../../../../../ui/Spinner";
 import { processImage } from "../../../../../../utils/utils";
 
 export const AccountEditBookInfo = () => {

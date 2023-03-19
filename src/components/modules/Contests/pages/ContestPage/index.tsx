@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import ContestHeader from "../../components/ContestHeader/";
+import { ContestHeader } from "../../components/ContestHeader/";
 import useContest from "../../api/useContest";
 import { ContestType } from "../../../../../types/types";
 
@@ -14,7 +14,7 @@ export type ContestContextType = {
   contest: ContestType;
 };
 
-const ContestPage = () => {
+export const ContestPage = () => {
   const { id } = useParams<Params>();
   const { data: contest, isLoading } = useContest(id!);
   return (
@@ -32,5 +32,3 @@ const ContestPage = () => {
     </Wrapper>
   );
 };
-
-export default ContestPage;

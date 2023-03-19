@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
-import CommentSection from "../../../Comments/components/CommentSection";
+import { CommentSection } from "../../../Comments/components/CommentSection";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogById, fetchUserData } from "../../../../../api/data";
 import useComments from "../../../Comments/api/useComments";
@@ -12,7 +12,7 @@ type Params = {
   id: string;
 };
 
-const BlogPage = () => {
+export const BlogPage = () => {
   const { id } = useParams<Params>();
   const { data: blog, isLoading: blogLoading } = useQuery({
     queryFn: () => fetchBlogById(id!),
@@ -62,5 +62,3 @@ const BlogPage = () => {
     </Wrapper>
   );
 };
-
-export default BlogPage;

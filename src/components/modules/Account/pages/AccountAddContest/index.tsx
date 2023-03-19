@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { FileInput } from "../../../../ui/FileInput";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
@@ -8,7 +8,7 @@ import useGenres from "../../../Genres/api/useGenres";
 import { useUserContext } from "../../../../context/userContext";
 import useCreateContest from "../../api/useCreateContest";
 import { notifyError, notifySuccess } from "../../../../../hooks";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountAddContest = () => {
   const { user } = useUserContext();
@@ -53,8 +53,11 @@ export const AccountAddContest = () => {
   }, [status]);
   return (
     <PageWrapper title="Новый конкурс" className="gap-y-10">
-      <div className="flex flex-col sm:flex-row gap-x-5">
-        <FileInput className="h-72 w-52 mb-5 sm:mb-0" onChange={handleSetFile} />
+      <div className="flex flex-col gap-x-5 sm:flex-row">
+        <FileInput
+          className="mb-5 h-72 w-52 sm:mb-0"
+          onChange={handleSetFile}
+        />
         <div className="flex flex-grow flex-col gap-y-5">
           <Input
             value={title}

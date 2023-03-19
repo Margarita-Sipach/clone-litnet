@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import useGenres from "../../api/useGenres";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
 interface CategoriesProps {
   onClick?: () => void;
 }
 
-const Categories = ({ onClick }: CategoriesProps) => {
+export const Categories = ({ onClick }: CategoriesProps) => {
   const { data: genres, isLoading } = useGenres();
   return (
     <div>
@@ -40,5 +40,3 @@ const Categories = ({ onClick }: CategoriesProps) => {
     </div>
   );
 };
-
-export default Categories;

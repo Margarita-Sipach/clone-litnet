@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import useUserBlogs from "../../api/useUserBlogs";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { PersonalBlogElement } from "../../components/PersonalBlogElement";
-import Spinner from "../../../../ui/Spinner";
-import MotionWrapper from "../../../../ui/MotionWrapper";
+import { Spinner } from "../../../../ui/Spinner";
+import { MotionWrapper } from "../../../../ui/MotionWrapper";
 import { sortByTime } from "../../../../../utils/utils";
 
-const PersonalBlogs = () => {
+export const PersonalBlogs = () => {
   const { id } = useParams();
   const { blogs, isLoading } = useUserBlogs(id as string);
   return (
@@ -36,5 +36,3 @@ const PersonalBlogs = () => {
     </PageWrapper>
   );
 };
-
-export default PersonalBlogs;

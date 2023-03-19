@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUserContext } from "../../../context/userContext";
-import Button from "../../../ui/Button";
+import { Button } from "../../../ui/Button";
 import { PageWrapper } from "../../../ui/PageWrapper";
 import useBook from "../../Books/api/useBook";
 import { useBookmark } from "../api/useBookmark";
@@ -11,14 +11,17 @@ import { ReaderHeader } from "../components/ReaderHeader";
 import { ReaderContent } from "../components/PageNavigation";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { Router } from "../../../router";
-import Spinner from "../../../ui/Spinner";
+import { Spinner } from "../../../ui/Spinner";
 
 export const ReaderPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading: bookLoading } = useBook(id!);
   const bookmarkId = useMemo(
-    () => user?.bookmarks ? user?.bookmarks.find((b) => b.bookId === +id!)?.id : undefined,
+    () =>
+      user?.bookmarks
+        ? user?.bookmarks.find((b) => b.bookId === +id!)?.id
+        : undefined,
     [id, user]
   );
   const { data: bookmark, isLoading: bookmarkLoading } =

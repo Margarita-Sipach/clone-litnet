@@ -3,10 +3,10 @@ import React from "react";
 import { FaTrophy } from "react-icons/fa";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import DetailsElement from "../DetailsElement";
-import { handleImageError, processImage } from "../../../../../utils/utils";
+import { DetailsElement } from "../DetailsElement";
+import { handleImageError } from "../../../../../utils/utils";
 import avatar from "../../../../../common/assets/images/avatar.png";
 
 type ContestElementProps = {
@@ -20,7 +20,7 @@ type ContestElementProps = {
   booksAmount?: number;
 };
 
-const ContestElement: React.FC<ContestElementProps> = ({
+export const ContestElement: React.FC<ContestElementProps> = ({
   id,
   title,
   prize,
@@ -82,5 +82,3 @@ const ContestElement: React.FC<ContestElementProps> = ({
     </div>
   );
 };
-
-export default ContestElement;

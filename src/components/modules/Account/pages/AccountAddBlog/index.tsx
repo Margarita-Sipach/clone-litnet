@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Textarea } from "../../../../ui/Textarea";
@@ -7,7 +7,7 @@ import { Wrapper } from "../../../../ui/Wrapper";
 import { useUserContext } from "../../../../context/userContext";
 import { notifyError, notifySuccess } from "../../../../../hooks";
 import useAddBlog from "../../api/useAddBlog";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountAddBlog = () => {
   const { user } = useUserContext();
@@ -18,7 +18,7 @@ export const AccountAddBlog = () => {
     text,
     title,
   });
-  
+
   useEffect(() => {
     if (isSuccess) {
       notifySuccess("blog created!");

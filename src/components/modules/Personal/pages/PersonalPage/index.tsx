@@ -1,4 +1,4 @@
-import PersonalHeader from "../../components/PersonalHeader";
+import {PersonalHeader} from "../../components/PersonalHeader";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { Outlet, useParams } from "react-router-dom";
 import { useFetchUser } from "../../../../../hooks";

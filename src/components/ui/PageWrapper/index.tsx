@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
-import MotionWrapper from "../MotionWrapper";
+import { MotionWrapper } from "../MotionWrapper";
 
 interface PageWrapperProps {
   title?: string;

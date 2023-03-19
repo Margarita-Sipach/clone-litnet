@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from "react";
 import { useEditUserPage } from "../../../../../hooks";
 import { useUserContext } from "../../../../context/userContext";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { FileInput } from "../../../../ui/FileInput";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Input } from "../../../../ui/Input";
 import { Textarea } from "../../../../ui/Textarea";
 
-const AccountEdit = () => {
+export const AccountEdit = () => {
   const { user } = useUserContext();
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState(user?.name || "");
@@ -82,5 +82,3 @@ const AccountEdit = () => {
     </PageWrapper>
   );
 };
-
-export default AccountEdit;

@@ -1,5 +1,5 @@
 import React from "react";
-import ContestBook from "../../../components/ContestBook/";
+import { ContestBook } from "../../../components/ContestBook/";
 import useContest from "../../../api/useContest";
 import { useParams } from "react-router-dom";
 
@@ -7,7 +7,7 @@ type Params = {
   id: string;
 };
 
-const ContestBooks = () => {
+export const ContestBooks = () => {
   const { id } = useParams<Params>();
   const { data: contest, isLoading } = useContest(id!);
   return (
@@ -34,5 +34,3 @@ const ContestBooks = () => {
     </div>
   );
 };
-
-export default ContestBooks;

@@ -4,8 +4,8 @@ import { FileInput } from "../../../../ui/FileInput";
 import { Link } from "react-router-dom";
 import { Router } from "../../../../router";
 import useRegistration from "../../api/useRegistration";
-import Button from "../../../../ui/Button";
-const RegistrationForm = () => {
+import { Button } from "../../../../ui/Button";
+export const RegistrationForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

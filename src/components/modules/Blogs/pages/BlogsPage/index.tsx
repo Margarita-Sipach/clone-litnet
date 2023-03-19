@@ -5,9 +5,9 @@ import { Wrapper } from "../../../../ui/Wrapper";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogs } from "../../../../../api/data";
 import { createDate } from "../../../../../utils/utils";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 
-const Blogs = () => {
+export const Blogs = () => {
   const blogsQuery = useQuery({
     queryFn: fetchBlogs,
     queryKey: ["blogs"],
@@ -38,5 +38,3 @@ const Blogs = () => {
     </Wrapper>
   );
 };
-
-export default Blogs;

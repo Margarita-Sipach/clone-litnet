@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Wrapper } from "../../../ui/Wrapper";
 import { PageWrapper } from "../../../ui/PageWrapper";
 
-const Account = () => {
+export const Account = () => {
   return (
     <Wrapper>
       <PageWrapper isTop={true}>
@@ -12,5 +12,3 @@ const Account = () => {
     </Wrapper>
   );
 };
-
-export default Account;

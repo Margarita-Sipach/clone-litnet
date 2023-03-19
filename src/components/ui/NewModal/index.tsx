@@ -7,7 +7,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const cancelButtonRef = useRef(null);
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -65,5 +65,3 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     </Transition.Root>
   );
 };
-
-export default Modal;

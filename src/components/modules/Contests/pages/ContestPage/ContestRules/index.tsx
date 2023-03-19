@@ -2,9 +2,9 @@ import React from "react";
 import { TiSortAlphabetically } from "react-icons/ti";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import CommentSection from "../../../../Comments/components/CommentSection";
-import Button from "../../../../../ui/Button";
-import DetailsElement from "../../../components/DetailsElement";
+import { CommentSection } from "../../../../Comments/components/CommentSection";
+import { Button } from "../../../../../ui/Button";
+import { DetailsElement } from "../../../components/DetailsElement";
 import { useParams } from "react-router-dom";
 import useContest from "../../../api/useContest";
 import { createDate } from "../../../../../../utils/utils";
@@ -14,7 +14,7 @@ const mockRules = {
   genres: ["ЛитРПГ", "РеалРПГ", "Постапокалипсис"],
 };
 
-const ContestRules = () => {
+export const ContestRules = () => {
   const { id } = useParams();
   const { data: contest, isLoading: contestLoading } = useContest(id!);
   const { data: comments, isLoading: commentsLoading } = useComments(
@@ -107,5 +107,3 @@ const ContestRules = () => {
     </div>
   );
 };
-
-export default ContestRules;

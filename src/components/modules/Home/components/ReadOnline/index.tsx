@@ -1,6 +1,6 @@
 import useGenres from "../../../Genres/api/useGenres";
 
-const ReadOnline = () => {
+export const ReadOnline = () => {
   const { data: genres, isLoading } = useGenres();
   return (
     <div className="flex flex-col gap-y-4">
@@ -56,5 +56,3 @@ const ReadOnline = () => {
     </div>
   );
 };
-
-export default ReadOnline;

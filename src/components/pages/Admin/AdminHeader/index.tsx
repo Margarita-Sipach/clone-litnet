@@ -24,7 +24,7 @@ const navItems = [
   },
 ];
 
-const AdminHeader = () => {
+export const AdminHeader = () => {
   const [burgerMenuDisplay, setBurgerMenuDisplay] = useState(false);
 
   return (
@@ -63,5 +63,3 @@ const AdminHeader = () => {
     </header>
   );
 };
-
-export default AdminHeader;

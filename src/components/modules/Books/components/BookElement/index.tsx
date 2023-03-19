@@ -3,7 +3,7 @@ import { AiFillStar, AiOutlineComment } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { Icon } from "../../../../ui/Icon";
 import { BookElementType } from "../../../../../types/types";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { handleImageError, processImage } from "../../../../../utils/utils";
 

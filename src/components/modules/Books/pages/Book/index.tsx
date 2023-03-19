@@ -1,13 +1,11 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { AiOutlineComment } from "react-icons/ai";
-import { GiBookshelf } from "react-icons/gi";
 import { Link, useParams } from "react-router-dom";
-import CommentSection from "../../../Comments/components/CommentSection";
+import { CommentSection } from "../../../Comments/components/CommentSection";
 import { ElementWrapper } from "../../../../ui/ElementWrapper";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Rating } from "../../../../ui/Rating";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { Wrapper } from "../../../../ui/Wrapper";
 import {
   baseUrl,
@@ -47,7 +45,7 @@ export type Params = {
   id: string;
 };
 
-const BookPage = () => {
+export const BookPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<Params>();
   const userBookmark = useMemo(
@@ -208,5 +206,3 @@ const BookPage = () => {
     </Wrapper>
   );
 };
-
-export default BookPage;

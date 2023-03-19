@@ -1,7 +1,7 @@
 import { useUserContext } from "../../../../context/userContext";
 import { PageWrapper } from "../../../../ui/PageWrapper";
 
-const PersonalAbout = () => {
+export const PersonalAbout = () => {
   const { selectedUser } = useUserContext();
   return (
     <PageWrapper title="Обо мне">
@@ -9,5 +9,3 @@ const PersonalAbout = () => {
     </PageWrapper>
   );
 };
-
-export default PersonalAbout;

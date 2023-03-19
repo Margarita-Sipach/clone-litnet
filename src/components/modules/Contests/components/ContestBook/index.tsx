@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import useBook from "../../../Books/api/useBook";
 import { handleImageError, processImage } from "../../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 import useParticipateInContest from "../../api/useParticipateInContest";
 import { notifyError, notifySuccess } from "../../../../../hooks";
 
@@ -15,7 +15,7 @@ type ContestBookProps = {
   participate?: boolean;
 };
 
-const ContestBook: React.FC<ContestBookProps> = ({
+export const ContestBook: React.FC<ContestBookProps> = ({
   id,
   contestId,
   participate = false,
@@ -88,5 +88,3 @@ const ContestBook: React.FC<ContestBookProps> = ({
     </div>
   );
 };
-
-export default ContestBook;

@@ -2,7 +2,7 @@ import { PageWrapper } from "../../../../ui/PageWrapper";
 import { Wrapper } from "../../../../ui/Wrapper";
 import { BookElement } from "../../components/BookElement";
 import useBooks from "../../api/useBooks";
-import Spinner from "../../../../ui/Spinner";
+import { Spinner } from "../../../../ui/Spinner";
 import { useParams } from "react-router-dom";
 import { BookType } from "../../../../../types/types";
 

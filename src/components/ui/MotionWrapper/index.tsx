@@ -6,7 +6,7 @@ interface MotionWrapperProps {
   className?: string;
 }
 
-const MotionWrapper: React.FC<MotionWrapperProps> = ({
+export const MotionWrapper: React.FC<MotionWrapperProps> = ({
   children,
   className = "",
 }) => (
@@ -19,5 +19,3 @@ const MotionWrapper: React.FC<MotionWrapperProps> = ({
     {children}
   </motion.div>
 );
-
-export default MotionWrapper;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaBaseballBall } from "react-icons/fa";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
-import Button from "../../ui/Button";
+import { Button } from "../../ui/Button";
 import { Modal } from "../../ui/Modal";
 import { PrimaryLink } from "../../ui/PrimaryLink";
 
@@ -247,7 +247,10 @@ export const Game = () => {
               <p className="mb-5 max-w-[300px]">
                 Зарядка выполнена. Поздравляю!
               </p>
-              <PrimaryLink className="flex items-center justify-center" path="/">
+              <PrimaryLink
+                className="flex items-center justify-center"
+                path="/"
+              >
                 Выйти
               </PrimaryLink>
             </div>

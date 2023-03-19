@@ -27,7 +27,7 @@ const navItems = [
   },
 ];
 
-const UserMenu = () => {
+export const UserMenu = () => {
   return (
     <div className="flex flex-col items-center gap-3">
       {navItems.map((item) => (
@@ -36,5 +36,3 @@ const UserMenu = () => {
     </div>
   );
 };
-
-export default UserMenu;

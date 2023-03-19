@@ -1,5 +1,5 @@
 import { ChapterType } from "../../../../../types/types";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 
 export interface ReaderContentProps {
   readingView: string;

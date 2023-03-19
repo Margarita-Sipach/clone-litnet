@@ -7,7 +7,7 @@ import slide4 from "../../../../../common/assets/images/big-slider/banner-light-
 
 import "./animation.css";
 import { Link } from "react-router-dom";
-import Button from "../../../../ui/Button";
+import { Button } from "../../../../ui/Button";
 import { useUserContext } from "../../../../context/userContext";
 
 const benefits = [
