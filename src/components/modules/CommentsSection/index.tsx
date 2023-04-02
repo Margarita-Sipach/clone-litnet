@@ -3,8 +3,8 @@ import { CommentType } from "../../../types/types";
 import { CommentElement } from "../elements/CommentElement";
 import { Button } from "../../ui/buttons/Button";
 import { useUserContext } from "../../context/userContext";
-import useComments from "../../../api/comments/useComments";
-import usePostComment from "../../../api/comments/usePostComment";
+import useComments from "../../../hooks/comments/useComments";
+import usePostComment from "../../../hooks/comments/usePostComment";
 import { notifyError } from "../../../hooks";
 import { Spinner } from "../../ui/Spinner";
 

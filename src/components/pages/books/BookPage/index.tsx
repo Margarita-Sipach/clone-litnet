@@ -15,12 +15,12 @@ import useBook from "../../../../hooks/books/useBook";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { Router } from "../../../router";
 import { useUserContext } from "../../../context/userContext";
-import { usePostBookmark } from "../../../../api/reader/usePostBookmark";
+import { usePostBookmark } from "../../../../hooks/reader/usePostBookmark";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { ErrorResponse } from "../../../../types/types";
 import { notifyError, notifySuccess } from "../../../../hooks";
-import useComments from "../../../../api/comments/useComments";
+import useComments from "../../../../hooks/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
 import useChapters from "../../../../hooks/account/useChapters";
 
