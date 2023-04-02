@@ -57,13 +57,14 @@ export const AuthorizationForm = () => {
         name={InputNames.PASSWORD}
         errors={errors}
       />
-      <Button className="text-base" onClick={handleSubmit(handleSubmitForm)}>
-        Войти
-      </Button>
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmit(handleSubmitForm)}>Войти</Button>
+      )}
       <Link className="text-center hover:text-blue-500" to={Router.register}>
         Нет аккаунта? Зарегистрироваться!
       </Link>
-      {isLoading && <Spinner />}
     </form>
   );
 };

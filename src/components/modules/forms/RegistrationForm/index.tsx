@@ -81,24 +81,27 @@ export const RegistrationForm = () => {
             required: ErrorInputMessages.REQUIRED,
             minLength: {
               value: 4,
-              message: ErrorInputMessages.LENGTH,
+              message: ErrorInputMessages.PASSWORD_LENGTH,
             },
             maxLength: {
               value: 12,
-              message: ErrorInputMessages.LENGTH,
+              message: ErrorInputMessages.PASSWORD_LENGTH,
             },
           }),
         }}
         name={InputNames.PASSWORD}
         errors={errors}
       />
-      <Button onClick={handleSubmit(handleSubmitForm)}>
-        Зарегистрироваться
-      </Button>
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmit(handleSubmitForm)}>
+          Зарегистрироваться
+        </Button>
+      )}
       <Link className="text-center hover:text-blue-500" to={Router.login}>
         Уже есть аккаунт? Войти!
       </Link>
-      {isLoading && <Spinner />}
     </form>
   );
 };

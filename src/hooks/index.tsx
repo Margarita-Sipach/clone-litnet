@@ -72,41 +72,6 @@ export const useImage = (entity: AccountType | BookType) => {
   return image;
 };
 
-export const useEditUserPage = () => {
-  const { user, setUser, setSelectedUser } = useUserContext();
-  const navigate = useNavigate();
-  const { mutate: edit, isError } = useMutation({
-    mutationFn: (data: any) => updateUserById(`${user?.id}`, data),
-    mutationKey: ["user", "edit-page", user?.id],
-    onSuccess: (user: any) => {
-      setUser(user);
-      setSelectedUser(user);
-      navigate(`${Router.users}/${user.id}`);
-    },
-  });
-
-  return { edit, isError };
-};
-
-export const useEditPassword = () => {
-  const { user, setUser } = useUserContext();
-  const navigate = useNavigate();
-  const {
-    mutate: editPassword,
-    isError,
-    isLoading,
-  } = useMutation({
-    mutationFn: (data: any) => updateUserPassword(data),
-    mutationKey: ["user", "edit-password", user?.id],
-    onSuccess: ({ user }: any) => {
-      setUser(user);
-      navigate(`${Router.users}/${user.id}`);
-    },
-  });
-
-  return { editPassword, isError, isLoading };
-};
-
 export const useFetchBooks = () => {
   const { data, isError, isLoading, isSuccess } = useQuery<BookListType>({
     queryKey: ["books"],

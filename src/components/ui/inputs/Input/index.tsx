@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent } from "react";
 import { FieldErrors } from "react-hook-form";
 
 interface InputProps {
@@ -31,7 +31,7 @@ export const Input: React.FC<InputProps> = ({
         className={`rounded-md border-[1px] bg-slate-100 px-4 py-2 text-slate-500 placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none sm:text-sm sm:placeholder:text-sm lg:text-lg lg:placeholder:text-lg `}
         required={!!required}
         type={type}
-        value={value}
+        defaultValue={value}
         placeholder={placeholder}
         onChange={(e?: ChangeEvent<HTMLInputElement>) => {
           if (onChange) onChange(e);
