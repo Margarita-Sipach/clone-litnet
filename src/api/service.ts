@@ -39,11 +39,6 @@ export const updateUserPassword = async (body: any) => {
   }
 };
 
-export const checkUserPassword = async (data: any) => {
-  const response = (await API.loginUser(data)) as Response;
-  if (!response.ok) throw new Error("Password is incorrect");
-};
-
 export const getUserById = async (id: string) => {
   const response = await API.getUserById(id);
   if (response.ok) {

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { checkUserPassword } from "../../../../../api/service";
 import { useUserContext } from "../../../../context/userContext";
 import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
@@ -13,28 +12,52 @@ import {
   InputNames,
 } from "../../../../../utils/formUtils";
 import { useEditPassword } from "../../../../../hooks/account/useEditPassword";
+import { checkUserPassword } from "../../../../../hooks/forms/useLogin";
+import { notifyError } from "../../../../../hooks";
 
 export const AccountEditPassword = () => {
   const { user } = useUserContext();
-  const { editPassword, isLoading } = useEditPassword();
+  const { editPassword, isLoading, isError, error } = useEditPassword();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    resetField,
   } = useForm({ mode: "onBlur" });
 
-  const handleSubmitForm = async (data) => {
-    await checkUserPassword(
-      createFormData({
-        email: `${user?.email}`,
-        password: data[InputNames.PASSWORD],
-      })
-    );
-    editPassword({
-      id: `${user?.id}`,
-      password: data[InputNames.NEW_PASSWORD],
-    });
+  const handleCheckPassword = async (data) => {
+    try {
+      await checkUserPassword(
+        createFormData({
+          email: `${user?.email}`,
+          password: data[InputNames.PASSWORD],
+        })
+      );
+    } catch (error: any) {
+      notifyError(error.message);
+      resetField(InputNames.NEW_PASSWORD);
+      resetField(InputNames.PASSWORD);
+      throw error;
+    }
   };
+
+  const handleSubmitForm = async (data) => {
+    try {
+      await handleCheckPassword(data);
+      editPassword({
+        id: `${user?.id}`,
+        password: data[InputNames.NEW_PASSWORD],
+      });
+      resetField(InputNames.NEW_PASSWORD);
+      resetField(InputNames.PASSWORD);
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (isError && error) {
+      notifyError("Не удалось изменить пароль, повторите позднее");
+    }
+  }, [error, isError]);
 
   return (
     <Wrapper className="flex flex-col items-start">

@@ -21,6 +21,7 @@ export const useEditPassword = () => {
     mutate: editPassword,
     isError,
     isLoading,
+    error,
   } = useMutation({
     mutationFn: (data: any) => updateUserPassword(data),
     mutationKey: ["user", "edit-password", user?.id],
@@ -28,7 +29,10 @@ export const useEditPassword = () => {
       setUser(user);
       navigate(`${Router.users}/${user.id}`);
     },
+    onError: (error) => {
+      throw error;
+    },
   });
 
-  return { editPassword, isError, isLoading };
+  return { editPassword, isError, isLoading, error };
 };

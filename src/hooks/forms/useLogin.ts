@@ -16,6 +16,14 @@ const loginUser = async (data) => {
   }
 };
 
+export const checkUserPassword = async (data: any) => {
+  try {
+    await loginUser(data);
+  } catch (error) {
+    throw new Error("Неверный пароль");
+  }
+};
+
 const useLogin = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
