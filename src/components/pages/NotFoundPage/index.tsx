@@ -1,13 +1,13 @@
 import React from "react";
 import { Footer } from "../../modules/Footer";
-import Header from "../../modules/Header";
+import { Header } from "../../modules/Header";
 
 import slide1 from "../../../common/assets/images/big-slider/banner-light-1.png";
 import slide2 from "../../../common/assets/images/big-slider/banner-light-2.png";
 import slide3 from "../../../common/assets/images/big-slider/banner-light-3.png";
 import slide4 from "../../../common/assets/images/big-slider/banner-light-4.png";
 
-const NotFound = () => {
+export const NotFound = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-between bg-white ">
       <Header />
@@ -35,5 +35,3 @@ const NotFound = () => {
     </div>
   );
 };
-
-export default NotFound;

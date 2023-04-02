@@ -1,7 +1,7 @@
 import React from "react";
-import { PageWrapper } from "../../../ui/PageWrapper";
+import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Table } from "../../../ui/Table";
-import { Wrapper } from "../../../ui/Wrapper";
+import { Wrapper } from "../../../ui/wrappers/Wrapper";
 
 const data = [
   {
@@ -31,7 +31,7 @@ const data = [
   },
 ];
 
-const AdminHomePage = () => {
+export const AdminHomePage = () => {
   return (
     <div className="flex w-full flex-col items-center justify-between overflow-hidden">
       <Wrapper className="">
@@ -52,5 +52,3 @@ const AdminHomePage = () => {
     </div>
   );
 };
-
-export default AdminHomePage;

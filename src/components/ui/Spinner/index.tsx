@@ -1,17 +1,15 @@
 import React from "react";
 import { BiLoaderAlt } from "react-icons/bi";
-import MotionWrapper from "../MotionWrapper";
+import { MotionWrapper } from "../wrappers/MotionWrapper";
 
 type SpinnerProps = {
   className?: string;
 };
 
-const Spinner: React.FC<SpinnerProps> = ({ className = "" }) => {
+export const Spinner: React.FC<SpinnerProps> = ({ className = "" }) => {
   return (
     <MotionWrapper className={`overflow-hidden ${className}`}>
       <BiLoaderAlt className="flex-1 animate-spin" size="30px" />
     </MotionWrapper>
   );
 };
-
-export default Spinner;

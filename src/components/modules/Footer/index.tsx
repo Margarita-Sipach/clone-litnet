@@ -1,6 +1,6 @@
 import { ImGithub } from "react-icons/im";
 import { ReactComponent as School } from "../../../common/assets/icons/rs_school.svg";
-import { Wrapper } from "../../ui/Wrapper";
+import { Wrapper } from "../../ui/wrappers/Wrapper";
 
 const GITS = ["lordofthevillage", "margarita-sipach", "cerealexperiments"];
 
