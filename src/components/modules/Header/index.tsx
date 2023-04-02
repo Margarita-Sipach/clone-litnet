@@ -1,15 +1,15 @@
-import { Wrapper } from "../../ui/Wrapper";
+import { Wrapper } from "../../ui/wrappers/Wrapper";
 import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { useState } from "react";
-import { Burger } from "../../ui/Burger";
-import { CloseButton } from "../../ui/CloseButton";
-import { Categories } from "../Genres/components/Categories";
+import { Burger } from "../../ui/buttons/Burger";
+import { CloseButton } from "../../ui/buttons/CloseButton";
+import { Categories } from "../Genres";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { Router } from "../../router";
-import { CircleUserAvatar } from "../../ui/CircleAvatar";
-import { Button } from "../../ui/Button";
-import { Modal } from "../../ui/NewModal";
+import { CircleUserAvatar } from "../../ui/avatars/CircleAvatar";
+import { Button } from "../../ui/buttons/Button";
+import { Modal } from "../../ui/modals/NewModal";
 
 const navItems = [
   {

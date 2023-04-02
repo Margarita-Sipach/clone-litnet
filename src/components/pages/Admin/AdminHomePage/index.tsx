@@ -1,7 +1,7 @@
 import React from "react";
-import { PageWrapper } from "../../../ui/PageWrapper";
+import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Table } from "../../../ui/Table";
-import { Wrapper } from "../../../ui/Wrapper";
+import { Wrapper } from "../../../ui/wrappers/Wrapper";
 
 const data = [
   {

@@ -1,6 +1,6 @@
 import React from "react";
 import { BiLoaderAlt } from "react-icons/bi";
-import { MotionWrapper } from "../MotionWrapper";
+import { MotionWrapper } from "../wrappers/MotionWrapper";
 
 type SpinnerProps = {
   className?: string;

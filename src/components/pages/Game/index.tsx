@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaBaseballBall } from "react-icons/fa";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
-import { Button } from "../../ui/Button";
-import { Modal } from "../../ui/Modal";
+import { Button } from "../../ui/buttons/Button";
+import { Modal } from "../../ui/modals/Modal";
 import { PrimaryLink } from "../../ui/PrimaryLink";
 
 import "./game.css";
