@@ -1,6 +1,6 @@
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link, useParams } from "react-router-dom";
-import useChapters from "../../../../../api/account/useChapters";
+import useChapters from "../../../../../hooks/account/useChapters";
 import { ElementWrapper } from "../../../../ui/wrappers/ElementWrapper";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { PrimaryLink } from "../../../../ui/PrimaryLink";

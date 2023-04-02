@@ -11,7 +11,7 @@ import {
   handleImageError,
   processImage,
 } from "../../../../utils/utils";
-import useBook from "../../../../api/books/useBook";
+import useBook from "../../../../hooks/books/useBook";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { Router } from "../../../router";
 import { useUserContext } from "../../../context/userContext";
@@ -22,7 +22,7 @@ import { ErrorResponse } from "../../../../types/types";
 import { notifyError, notifySuccess } from "../../../../hooks";
 import useComments from "../../../../api/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
-import useChapters from "../../../../api/account/useChapters";
+import useChapters from "../../../../hooks/account/useChapters";
 
 const rateBook = async (
   userId: string | number,

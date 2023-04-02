@@ -4,7 +4,7 @@ import { BookElement } from "../../../modules/elements/BookElement";
 import { Spinner } from "../../../ui/Spinner";
 import { useParams } from "react-router-dom";
 import { BookType } from "../../../../types/types";
-import useBooks from "../../../../api/books/useBooks";
+import useBooks from "../../../../hooks/books/useBooks";
 
 export const BooksPage = () => {
   const { data: books, isLoading } = useBooks();

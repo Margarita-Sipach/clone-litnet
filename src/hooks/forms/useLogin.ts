@@ -1,28 +1,28 @@
 import { useUserContext } from "../../components/context/userContext";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "../service";
+import { loginUser } from "../../api/service";
 import { LocalStorage } from "../../components/storage";
 import { Router } from "../../components/router";
 
-const useRegistration = () => {
+const useLogin = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const {
-    mutate: register,
+    mutate: login,
     isError,
     isLoading,
   } = useMutation({
-    mutationFn: (data: any) => registerUser(data),
-    mutationKey: ["registration"],
+    mutationFn: (data: any) => loginUser(data),
+    mutationKey: ["login"],
     onSuccess: ({ token, user }: any) => {
       setUser(user);
       LocalStorage.setUserToken(token);
-      navigate(Router.main);
+      navigate(`${Router.users}/${user.id}`);
     },
-    onError: (error) => console.log(error),
   });
-  return { register, isError, isLoading };
+
+  return { login, isError, isLoading };
 };
 
-export default useRegistration;
+export default useLogin;

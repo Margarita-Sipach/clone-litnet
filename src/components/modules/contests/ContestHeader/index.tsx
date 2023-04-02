@@ -3,7 +3,7 @@ import { FaTrophy } from "react-icons/fa";
 import { Button } from "../../../ui/buttons/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { handleImageError } from "../../../../utils/utils";
-import useContest from "../../../../api/contests/useContest";
+import useContest from "../../../../hooks/contests/useContest";
 import contestBackground from "../../../../common/assets/images/contestBackground1.png";
 
 type ContestHeaderProps = {

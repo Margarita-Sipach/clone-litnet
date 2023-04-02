@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
 import { Button } from "../../../ui/buttons/Button";
-import useBook from "../../../../api/books/useBook";
+import useBook from "../../../../hooks/books/useBook";
 import { handleImageError, processImage } from "../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../ui/Spinner";
-import useParticipateInContest from "../../../../api/contests/useParticipateInContest";
+import useParticipateInContest from "../../../../hooks/contests/useParticipateInContest";
 import { notifyError, notifySuccess } from "../../../../hooks";
 
 type ContestBookProps = {

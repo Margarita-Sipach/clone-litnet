@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useUserBooks from "../../../../../api/account/useUserBooks";
+import useUserBooks from "../../../../../hooks/account/useUserBooks";
 import { BookType } from "../../../../../types/types";
 import { useUserContext } from "../../../../context/userContext";
 import { BookElement } from "../../../../modules/elements/BookElement";

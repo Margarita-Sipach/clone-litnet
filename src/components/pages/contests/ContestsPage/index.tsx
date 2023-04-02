@@ -4,7 +4,7 @@ import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { ContestElement } from "../../../modules/elements/ContestElement";
 import { createDate, processImage } from "../../../../utils/utils";
 import { Spinner } from "../../../ui/Spinner";
-import useContests from "../../../../api/contests/useContests";
+import useContests from "../../../../hooks/contests/useContests";
 
 export const Contests = () => {
   const { data: contests, isLoading } = useContests();

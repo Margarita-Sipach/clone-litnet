@@ -6,7 +6,7 @@ import { Input } from "../../../ui/inputs/Input";
 import { Textarea } from "../../../ui/Textarea";
 import useGenres from "../../../../api/genres/useGenres";
 import { useUserContext } from "../../../context/userContext";
-import useCreateContest from "../../../../api/account/useCreateContest";
+import useCreateContest from "../../../../hooks/account/useCreateContest";
 import { notifyError, notifySuccess } from "../../../../hooks";
 import { Spinner } from "../../../ui/Spinner";
 

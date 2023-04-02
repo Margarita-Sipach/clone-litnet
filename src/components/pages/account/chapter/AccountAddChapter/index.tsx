@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchBook } from "../../../../../hooks";
-import useCreateChapter from "../../../../../api/account/useCreateChapter";
+import useCreateChapter from "../../../../../hooks/account/useCreateChapter";
 import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";

@@ -3,7 +3,7 @@ import { useUserContext } from "../../../context/userContext";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Spinner } from "../../../ui/Spinner";
 import { BookElement } from "../../../modules/elements/BookElement";
-import { useLibrary } from "../../../../api/account/useLibrary";
+import { useLibrary } from "../../../../hooks/account/useLibrary";
 
 export const AccountLibrary = () => {
   const { user } = useUserContext();

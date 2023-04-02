@@ -5,7 +5,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { CommentSection } from "../../../modules/CommentsSection";
 import { Button } from "../../../ui/buttons/Button";
 import { useParams } from "react-router-dom";
-import useContest from "../../../../api/contests/useContest";
+import useContest from "../../../../hooks/contests/useContest";
 import { createDate } from "../../../../utils/utils";
 import useComments from "../../../../api/comments/useComments";
 import { DetailsElement } from "../../../modules/elements/DetailsElement";

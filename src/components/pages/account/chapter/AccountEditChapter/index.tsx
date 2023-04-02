@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useEditChapter from "../../../../../api/account/useEditChapter";
+import useEditChapter from "../../../../../hooks/account/useEditChapter";
 import { getChapterText } from "../../../../../utils/utils";
 import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { Textarea } from "../../../../ui/Textarea";
-import useChapter from "../../../../../api/account/useChapter";
+import useChapter from "../../../../../hooks/account/useChapter";
 import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountEditChapter = () => {

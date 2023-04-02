@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { addChapter } from "../service";
+import { addChapter } from "../../api/service";
 
 const useCreateChapter = () => {
   const navigate = useNavigate();

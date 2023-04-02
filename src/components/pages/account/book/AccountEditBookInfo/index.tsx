@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useFetchBook, useFetchGenres } from "../../../../../hooks";
-import useEditBook from "../../../../../api/account/useEditBook";
+import useEditBook from "../../../../../hooks/account/useEditBook";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";

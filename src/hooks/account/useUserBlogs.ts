@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBlogsByUserId } from "../service";
+import { getBlogsByUserId } from "../../api/service";
 import { BlogListType } from "../../types/list.types";
 
 const useUserBlogs = (userId: string) => {

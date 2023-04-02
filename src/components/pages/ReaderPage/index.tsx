@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { Button } from "../../ui/buttons/Button";
 import { PageWrapper } from "../../ui/wrappers/PageWrapper";
-import useBook from "../../../api/books/useBook";
+import useBook from "../../../hooks/books/useBook";
 import { useBookmark } from "../../../api/reader/useBookmark";
 import { useChapter } from "../../../api/reader/useChapter";
 import { usePostBookmark } from "../../../api/reader/usePostBookmark";

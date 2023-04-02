@@ -7,7 +7,7 @@ import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../ui/Textarea";
-import useCreateBook from "../../../../../api/account/useCreateBook";
+import useCreateBook from "../../../../../hooks/account/useCreateBook";
 import { Spinner } from "../../../../ui/Spinner";
 
 export const AccountAddBook = () => {

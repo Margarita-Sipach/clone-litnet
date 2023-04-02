@@ -1,5 +1,5 @@
 import React from "react";
-import useContest from "../../../../api/contests/useContest";
+import useContest from "../../../../hooks/contests/useContest";
 import { useParams } from "react-router-dom";
 import { ContestBook } from "../../../modules/contests/ContestBook";
 
