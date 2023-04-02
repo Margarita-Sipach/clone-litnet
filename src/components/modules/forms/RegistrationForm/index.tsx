@@ -1,22 +1,30 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Input } from "../../../ui/inputs/Input";
 import { FileInput } from "../../../ui/inputs/FileInput";
 import { Link } from "react-router-dom";
 import { Router } from "../../../router";
 import useRegistration from "../../../../hooks/forms/useRegistration";
 import { Button } from "../../../ui/buttons/Button";
+import { useForm } from "react-hook-form";
+import {
+  createFormData,
+  ErrorInputMessages,
+  InputNames,
+} from "../../../../utils/formUtils";
+import { notifyError } from "../../../../hooks";
+import { Spinner } from "../../../ui/Spinner";
 export const RegistrationForm = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [login, setLogin] = useState("");
-  const { register, isLoading, isError } = useRegistration();
+  const { registration, isLoading, isError, error } = useRegistration();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    resetField,
+  } = useForm({ mode: "onBlur" });
 
-  const createFormData = () => {
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("name", login);
+  const createImageFormData = (data: Record<string, string>): any => {
+    const formData = createFormData(data);
     if (file) formData.append("img", file);
     return formData;
   };
@@ -26,9 +34,16 @@ export const RegistrationForm = () => {
     if (files) setFile(files[0]);
   };
 
-  const handleSubmitForm = () => {
-    register(createFormData());
+  const handleSubmitForm = (data: any) => {
+    registration(createImageFormData(data));
+    resetField(InputNames.PASSWORD);
   };
+
+  useEffect(() => {
+    if (isError && error) {
+      notifyError("Имя или email уже заняты");
+    }
+  }, [error, isError]);
 
   return (
     <form
@@ -39,27 +54,51 @@ export const RegistrationForm = () => {
       {isLoading && <p>Sending data...</p>}
       <Input
         placeholder="Логин"
-        required={true}
-        onChange={(e) => setLogin(e?.target.value || "")}
+        properties={{
+          ...register(InputNames.NAME, {
+            required: ErrorInputMessages.REQUIRED,
+          }),
+        }}
+        name={InputNames.NAME}
+        errors={errors}
       />
       <Input
-        placeholder="E-mail"
-        required={true}
         type="email"
-        invalid={isError}
-        onChange={(e) => setEmail(e?.target.value || "")}
+        placeholder="E-mail"
+        properties={{
+          ...register(InputNames.EMAIL, {
+            required: ErrorInputMessages.REQUIRED,
+          }),
+        }}
+        name={InputNames.EMAIL}
+        errors={errors}
       />
       <Input
         placeholder="Пароль"
-        required={true}
         type="password"
-        invalid={isError}
-        onChange={(e) => setPassword(e?.target.value || "")}
+        properties={{
+          ...register(InputNames.PASSWORD, {
+            required: ErrorInputMessages.REQUIRED,
+            minLength: {
+              value: 4,
+              message: ErrorInputMessages.LENGTH,
+            },
+            maxLength: {
+              value: 12,
+              message: ErrorInputMessages.LENGTH,
+            },
+          }),
+        }}
+        name={InputNames.PASSWORD}
+        errors={errors}
       />
-      <Button onClick={handleSubmitForm}>Зарегистрироваться</Button>
+      <Button onClick={handleSubmit(handleSubmitForm)}>
+        Зарегистрироваться
+      </Button>
       <Link className="text-center hover:text-blue-500" to={Router.login}>
         Уже есть аккаунт? Войти!
       </Link>
+      {isLoading && <Spinner />}
     </form>
   );
 };
