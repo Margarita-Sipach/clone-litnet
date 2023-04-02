@@ -4,7 +4,7 @@ import { FileInput } from "../../../ui/inputs/FileInput";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../ui/inputs/Input";
 import { Textarea } from "../../../ui/Textarea";
-import useGenres from "../../../../api/genres/useGenres";
+import useGenres from "../../../../hooks/genres/useGenres";
 import { useUserContext } from "../../../context/userContext";
 import useCreateContest from "../../../../hooks/account/useCreateContest";
 import { notifyError, notifySuccess } from "../../../../hooks";

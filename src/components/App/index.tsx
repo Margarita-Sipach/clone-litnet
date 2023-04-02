@@ -37,11 +37,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReaderPage } from "../pages/ReaderPage";
 import { ContestParticipate } from "../pages/contests/ContestParticipate";
-import { AdminHomePage } from "../pages/admin/AdminHomePage";
-import { AdminRoot } from "../pages/admin/AdminRoot";
-import { AdminBooksPage } from "../pages/admin/AdminBooksPage";
-import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
-import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
+import { AdminHomePage } from "../pages/Admin/AdminHomePage";
+import { AdminRoot } from "../pages/Admin/AdminRoot";
+import { AdminBooksPage } from "../pages/Admin/AdminBooksPage";
+import { AdminBlogsPage } from "../pages/Admin/AdminBlogsPage";
+import { AdminContestsPage } from "../pages/Admin/AdminContestsPage";
 
 const client = new QueryClient({
   logger: {

@@ -1,4 +1,4 @@
-import useGenres from "../../../../api/genres/useGenres";
+import useGenres from "../../../../hooks/genres/useGenres";
 
 export const ReadOnline = () => {
   const { data: genres, isLoading } = useGenres();

@@ -5,7 +5,7 @@ import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { CommentSection } from "../../../modules/CommentsSection";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogById, fetchUserData } from "../../../../api/data";
-import useComments from "../../../../api/comments/useComments";
+import useComments from "../../../../hooks/comments/useComments";
 import { createDate } from "../../../../utils/utils";
 
 type Params = {

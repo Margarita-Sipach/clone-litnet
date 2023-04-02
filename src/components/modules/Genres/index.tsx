@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useGenres from "../../../api/genres/useGenres";
+import useGenres from "../../../hooks/genres/useGenres";
 import { Spinner } from "../../ui/Spinner";
 
 interface CategoriesProps {
