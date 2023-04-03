@@ -2,18 +2,14 @@ import axios, { AxiosError } from "axios";
 import { baseUrl } from "../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import { ErrorResponse } from "../../types/types";
+import { useUserContext } from "../../components/context/userContext";
+import { useNavigate } from "react-router-dom";
+import { Router } from "../../components/router";
 
-type BlogParams = {
-  userId: string;
-  title: string;
-  text: string;
-};
-
-const createBlog = async (title: string, text: string, userId: string) => {
+const createBlog = async (data, userId: string) => {
   try {
     const response = await axios.post(`${baseUrl}/blog`, {
-      title,
-      text,
+      ...data,
       userId,
     });
     return response.data;
@@ -22,14 +18,18 @@ const createBlog = async (title: string, text: string, userId: string) => {
   }
 };
 
-const useCreateBlog = ({ userId, title, text }: BlogParams) => {
+export const useCreateBlog = (userId: string) => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
+
   return useMutation({
-    mutationFn: () => createBlog(title, text, userId),
+    mutationFn: (data) => createBlog(data, userId),
     mutationKey: ["createBlog"],
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
     },
+    onSuccess: () => {
+      navigate(`${Router.users}/${user?.id}/${Router.blogs}`);
+    },
   });
 };
-
-export default useCreateBlog;

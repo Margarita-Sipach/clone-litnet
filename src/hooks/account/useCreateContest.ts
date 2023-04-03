@@ -2,6 +2,10 @@ import axios, { AxiosError } from "axios";
 import { baseUrl } from "../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import { ErrorResponse } from "../../types/types";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../components/context/userContext";
+import { createFormDataWithImage } from "../../utils/formUtils";
+import { Router } from "../../components/router";
 
 const createContest = async (formData: FormData) => {
   try {
@@ -16,12 +20,18 @@ const createContest = async (formData: FormData) => {
   }
 };
 
-const useCreateContest = (formData: FormData) => {
+const useCreateContest = (userId: string) => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
   return useMutation({
-    mutationFn: () => createContest(formData),
+    mutationFn: (data: any) =>
+      createContest(createFormDataWithImage({ ...data, userId })),
     mutationKey: ["createContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
+    },
+    onSuccess: () => {
+      navigate(`${Router.users}/${user?.id}`);
     },
   });
 };

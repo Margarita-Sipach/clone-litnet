@@ -64,7 +64,6 @@ export const AccountAddBook = () => {
         <div className="flex flex-grow flex-col gap-y-5">
           <Input
             placeholder="Название книги"
-            required={true}
             properties={{
               ...register(InputNames.TITLE, {
                 required: ErrorInputMessages.REQUIRED,
