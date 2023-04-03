@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
-import { useFetchGenres } from "../../../../../hooks";
+import React, { ChangeEvent, useState, useEffect } from "react";
+import { notifyError, useFetchGenres } from "../../../../../hooks";
 import { useUserContext } from "../../../../context/userContext";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";
@@ -7,25 +7,34 @@ import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../ui/Textarea";
-import useCreateBook from "../../../../../hooks/account/useCreateBook";
 import { Spinner } from "../../../../ui/Spinner";
+import { useForm } from "react-hook-form";
+import {
+  ErrorInputMessages,
+  ErrorNotifies,
+  InputNames,
+  createFormData,
+} from "../../../../../utils/formUtils";
+import { useCreateBook } from "../../../../../hooks/account/useCreateBook";
 
 export const AccountAddBook = () => {
   const { user } = useUserContext();
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [firstSelectedGenre, setFirstSelectedGenre] = useState("");
-  const [secondSelectedGenre, setSecondSelectedGenre] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
   const { genres } = useFetchGenres();
-  const { createBook, isLoading } = useCreateBook();
+  const { createBook, isLoading, isError, error } = useCreateBook();
 
-  const createFormData = () => {
-    const formData = new FormData();
-    formData.append("title", title);
+  const createCustomFormData = (data) => {
+    const formData = createFormData(data);
     formData.append("userId", `${user?.id}`);
-    formData.append("description", description);
-    formData.append("genres", `${firstSelectedGenre} ${secondSelectedGenre}`);
+    formData.append(
+      "genres",
+      `${data[InputNames.GENRE_FIRST]} ${data[InputNames.GENRE_SECOND]}`
+    );
     if (file) formData.append("img", file);
     return formData;
   };
@@ -35,9 +44,15 @@ export const AccountAddBook = () => {
     if (files) setFile(files[0]);
   };
 
-  const handleSubmitForm = () => {
-    createBook(createFormData());
+  const handleSubmitForm = (data) => {
+    createBook(createCustomFormData(data));
   };
+
+  useEffect(() => {
+    if (isError && error) {
+      notifyError(ErrorNotifies.BOOK_EXISTS);
+    }
+  }, [error, isError]);
 
   return genres ? (
     <PageWrapper title="Новая книга">
@@ -50,16 +65,54 @@ export const AccountAddBook = () => {
           <Input
             placeholder="Название книги"
             required={true}
-            onChange={(e) => setTitle(e?.target.value || "")}
+            properties={{
+              ...register(InputNames.TITLE, {
+                required: ErrorInputMessages.REQUIRED,
+                minLength: {
+                  value: 3,
+                  message: ErrorInputMessages.TITLE_LENGTH,
+                },
+                maxLength: {
+                  value: 24,
+                  message: ErrorInputMessages.TITLE_LENGTH,
+                },
+              }),
+            }}
+            name={InputNames.TITLE}
+            errors={errors}
           />
           <PrimarySelect
             title="Жанр 1"
-            onChange={(e) => setFirstSelectedGenre(e.target.value || "")}
+            properties={{
+              ...register(InputNames.GENRE_FIRST, {
+                required: ErrorInputMessages.REQUIRED,
+                validate: (value, formData) =>
+                  value !== formData[InputNames.GENRE_SECOND]
+                    ? [...genres.map((g) => g.name)].includes(value)
+                      ? true
+                      : ErrorInputMessages.SELECT_GENRE
+                    : ErrorInputMessages.EQUALS_GENRES,
+              }),
+            }}
+            name={InputNames.GENRE_FIRST}
+            errors={errors}
             options={genres.map((g) => g.name)}
           />
           <PrimarySelect
             title="Жанр 2"
-            onChange={(e) => setSecondSelectedGenre(e.target.value || "")}
+            properties={{
+              ...register(InputNames.GENRE_SECOND, {
+                required: ErrorInputMessages.REQUIRED,
+                validate: (value, formData) =>
+                  value !== formData[InputNames.GENRE_FIRST]
+                    ? [...genres.map((g) => g.name)].includes(value)
+                      ? true
+                      : ErrorInputMessages.SELECT_GENRE
+                    : ErrorInputMessages.EQUALS_GENRES,
+              }),
+            }}
+            name={InputNames.GENRE_SECOND}
+            errors={errors}
             options={genres.map((g) => g.name)}
           />
         </div>
@@ -67,15 +120,24 @@ export const AccountAddBook = () => {
       <Textarea
         required={true}
         placeholder="Аннотация"
-        onChange={(e) => setDescription(e?.target.value || "")}
+        properties={{
+          ...register(InputNames.DESCRIPTION, {
+            maxLength: {
+              value: 400,
+              message: ErrorInputMessages.TEXT_LENGTH,
+            },
+          }),
+        }}
+        name={InputNames.DESCRIPTION}
+        errors={errors}
       />
       {isLoading ? (
         <Spinner className="flex w-full justify-center" />
       ) : (
-        <Button onClick={handleSubmitForm}>Сохранить</Button>
+        <Button onClick={handleSubmit(handleSubmitForm)}>Сохранить</Button>
       )}
     </PageWrapper>
   ) : (
-    <h1>Loading...</h1>
+    <Spinner className="flex w-full justify-center" />
   );
 };

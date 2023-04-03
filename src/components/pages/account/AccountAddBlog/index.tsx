@@ -6,7 +6,7 @@ import { Textarea } from "../../../ui/Textarea";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { useUserContext } from "../../../context/userContext";
 import { notifyError, notifySuccess } from "../../../../hooks";
-import useAddBlog from "../../../../hooks/account/useAddBlog";
+import useAddBlog from "../../../../hooks/account/useCreateBlog";
 import { Spinner } from "../../../ui/Spinner";
 
 export const AccountAddBlog = () => {

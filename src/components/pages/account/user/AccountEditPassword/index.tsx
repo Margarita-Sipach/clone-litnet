@@ -9,6 +9,7 @@ import { Spinner } from "../../../../ui/Spinner";
 import {
   createFormData,
   ErrorInputMessages,
+  ErrorNotifies,
   InputNames,
 } from "../../../../../utils/formUtils";
 import { useEditPassword } from "../../../../../hooks/account/useEditPassword";
@@ -55,7 +56,7 @@ export const AccountEditPassword = () => {
 
   useEffect(() => {
     if (isError && error) {
-      notifyError("Не удалось изменить пароль, повторите позднее");
+      notifyError(ErrorNotifies.CANNOT_CHANGE_PASSWORD);
     }
   }, [error, isError]);
 

@@ -6,6 +6,7 @@ import useLogin from "../../../../hooks/forms/useLogin";
 import {
   createFormData,
   ErrorInputMessages,
+  ErrorNotifies,
   InputNames,
 } from "../../../../utils/formUtils";
 import { Router } from "../../../router";
@@ -29,7 +30,7 @@ export const AuthorizationForm = () => {
 
   useEffect(() => {
     if (isError && error) {
-      notifyError("Неправильный email или пароль");
+      notifyError(ErrorNotifies.INCORRECT_EMAIL_OR_PASSWORD);
     }
   }, [error, isError]);
 

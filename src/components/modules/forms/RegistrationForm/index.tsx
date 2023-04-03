@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import {
   createFormData,
   ErrorInputMessages,
+  ErrorNotifies,
   InputNames,
 } from "../../../../utils/formUtils";
 import { notifyError } from "../../../../hooks";
@@ -41,7 +42,7 @@ export const RegistrationForm = () => {
 
   useEffect(() => {
     if (isError && error) {
-      notifyError("Имя или email уже заняты");
+      notifyError(ErrorNotifies.NAME_OR_EMAIL_EXISTS);
     }
   }, [error, isError]);
 
@@ -57,6 +58,14 @@ export const RegistrationForm = () => {
         properties={{
           ...register(InputNames.NAME, {
             required: ErrorInputMessages.REQUIRED,
+            minLength: {
+              value: 3,
+              message: ErrorInputMessages.NAME_LENGTH,
+            },
+            maxLength: {
+              value: 12,
+              message: ErrorInputMessages.NAME_LENGTH,
+            },
           }),
         }}
         name={InputNames.NAME}

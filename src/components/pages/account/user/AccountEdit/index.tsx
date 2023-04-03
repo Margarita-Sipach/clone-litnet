@@ -9,6 +9,7 @@ import { Textarea } from "../../../../ui/Textarea";
 import {
   createFormData,
   ErrorInputMessages,
+  ErrorNotifies,
   InputNames,
 } from "../../../../../utils/formUtils";
 import { Spinner } from "../../../../ui/Spinner";
@@ -44,7 +45,7 @@ export const AccountEdit = () => {
 
   useEffect(() => {
     if (isError && error) {
-      notifyError("Произошла непредвиденная ошибка, повторите позднее");
+      notifyError(ErrorNotifies.UNEXPECTED_ERROR);
     }
   }, [error, isError]);
 
