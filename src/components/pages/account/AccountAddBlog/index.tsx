@@ -4,7 +4,6 @@ import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../ui/inputs/Input";
 import { Textarea } from "../../../ui/Textarea";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
-import { useUserContext } from "../../../context/userContext";
 import { notifyError } from "../../../../hooks";
 import { Spinner } from "../../../ui/Spinner";
 import { useForm } from "react-hook-form";
@@ -16,15 +15,12 @@ import {
 import { useCreateBlog } from "../../../../hooks/account/useCreateBlog";
 
 export const AccountAddBlog = () => {
-  const { user } = useUserContext();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: "onBlur" });
-  const { mutate, error, isError, isLoading } = useCreateBlog(
-    user!.id.toString()
-  );
+  const { mutate, error, isError, isLoading } = useCreateBlog();
 
   const handleSubmitForm = (data) => {
     mutate(data);

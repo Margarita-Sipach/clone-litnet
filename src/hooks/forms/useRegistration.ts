@@ -5,6 +5,7 @@ import { LocalStorage } from "../../components/storage";
 import { Router } from "../../components/router";
 import axios from "axios";
 import { baseUrl } from "../../utils/utils";
+import { createFormDataWithImage } from "../../utils/formUtils";
 
 const registerUser = async (data) => {
   try {
@@ -24,7 +25,7 @@ const useRegistration = () => {
     isLoading,
     error,
   } = useMutation({
-    mutationFn: (data: any) => registerUser(data),
+    mutationFn: (data: any) => registerUser(createFormDataWithImage(data)),
     mutationKey: ["registration"],
     onSuccess: ({ token, user }: any) => {
       setUser(user);

@@ -7,7 +7,6 @@ import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { Textarea } from "../../../../ui/Textarea";
 import {
-  createFormData,
   ErrorInputMessages,
   ErrorNotifies,
   InputNames,
@@ -32,15 +31,8 @@ export const AccountEdit = () => {
     if (files) setFile(files[0]);
   };
 
-  const createCustomFormData = (data: Record<string, string>): any => {
-    const formData = createFormData(data);
-    if (file) formData.append("img", file);
-    formData.append("readingView", readingView);
-    return formData;
-  };
-
   const handleSubmitForm = async (data) => {
-    edit(createCustomFormData(data));
+    edit({ ...data, img: file, readingView });
   };
 
   useEffect(() => {

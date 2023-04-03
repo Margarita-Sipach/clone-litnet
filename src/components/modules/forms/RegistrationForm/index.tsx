@@ -24,19 +24,13 @@ export const RegistrationForm = () => {
     resetField,
   } = useForm({ mode: "onBlur" });
 
-  const createImageFormData = (data: Record<string, string>): any => {
-    const formData = createFormData(data);
-    if (file) formData.append("img", file);
-    return formData;
-  };
-
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
     if (files) setFile(files[0]);
   };
 
   const handleSubmitForm = (data: any) => {
-    registration(createImageFormData(data));
+    registration({ ...data, img: file });
     resetField(InputNames.PASSWORD);
   };
 

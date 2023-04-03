@@ -15,10 +15,8 @@ import {
 } from "../../../../utils/formUtils";
 import { PrimarySelect } from "../../../ui/PrimarySelect";
 import { isBefore } from "date-fns";
-import { useUserContext } from "../../../context/userContext";
 
 export const AccountAddContest = () => {
-  const { user } = useUserContext();
   const {
     register,
     formState: { errors },
@@ -26,9 +24,7 @@ export const AccountAddContest = () => {
   } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
   const { genres } = useFetchGenres();
-  const { mutate, isLoading, error, isError } = useCreateContest(
-    user!.id.toString()
-  );
+  const { mutate, isLoading, error, isError } = useCreateContest();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;

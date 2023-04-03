@@ -14,6 +14,7 @@ export enum InputNames {
   SYMBOLS = "countCharacters",
   PRIZE = "prize",
   DATE = "date",
+  READING_VIEW = "readingView",
 }
 
 export enum ErrorInputMessages {

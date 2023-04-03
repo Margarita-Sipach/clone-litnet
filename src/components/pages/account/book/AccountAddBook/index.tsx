@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { notifyError, useFetchGenres } from "../../../../../hooks";
-import { useUserContext } from "../../../../context/userContext";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
@@ -13,12 +12,10 @@ import {
   ErrorInputMessages,
   ErrorNotifies,
   InputNames,
-  createFormData,
 } from "../../../../../utils/formUtils";
 import { useCreateBook } from "../../../../../hooks/account/useCreateBook";
 
 export const AccountAddBook = () => {
-  const { user } = useUserContext();
   const {
     register,
     formState: { errors },
@@ -28,24 +25,13 @@ export const AccountAddBook = () => {
   const { genres } = useFetchGenres();
   const { createBook, isLoading, isError, error } = useCreateBook();
 
-  const createCustomFormData = (data) => {
-    const formData = createFormData(data);
-    formData.append("userId", `${user?.id}`);
-    formData.append(
-      "genres",
-      `${data[InputNames.GENRE_FIRST]} ${data[InputNames.GENRE_SECOND]}`
-    );
-    if (file) formData.append("img", file);
-    return formData;
-  };
-
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
     if (files) setFile(files[0]);
   };
 
   const handleSubmitForm = (data) => {
-    createBook(createCustomFormData(data));
+    createBook({ ...data, img: file });
   };
 
   useEffect(() => {

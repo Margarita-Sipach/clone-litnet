@@ -18,12 +18,12 @@ const createBlog = async (data, userId: string) => {
   }
 };
 
-export const useCreateBlog = (userId: string) => {
+export const useCreateBlog = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (data) => createBlog(data, userId),
+    mutationFn: (data) => createBlog(data, `${user?.id}`),
     mutationKey: ["createBlog"],
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;

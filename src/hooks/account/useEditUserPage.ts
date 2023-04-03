@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../components/context/userContext";
 import { Router } from "../../components/router";
 import { baseUrl } from "../../utils/utils";
+import { InputNames, createFormDataWithImage } from "../../utils/formUtils";
 
 const updateUserById = async (id, data) => {
   try {
@@ -12,6 +13,12 @@ const updateUserById = async (id, data) => {
   } catch (error: any) {
     throw error;
   }
+};
+
+const createCustomFormData = ({ readingView, ...data }): any => {
+  const formData = createFormDataWithImage(data);
+  formData.append(InputNames.READING_VIEW, readingView);
+  return formData;
 };
 
 export const useEditUserPage = () => {
@@ -23,7 +30,8 @@ export const useEditUserPage = () => {
     isLoading,
     error,
   } = useMutation({
-    mutationFn: (data: any) => updateUserById(`${user?.id}`, data),
+    mutationFn: (data: any) =>
+      updateUserById(`${user?.id}`, createCustomFormData(data)),
     mutationKey: ["user", "edit-page", user?.id],
     onSuccess: (user: any) => {
       setUser(user);

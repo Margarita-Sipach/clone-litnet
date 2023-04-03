@@ -4,6 +4,7 @@ import { Router } from "../../components/router";
 import { useUserContext } from "../../components/context/userContext";
 import { baseUrl } from "../../utils/utils";
 import axios from "axios";
+import { InputNames, createFormDataWithImage } from "../../utils/formUtils";
 
 const createNewBook = async (data) => {
   try {
@@ -12,6 +13,15 @@ const createNewBook = async (data) => {
   } catch (error: any) {
     throw error;
   }
+};
+
+const createCustomFormData = (data) => {
+  const formData = createFormDataWithImage(data);
+  formData.append(
+    InputNames.GENRE,
+    `${data[InputNames.GENRE_FIRST]} ${data[InputNames.GENRE_SECOND]}`
+  );
+  return formData;
 };
 
 export const useCreateBook = () => {
@@ -23,7 +33,8 @@ export const useCreateBook = () => {
     isLoading,
     error,
   } = useMutation({
-    mutationFn: (data: any) => createNewBook(data),
+    mutationFn: (data: any) =>
+      createNewBook(createCustomFormData({ ...data, userId: `${user?.id}` })),
     mutationKey: ["users", user?.id, "books"],
     onSuccess: () => {
       navigate(`${Router.users}/${user?.id}/${Router.books}`);

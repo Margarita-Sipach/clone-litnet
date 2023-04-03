@@ -20,12 +20,14 @@ const createContest = async (formData: FormData) => {
   }
 };
 
-const useCreateContest = (userId: string) => {
+const useCreateContest = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (data: any) =>
-      createContest(createFormDataWithImage({ ...data, userId })),
+      createContest(
+        createFormDataWithImage({ ...data, userId: `${user?.id}` })
+      ),
     mutationKey: ["createContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
