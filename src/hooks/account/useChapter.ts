@@ -6,7 +6,6 @@ const useChapter = (id: string) => {
   const { data: chapter } = useQuery<ChapterType>({
     queryKey: ["chapters", id],
     queryFn: async () => getChapter(id),
-    staleTime: 1000,
   });
 
   return { chapter };

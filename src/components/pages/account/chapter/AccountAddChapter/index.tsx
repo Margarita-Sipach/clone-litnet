@@ -1,51 +1,82 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useFetchBook } from "../../../../../hooks";
+import { useEffect } from "react";
+import { notifyError, useFetchBook } from "../../../../../hooks";
 import useCreateChapter from "../../../../../hooks/account/useCreateChapter";
 import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { Textarea } from "../../../../ui/Textarea";
 import { Spinner } from "../../../../ui/Spinner";
+import { useForm } from "react-hook-form";
+import {
+  ErrorInputMessages,
+  ErrorNotifies,
+  InputNames,
+} from "../../../../../utils/formUtils";
 
 export const AccountAddChapter = () => {
   const { bookId } = useParams();
-  const [text, setText] = useState("");
-  const [title, setTitle] = useState("");
-  const { createChapter, isLoading } = useCreateChapter();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: "onBlur" });
+  const { createChapter, isLoading, isError, error } = useCreateChapter();
   const { book } = useFetchBook(`${bookId}`);
 
-  const createRequestBody = () => {
-    return JSON.stringify({
-      text,
-      title,
+  const handleSubmitForm = (data) => {
+    createChapter({
+      ...data,
       bookId: book?.id,
     });
   };
 
-  const handleSubmitForm = () => {
-    createChapter(createRequestBody());
-  };
+  useEffect(() => {
+    if (isError && error) {
+      notifyError(ErrorNotifies.CREATE_CHAPTER);
+    }
+  }, [error, isError]);
 
   return book ? (
     <PageWrapper title="Добавить новую главу" isTop={false}>
       <Input
         placeholder="Название главы"
-        value={title}
-        onChange={(e) => setTitle(e?.target.value || "")}
+        properties={{
+          ...register(InputNames.TITLE, {
+            required: ErrorInputMessages.REQUIRED,
+            minLength: {
+              value: 3,
+              message: ErrorInputMessages.TITLE_LENGTH,
+            },
+            maxLength: {
+              value: 24,
+              message: ErrorInputMessages.TITLE_LENGTH,
+            },
+          }),
+        }}
+        name={InputNames.TITLE}
+        errors={errors}
       />
       <Textarea
         placeholder="Содержание главы"
-        value={text}
-        onChange={(e) => setText(e?.target.value || "")}
+        properties={{
+          ...register(InputNames.TEXT, {
+            maxLength: {
+              value: 400,
+              message: ErrorInputMessages.TEXT_LENGTH,
+            },
+          }),
+        }}
+        name={InputNames.TEXT}
+        errors={errors}
       ></Textarea>
       {isLoading ? (
         <Spinner className="flex w-full justify-center" />
       ) : (
-        <Button onClick={handleSubmitForm}>Сохранить</Button>
+        <Button onClick={handleSubmit(handleSubmitForm)}>Сохранить</Button>
       )}
     </PageWrapper>
   ) : (
-    <h1>Loading....</h1>
+    <Spinner className="flex w-full justify-center" />
   );
 };

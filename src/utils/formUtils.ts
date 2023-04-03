@@ -39,6 +39,8 @@ export enum ErrorNotifies {
   INCORRECT_EMAIL_OR_PASSWORD = "Неправильный email или пароль",
   BLOG_EXISTS = "Блог с таким именем уже существует",
   CONTEST_ERROR = "Конкурс с таким названием уже существует",
+  CREATE_CHAPTER = "Не удалось создать главу, попробуйте позднее",
+  CREATE_UPDATE = "Не удалось обновить главу, попробуйте позднее",
 }
 
 export const createFormData = (data: Record<string, string>): any => {
