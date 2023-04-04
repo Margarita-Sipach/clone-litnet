@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { ChangeEvent } from "react";
 import { FieldErrors } from "react-hook-form";
 
-interface PrimaryInputProps {
+interface PrimarySelectProps {
   title: string;
   options: (string | number)[];
   defaultOption?: string | number;
@@ -20,7 +20,7 @@ export const PrimarySelect = ({
   properties,
   name,
   errors,
-}: PrimaryInputProps) => {
+}: PrimarySelectProps) => {
   return (
     <label className="h-15 flex flex-col">
       <select

@@ -25,7 +25,7 @@ export const BlogPage = () => {
     enabled: !!blog,
   });
   const { data: comments, isLoading: commentsLoading } = useComments(
-    "blog",
+    CommentTypes.BLOG,
     id!,
     blog
   );

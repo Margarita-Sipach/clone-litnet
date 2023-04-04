@@ -3,14 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { ElementWrapper } from "../../../ui/wrappers/ElementWrapper";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { PrimarySelect } from "../../../ui/PrimarySelect";
-import { Rating } from "../../../ui/Rating";
 import { Button } from "../../../ui/buttons/Button";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
-import {
-  baseUrl,
-  handleImageError,
-  processImage,
-} from "../../../../utils/utils";
+import { handleImageError, processImage } from "../../../../utils/utils";
 import useBook from "../../../../hooks/books/useBook";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { Router } from "../../../router";
@@ -24,23 +19,10 @@ import useComments from "../../../../hooks/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
 import useChapters from "../../../../hooks/account/useChapters";
 import { CommentTypes } from "../../../../hooks/comments/usePostComment";
-
-const rateBook = async (
-  userId: string | number,
-  bookId: string,
-  rating: number
-) => {
-  try {
-    const response = await axios.post(`${baseUrl}/ratings/`, {
-      userId,
-      bookId,
-      rating,
-    });
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { RatingForm } from "../../../modules/rating/RatingForm/indext";
+import { useUserRating } from "../../../../hooks/books/useUserRating";
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { SelectList } from "../../../ui/SelectList";
 
 export type Params = {
   id: string;
@@ -60,9 +42,13 @@ export const BookPage = () => {
   const { mutate: addBookmark } = usePostBookmark();
   const { chapters } = useChapters(id!);
   const { data: book, isLoading: bookLoading, refetch } = useBook(id!);
-  const [rating, setRating] = useState<number | string>("");
+  const {
+    data: rating,
+    isSuccess: ratingSuccess,
+    refetch: ratingRefetch,
+  } = useUserRating(`${user?.id}`, `${id}`);
   const { data: comments, isLoading: commentsLoading } = useComments(
-    "book",
+    CommentTypes.BOOK,
     id!,
     book
   );
@@ -82,21 +68,9 @@ export const BookPage = () => {
     });
   };
 
-  const ratingMutation = useMutation({
-    mutationFn: () => rateBook(user!.id, id!, Number(rating)),
-    mutationKey: ["rateBook"],
-    onError: (error: AxiosError<ErrorResponse>) => {
-      throw error;
-    },
-  });
-  // useEffect(() => {
-  //   if (ratingMutation.status === "success") {
-  //     notifySuccess("success");
-  //     refetch();
-  //   } else if (ratingMutation.status === "error") {
-  //     notifyError(ratingMutation.error.response!.data.message);
-  //   }
-  // }, [ratingMutation.status]);
+  useEffect(() => {
+    ratingRefetch();
+  }, [book, ratingRefetch, user]);
 
   return (
     <Wrapper>
@@ -112,7 +86,20 @@ export const BookPage = () => {
               />
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
-                  <h4 className="mb-1 text-2xl">{book.title}</h4>
+                  <span className="flex items-center">
+                    <h4 className="mb-1 text-2xl">{book.title}</h4>
+                    {ratingSuccess && rating ? (
+                      <BsStarFill
+                        className="cursor-pointer pl-3 text-3xl text-indigo-400"
+                        title={`Вы оценили книгу: ${rating.rating}`}
+                      />
+                    ) : (
+                      <BsStar
+                        className="cursor-pointer pl-3 text-3xl text-indigo-400"
+                        title="Вы ещё не оценили книгу"
+                      />
+                    )}
+                  </span>
                   <Link
                     to={`/users/${book.userId}`}
                     className="mb-4 text-indigo-500"
@@ -129,61 +116,58 @@ export const BookPage = () => {
                       </div>
                     ))}
                   </div>
-                  <Rating
-                    rating={Number(book.rating)}
-                    statistic={book.ratings.map((item) => item.rating)}
-                  />
-                  {/* {user && (
-                    <div className="mb-4 mt-2 flex items-center gap-2">
-                      <input
-                        value={rating!}
-                        onChange={(e) => setRating(Number(e.target.value))}
-                        type="number"
-                        placeholder="Оценка"
-                        className="w-40 self-start border p-1"
-                      />
-                      <Button size="sm" onClick={() => ratingMutation.mutate()}>
-                        Оценить
-                      </Button>
-                    </div>
-                  )} */}
+                  <RatingForm book={book} refetchBook={refetch} />
                 </div>
                 {chapters && chapters?.length > 0 ? (
-                  <div className="flex gap-x-5 justify-self-end">
-                    <Button
-                      type="secondary"
-                      className={`w-1/2 ${
-                        addedBook &&
-                        " border-indigo-500 text-indigo-500 hover:cursor-default"
-                      }`}
-                      onClick={() => {
-                        if (addedBook) return;
-                        handleAddBookmark();
-                      }}
-                    >
-                      {addedBook ? "Добавлена" : "Добавить"}
-                    </Button>
-                    {/* <PrimaryLink
-                      path={`${Router.reader}/${id}`}
-                      className="w-1/2 text-center"
-                    >
-                      Читать онлайн
-                    </PrimaryLink> */}
-                  </div>
+                  user ? (
+                    <div className="flex gap-x-5 justify-self-end">
+                      <Button
+                        type="secondary"
+                        className={`w-1/2 ${
+                          addedBook &&
+                          " border-indigo-500 text-indigo-500 hover:cursor-default"
+                        }`}
+                        onClick={() => {
+                          if (addedBook) return;
+                          handleAddBookmark();
+                        }}
+                      >
+                        {addedBook ? "Добавлена" : "Добавить"}
+                      </Button>
+                      <PrimaryLink
+                        path={`${Router.reader}/${id}`}
+                        className="w-1/2 text-center"
+                      >
+                        Читать онлайн
+                      </PrimaryLink>
+                    </div>
+                  ) : (
+                    <div className="w-full text-center">
+                      {" "}
+                      Пожалуйста,{" "}
+                      <Link
+                        to={`${Router.login}`}
+                        className="w-1/2 text-center text-blue-800 hover:underline"
+                      >
+                        авторизируйтесь
+                      </Link>{" "}
+                      для чтения книги
+                    </div>
+                  )
                 ) : (
                   <div className="w-full text-center">
                     В книге недостаточно глав для чтения
                   </div>
                 )}
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
-                {/* <PrimarySelect
+                <SelectList
                   title="Содержание"
                   options={
                     chapters
                       ? (chapters?.map((ch) => ch.title) as string[])
                       : []
                   }
-                /> */}
+                />
               </div>
             </ElementWrapper>
             <ElementWrapper className="mb-5">

@@ -15,6 +15,7 @@ export enum InputNames {
   PRIZE = "prize",
   DATE = "date",
   READING_VIEW = "readingView",
+  RATING = "rating",
 }
 
 export enum ErrorInputMessages {
@@ -42,6 +43,7 @@ export enum ErrorNotifies {
   CREATE_CHAPTER = "Не удалось создать главу, попробуйте позднее",
   CREATE_UPDATE = "Не удалось обновить главу, попробуйте позднее",
   COMMENT_ERROR = "Не удалось оставить комментарий, попробуйте позднее",
+  RATING_ERROR = "Не удалось отставить рейтинг",
 }
 
 export enum SuccessNotifies {

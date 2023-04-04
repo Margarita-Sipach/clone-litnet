@@ -19,7 +19,7 @@ export const ContestRules = () => {
   const { id } = useParams();
   const { data: contest, isLoading: contestLoading } = useContest(id!);
   const { data: comments, isLoading: commentsLoading } = useComments(
-    "contest",
+    CommentTypes.CONTEST,
     id!,
     contest
   );
