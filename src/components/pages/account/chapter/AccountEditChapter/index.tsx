@@ -65,7 +65,7 @@ export const AccountEditChapter = () => {
         properties={{
           ...register(InputNames.TEXT, {
             maxLength: {
-              value: 400,
+              value: 1000,
               message: ErrorInputMessages.TEXT_LENGTH,
             },
           }),

@@ -73,7 +73,7 @@ export const AccountEdit = () => {
         properties={{
           ...register(InputNames.AUTOBIOGRAPHY, {
             maxLength: {
-              value: 400,
+              value: 1000,
               message: ErrorInputMessages.TEXT_LENGTH,
             },
           }),
