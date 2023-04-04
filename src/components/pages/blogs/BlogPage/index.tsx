@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBlogById, fetchUserData } from "../../../../api/data";
 import useComments from "../../../../hooks/comments/useComments";
 import { createDate } from "../../../../utils/utils";
+import { CommentTypes } from "../../../../hooks/comments/usePostComment";
 
 type Params = {
   id: string;
@@ -34,7 +35,7 @@ export const BlogPage = () => {
         {blog && userQuery.isSuccess ? (
           <>
             <h3 className="self-start text-2xl font-medium">{blog.title}</h3>
-            <p className="w-full bg-gray-50 py-2 px-4 text-xs">
+            <p className="w-full bg-gray-50 px-4 py-2 text-xs">
               Автор:{" "}
               <Link
                 to={`/users/${userQuery.data.id}`}
@@ -46,7 +47,11 @@ export const BlogPage = () => {
             </p>
             <p>{blog.text}</p>
             {comments ? (
-              <CommentSection type="blog" id={id!} comments={comments} />
+              <CommentSection
+                type={CommentTypes.BLOG}
+                id={id!}
+                comments={comments}
+              />
             ) : commentsLoading ? (
               <p>loading comments...</p>
             ) : (

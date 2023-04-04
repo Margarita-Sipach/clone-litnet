@@ -23,6 +23,7 @@ import { notifyError, notifySuccess } from "../../../../hooks";
 import useComments from "../../../../hooks/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
 import useChapters from "../../../../hooks/account/useChapters";
+import { CommentTypes } from "../../../../hooks/comments/usePostComment";
 
 const rateBook = async (
   userId: string | number,
@@ -88,14 +89,14 @@ export const BookPage = () => {
       throw error;
     },
   });
-  useEffect(() => {
-    if (ratingMutation.status === "success") {
-      notifySuccess("success");
-      refetch();
-    } else if (ratingMutation.status === "error") {
-      notifyError(ratingMutation.error.response!.data.message);
-    }
-  }, [ratingMutation.status]);
+  // useEffect(() => {
+  //   if (ratingMutation.status === "success") {
+  //     notifySuccess("success");
+  //     refetch();
+  //   } else if (ratingMutation.status === "error") {
+  //     notifyError(ratingMutation.error.response!.data.message);
+  //   }
+  // }, [ratingMutation.status]);
 
   return (
     <Wrapper>
@@ -122,7 +123,7 @@ export const BookPage = () => {
                     {book.genres.map((item) => (
                       <div
                         key={item.id}
-                        className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base"
+                        className="max-w-full truncate rounded-md bg-slate-200 p-1 text-base text-sm"
                       >
                         {item.name}
                       </div>
@@ -132,8 +133,8 @@ export const BookPage = () => {
                     rating={Number(book.rating)}
                     statistic={book.ratings.map((item) => item.rating)}
                   />
-                  {user && (
-                    <div className="mt-2 mb-4 flex items-center gap-2">
+                  {/* {user && (
+                    <div className="mb-4 mt-2 flex items-center gap-2">
                       <input
                         value={rating!}
                         onChange={(e) => setRating(Number(e.target.value))}
@@ -145,7 +146,7 @@ export const BookPage = () => {
                         Оценить
                       </Button>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 {chapters && chapters?.length > 0 ? (
                   <div className="flex gap-x-5 justify-self-end">
@@ -162,12 +163,12 @@ export const BookPage = () => {
                     >
                       {addedBook ? "Добавлена" : "Добавить"}
                     </Button>
-                    <PrimaryLink
+                    {/* <PrimaryLink
                       path={`${Router.reader}/${id}`}
                       className="w-1/2 text-center"
                     >
                       Читать онлайн
-                    </PrimaryLink>
+                    </PrimaryLink> */}
                   </div>
                 ) : (
                   <div className="w-full text-center">
@@ -175,14 +176,14 @@ export const BookPage = () => {
                   </div>
                 )}
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
-                <PrimarySelect
+                {/* <PrimarySelect
                   title="Содержание"
                   options={
                     chapters
                       ? (chapters?.map((ch) => ch.title) as string[])
                       : []
                   }
-                ></PrimarySelect>
+                /> */}
               </div>
             </ElementWrapper>
             <ElementWrapper className="mb-5">
@@ -196,7 +197,11 @@ export const BookPage = () => {
           <p>error loading book data</p>
         )}
         {comments ? (
-          <CommentSection id={id!} type="book" comments={comments} />
+          <CommentSection
+            id={id!}
+            type={CommentTypes.BOOK}
+            comments={comments}
+          />
         ) : commentsLoading ? (
           <p>loading comments...</p>
         ) : (

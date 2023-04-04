@@ -4,72 +4,102 @@ import { CommentElement } from "../elements/CommentElement";
 import { Button } from "../../ui/buttons/Button";
 import { useUserContext } from "../../context/userContext";
 import useComments from "../../../hooks/comments/useComments";
-import usePostComment from "../../../hooks/comments/usePostComment";
-import { notifyError } from "../../../hooks";
+import usePostComment, {
+  CommentTypes,
+} from "../../../hooks/comments/usePostComment";
+import { notifyError, notifySuccess } from "../../../hooks";
 import { Spinner } from "../../ui/Spinner";
+import { useForm } from "react-hook-form";
+import {
+  ErrorInputMessages,
+  ErrorNotifies,
+  InputNames,
+  SuccessNotifies,
+} from "../../../utils/formUtils";
+import { ErrorMessage } from "@hookform/error-message";
 
 type CommentSectionProps = {
   comments: CommentType[];
-  type: "blog" | "book" | "contest";
+  type: CommentTypes.BLOG | CommentTypes.BOOK | CommentTypes.CONTEST;
   id: string | number;
 };
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
   const { user } = useUserContext();
   const [isActive, setIsActive] = useState(false);
-  const [text, setText] = useState("");
-  const { data: comments, isLoading } = useComments(type, id.toString());
-  const commentMutation = usePostComment({
-    id: id.toString(),
-    userId: user?.id.toString(),
-    commentType: type,
-    text,
-  });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    resetField,
+  } = useForm({ mode: "onBlur" });
+  const { data: comments, isLoading: isLoadingComments } = useComments(
+    type,
+    id.toString()
+  );
+  const { mutate, isLoading, isError, isSuccess, error, hookStatus } =
+    usePostComment({
+      id: id.toString(),
+      commentType: type,
+    });
+
+  const handleSubmitForm = (data) => {
+    mutate(data);
+    resetField(InputNames.TEXT);
+    setIsActive(false);
+  };
+
   useEffect(() => {
-    if (commentMutation?.status === "error") {
-      notifyError(commentMutation.error.response!.data.message);
-    } else if (commentMutation?.status === "success") {
-      setText("");
+    if (isError && error) {
+      notifyError(ErrorNotifies.COMMENT_ERROR);
+    } else if (isSuccess) {
+      notifySuccess(SuccessNotifies.COMMENT_CREATED);
     }
-  }, [commentMutation?.status]);
+  }, [error, isError, isSuccess]);
+
   return (
-    <div className="w-full border p-6">
+    <form className="w-full border p-6">
       {comments ? (
         <>
           <p className="pb-4">{comments.length} комментариев</p>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className={`mb-4 flex w-full items-start rounded border bg-gray-50 px-2 py-1 transition-all focus:outline-none ${
-              isActive ? "h-44" : ""
-            }`}
-            onClick={() => {
-              if (user) setIsActive(true);
-            }}
-            placeholder={
-              user
-                ? "Напишите свой комментарий"
-                : "Авторизуйтесь чтобы оставлять комментарии"
-            }
-            disabled={!user}
-          />
-          {isActive && commentMutation && (
+
+          <label>
+            <textarea
+              className={`mb-4 flex w-full items-start rounded border bg-gray-50 px-2 py-1 transition-all focus:outline-none ${
+                isActive ? "h-44" : ""
+              }`}
+              onClick={() => {
+                if (user) setIsActive(true);
+              }}
+              placeholder={
+                user
+                  ? "Напишите свой комментарий"
+                  : "Авторизуйтесь чтобы оставлять комментарии"
+              }
+              {...register(InputNames.TEXT, {
+                maxLength: {
+                  value: 400,
+                  message: ErrorInputMessages.TEXT_LENGTH,
+                },
+                disabled: !user,
+              })}
+            />
+            <div className="ml-2 text-sm font-semibold text-red-500">
+              <ErrorMessage errors={errors} name={`${InputNames.TEXT}`} />
+            </div>
+          </label>
+          {isActive && hookStatus && (
             <div className="mb-4 flex gap-4">
-              {commentMutation.isLoading ? (
+              {isLoading ? (
                 <Spinner />
               ) : (
-                <Button
-                  onClick={() => {
-                    commentMutation.mutate();
-                  }}
-                >
+                <Button onClick={handleSubmit(handleSubmitForm)}>
                   Добавить
                 </Button>
               )}
               <Button
                 onClick={() => {
                   setIsActive(false);
-                  setText("");
                 }}
               >
                 Отменить
@@ -82,11 +112,11 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
             ))}
           </div>
         </>
-      ) : isLoading ? (
+      ) : isLoadingComments ? (
         <Spinner className="flex w-full justify-center" />
       ) : (
-        <p>error loading comments</p>
+        <p>Error loading comments</p>
       )}
-    </div>
+    </form>
   );
 };

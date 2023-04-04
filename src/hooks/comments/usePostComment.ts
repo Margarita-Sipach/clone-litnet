@@ -3,24 +3,24 @@ import { baseUrl } from "../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import useComments from "./useComments";
 import { ErrorResponse } from "../../types/types";
+import { useUserContext } from "../../components/context/userContext";
+
+export enum CommentTypes {
+  BLOG = "blog",
+  BOOK = "book",
+  CONTEST = "contest",
+}
 
 type CommentParams = {
-  commentType: "blog" | "book" | "contest";
+  commentType: CommentTypes.BLOG | CommentTypes.BOOK | CommentTypes.CONTEST;
   id: string;
-  userId: string | null | undefined;
-  text: string;
 };
 
-const postBlogComment = async (
-  blogId: string | number,
-  userId: string | number,
-  text: string
-) => {
+const postBlogComment = async ({ id, ...data }) => {
   try {
     const response = await axios.post(`${baseUrl}/blog-comment`, {
-      blogId,
-      userId,
-      text,
+      blogId: id,
+      ...data,
     });
     return response.data;
   } catch (error: any) {
@@ -28,16 +28,11 @@ const postBlogComment = async (
   }
 };
 
-const postBookComment = async (
-  bookId: string | number,
-  userId: string | number,
-  text: string
-) => {
+const postBookComment = async ({ id, ...data }) => {
   try {
     const response = await axios.post(`${baseUrl}/book-comments`, {
-      bookId,
-      userId,
-      text,
+      bookId: id,
+      ...data,
     });
     if (response.status === 200) {
       return response.data;
@@ -47,16 +42,11 @@ const postBookComment = async (
   }
 };
 
-const postContestComment = async (
-  contestId: string | number,
-  userId: string | number,
-  text: string
-) => {
+const postContestComment = async ({ id, ...data }) => {
   try {
     const response = await axios.post(`${baseUrl}/contest-comment`, {
-      contestId,
-      userId,
-      text,
+      contestId: id,
+      ...data,
     });
     if (response.status === 200) {
       return response.data;
@@ -66,29 +56,36 @@ const postContestComment = async (
   }
 };
 
-const usePostComment = ({ id, userId, commentType, text }: CommentParams) => {
+const usePostComment = ({ id, commentType }: CommentParams) => {
   const { refetch } = useComments(commentType, id);
-  let mutationFunction: (
-    id: string | number,
-    userId: string | number,
-    text: string
-  ) => Promise<any>;
-  if (commentType === "blog") {
-    mutationFunction = postBlogComment;
-  } else if (commentType === "book") {
-    mutationFunction = postBookComment;
-  } else if (commentType === "contest") {
-    mutationFunction = postContestComment;
+  const { user } = useUserContext();
+  let mutationFunction: (data) => Promise<any>;
+
+  switch (commentType) {
+    case CommentTypes.BOOK:
+      mutationFunction = postBookComment;
+      break;
+    case CommentTypes.BLOG:
+      mutationFunction = postBlogComment;
+      break;
+    case CommentTypes.CONTEST:
+      mutationFunction = postContestComment;
+      break;
+    default:
+      break;
   }
+
   const mutation = useMutation({
-    mutationFn: () => mutationFunction(id, userId!, text),
+    mutationFn: (data: Record<string, string>) =>
+      mutationFunction({ id, userId: user?.id!, ...data }),
     mutationKey: [id, commentType],
     onSuccess: refetch,
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
     },
   });
-  return userId ? mutation : null;
+  const hookStatus = !!user?.id;
+  return { ...mutation, hookStatus };
 };
 
 export default usePostComment;

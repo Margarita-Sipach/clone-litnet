@@ -41,6 +41,11 @@ export enum ErrorNotifies {
   CONTEST_ERROR = "Конкурс с таким названием уже существует",
   CREATE_CHAPTER = "Не удалось создать главу, попробуйте позднее",
   CREATE_UPDATE = "Не удалось обновить главу, попробуйте позднее",
+  COMMENT_ERROR = "Не удалось оставить комментарий, попробуйте позднее",
+}
+
+export enum SuccessNotifies {
+  COMMENT_CREATED = "Комментарий успешно создан",
 }
 
 export const createFormData = (data: Record<string, string>): any => {
