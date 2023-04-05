@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BsStar } from "react-icons/bs";
+import { RatingType } from "../../../../types/types";
 
 interface StarRatingProps {
   rating: number;
+  ratings: RatingType[];
   totalStars: number;
   precision: number;
   onClick: (rating: number) => void;
@@ -11,6 +13,7 @@ interface StarRatingProps {
 
 export const StarRating: React.FC<StarRatingProps> = ({
   rating,
+  ratings,
   precision = 1,
   totalStars = 5,
   onClick,
@@ -55,7 +58,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
   return (
     <div className="flex max-w-[30%]">
       <div
-        className="star-rating flex max-w-[98%] items-center justify-between"
+        className="star-rating flex max-w-[90%] items-center justify-between"
         onClick={handleClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -77,7 +80,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
               <div
                 style={{
                   width: showRatingWithPrecision
-                    ? `${(activeState % 1) * 100}%`
+                    ? `${(activeState % 1) * 10}%`
                     : "0%",
                   overflow: "hidden",
                   position: "absolute",
@@ -100,7 +103,20 @@ export const StarRating: React.FC<StarRatingProps> = ({
           );
         })}
       </div>
-      <span className="ml-3 text-xl">{rating}</span>
+      <span
+        className="ml-3 text-xl"
+        title={`Статистика оценок\n${new Array(10)
+          .fill("")
+          .map(
+            (item, index) =>
+              `${"★".repeat(index + 1)} - ${
+                ratings.filter((r) => r.rating === index + 1).length
+              }`
+          )
+          .join("\n")}`}
+      >
+        {rating}
+      </span>
     </div>
   );
 };

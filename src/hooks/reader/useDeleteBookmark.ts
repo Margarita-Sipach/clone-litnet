@@ -5,34 +5,25 @@ import { baseUrl } from "../../utils/utils";
 import { useUserContext } from "../../components/context/userContext";
 import { notifySuccess } from "..";
 
-interface BookmarkPostType {
-  chapterId: number;
-  pageId: number;
-  bookId: number;
-  userId: number;
-}
-
-const postBookmark = async (bookmark: BookmarkPostType) => {
+const deleteBookmark = async (id: string) => {
   try {
-    const response = await axios.post(`${baseUrl}/bookmark`, { ...bookmark });
+    const response = await axios.delete(`${baseUrl}/bookmark/${id}`);
     return response.data;
   } catch (error: any) {
     throw error;
   }
 };
 
-export const usePostBookmark = () => {
+export const useDeleteBookmark = () => {
   const { user, setUser } = useUserContext();
   return useMutation({
-    mutationFn: (bookmark: BookmarkPostType) => postBookmark(bookmark),
+    mutationFn: (id: string) => deleteBookmark(id),
     mutationKey: ["bookmark"],
     onSuccess: (bookmark) => {
-      const bookmarks = user!.bookmarks.find((b) => b.id === bookmark.id)
-        ? user!.bookmarks.map((b) => (b.id === bookmark.id ? bookmark : b))
-        : [...user!.bookmarks, bookmark];
+      const bookmarks = user!.bookmarks.filter((b) => b.id !== bookmark.id);
       const newUser = { ...user!, bookmarks };
       setUser(newUser);
-      notifySuccess("Закладка успешно добавлена");
+      notifySuccess("Закладка успешно удалена");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
