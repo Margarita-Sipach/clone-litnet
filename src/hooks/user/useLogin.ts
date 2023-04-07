@@ -15,7 +15,7 @@ export const checkUserPassword = async (data: any) => {
   }
 };
 
-const useLogin = () => {
+export const useLogin = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const { mutate: login, ...props } = useMutation({
@@ -33,5 +33,3 @@ const useLogin = () => {
 
   return { login, ...props };
 };
-
-export default useLogin;

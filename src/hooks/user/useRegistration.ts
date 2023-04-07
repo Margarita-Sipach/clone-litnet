@@ -3,24 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { LocalStorage } from "../../components/storage";
 import { Router } from "../../components/router";
-import axios from "axios";
-import { baseUrl } from "../../utils/utils";
 import { createFormDataWithImage } from "../../utils/formUtils";
+import { API } from "../../api/api";
 
-const registerUser = async (data) => {
-  try {
-    const response = await axios.post(`${baseUrl}/auth/registration`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-const useRegistration = () => {
+export const useRegistration = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const { mutate: registration, ...props } = useMutation({
-    mutationFn: (data: any) => registerUser(createFormDataWithImage(data)),
+    mutationFn: (data: any) => API.registerUser(createFormDataWithImage(data)),
     mutationKey: ["registration"],
     onSuccess: ({ token, user }: any) => {
       setUser(user);
@@ -33,5 +23,3 @@ const useRegistration = () => {
   });
   return { registration, ...props };
 };
-
-export default useRegistration;
