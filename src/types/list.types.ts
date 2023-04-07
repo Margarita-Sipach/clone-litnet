@@ -1,4 +1,14 @@
-import { BlogCommentType, BlogType, BookCommentType, BookmarkType, BookType, ChapterType, ContestCommentType, GenreType, RatingType } from "./types";
+import {
+  BlogCommentType,
+  BlogType,
+  BookCommentType,
+  BookmarkType,
+  BookType,
+  ChapterType,
+  ContestCommentType,
+  GenreType,
+  RatingType,
+} from "./types";
 
 export interface BookmarkListType {
   rows: BookmarkType[];
@@ -44,3 +54,8 @@ export interface BlogCommentListType {
   rows: BlogCommentType[];
   count: number;
 }
+
+export type CommentTypeList =
+  | BlogCommentListType
+  | ContestCommentListType
+  | BookCommentListType;

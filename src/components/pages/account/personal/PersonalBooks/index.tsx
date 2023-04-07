@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom";
-import useUserBooks from "../../../../../hooks/account/useUserBooks";
 import { BookType } from "../../../../../types/types";
 import { useUserContext } from "../../../../context/userContext";
 import { BookElement } from "../../../../modules/elements/BookElement";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Spinner } from "../../../../ui/Spinner";
 import { MotionWrapper } from "../../../../ui/wrappers/MotionWrapper";
+import { useFetchUserBooks } from "../../../../../hooks/account/useUserBooks";
 
 export const PersonalBooks = () => {
   const { id } = useParams();
   const { user } = useUserContext();
-  const { books, isLoading } = useUserBooks(id as string);
+  const { books, isLoading } = useFetchUserBooks(id as string);
   return (
     <PageWrapper title="Книги">
       {books ? (

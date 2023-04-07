@@ -4,8 +4,7 @@ import { FileInput } from "../../../ui/inputs/FileInput";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../ui/inputs/Input";
 import { Textarea } from "../../../ui/Textarea";
-import useCreateContest from "../../../../hooks/account/useCreateContest";
-import { notifyError, useFetchGenres } from "../../../../hooks";
+import { useCreateContest } from "../../../../hooks/account/useCreateContest";
 import { Spinner } from "../../../ui/Spinner";
 import { useForm } from "react-hook-form";
 import {
@@ -15,6 +14,8 @@ import {
 } from "../../../../utils/formUtils";
 import { PrimarySelect } from "../../../ui/PrimarySelect";
 import { isBefore } from "date-fns";
+import { useGenres } from "../../../../hooks/genres/useGenres";
+import { notifyError } from "../../../../utils/utils";
 
 export const AccountAddContest = () => {
   const {
@@ -23,7 +24,7 @@ export const AccountAddContest = () => {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
-  const { genres } = useFetchGenres();
+  const { genres } = useGenres();
   const { mutate, isLoading, error, isError } = useCreateContest();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {

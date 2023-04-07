@@ -5,12 +5,13 @@ import { Spinner } from "../../../ui/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { BookListType } from "../../../../types/list.types";
 import { ContestBook } from "../../../modules/contests/ContestBook";
+import { API } from "../../../../api/api";
 
 export const ContestParticipate = () => {
   const { id } = useParams();
   const { user } = useUserContext();
   const { data: books, isLoading } = useQuery<BookListType>({
-    queryFn: () => getBooksByUserId(user!.id.toString()),
+    queryFn: () => API.getBooksByUserId(user!.id.toString()),
     enabled: !!user,
   });
   return user ? (

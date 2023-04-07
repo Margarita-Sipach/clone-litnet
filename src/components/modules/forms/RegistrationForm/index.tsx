@@ -3,7 +3,7 @@ import { Input } from "../../../ui/inputs/Input";
 import { FileInput } from "../../../ui/inputs/FileInput";
 import { Link } from "react-router-dom";
 import { Router } from "../../../router";
-import useRegistration from "../../../../hooks/user/useRegistration";
+import { useRegistration } from "../../../../hooks/user/useRegistration";
 import { Button } from "../../../ui/buttons/Button";
 import { useForm } from "react-hook-form";
 import {
@@ -11,8 +11,8 @@ import {
   ErrorNotifies,
   InputNames,
 } from "../../../../utils/formUtils";
-import { notifyError } from "../../../../hooks";
 import { Spinner } from "../../../ui/Spinner";
+import { notifyError } from "../../../../utils/utils";
 export const RegistrationForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const { registration, isLoading, isError, error } = useRegistration();

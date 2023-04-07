@@ -20,7 +20,7 @@ export const ReadingBlock: React.FC<ReadingBlockProps> = ({
   book,
 }) => {
   const { user } = useUserContext();
-  const { mutate: addBookmark } = usePostBookmark();
+  const { createBookmark } = usePostBookmark();
   const { mutate: deleteBookmark } = useDeleteBookmark();
 
   const userBookmark = useMemo(() => {
@@ -37,7 +37,7 @@ export const ReadingBlock: React.FC<ReadingBlockProps> = ({
   }, [chapters, book]);
 
   const handleAddBookmark = () => {
-    addBookmark({
+    createBookmark({
       userId: user!.id,
       bookId: Number(bookId),
       chapterId: book.chapters![0].id,

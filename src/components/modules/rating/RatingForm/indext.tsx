@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { BookType } from "../../../../types/types";
 import { useRating } from "../../../../hooks/books/useRating";
-import { notifyError } from "../../../../hooks";
 import {
   ErrorNotifies,
   InputNames,
 } from "../../../../utils/formUtils";
 import { useForm } from "react-hook-form";
 import { StarRating } from "../StarRating";
+import { notifyError } from "../../../../utils/utils";
 
 interface RatingFormProps {
   book: BookType;

@@ -1,7 +1,7 @@
-import useGenres from "../../../../hooks/genres/useGenres";
+import { useGenres } from "../../../../hooks/genres/useGenres";
 
 export const ReadOnline = () => {
-  const { data: genres, isLoading } = useGenres();
+  const { genres, isLoading } = useGenres();
   return (
     <div className="flex flex-col gap-y-4">
       <p>

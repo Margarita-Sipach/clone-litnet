@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useUserBlogs from "../../../../../hooks/account/useUserBlogs";
+import { useUserBlogs } from "../../../../../hooks/account/useUserBlogs";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { PersonalBlogElement } from "../../../../modules/elements/PersonalBlogElement";
 import { Spinner } from "../../../../ui/Spinner";

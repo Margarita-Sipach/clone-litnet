@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { notifyError, useFetchBook } from "../../../../../hooks";
-import useCreateChapter from "../../../../../hooks/account/useCreateChapter";
+import { useCreateChapter } from "../../../../../hooks/account/useCreateChapter";
 import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
@@ -13,6 +12,8 @@ import {
   ErrorNotifies,
   InputNames,
 } from "../../../../../utils/formUtils";
+import { useBook } from "../../../../../hooks/books/useBook";
+import { notifyError } from "../../../../../utils/utils";
 
 export const AccountAddChapter = () => {
   const { bookId } = useParams();
@@ -22,7 +23,7 @@ export const AccountAddChapter = () => {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
   const { createChapter, isLoading, isError, error } = useCreateChapter();
-  const { book } = useFetchBook(`${bookId}`);
+  const { book } = useBook(`${bookId}`); //(! useFetchUserBooks)
 
   const handleSubmitForm = (data) => {
     createChapter({

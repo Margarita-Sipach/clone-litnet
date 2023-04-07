@@ -1,18 +1,12 @@
-import React from "react";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { BlogElement } from "../../../modules/elements/BlogElement";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
-import { useQuery } from "@tanstack/react-query";
-import { fetchBlogs } from "../../../../api/data";
 import { createDate } from "../../../../utils/utils";
 import { Spinner } from "../../../ui/Spinner";
+import { useBlogs } from "../../../../hooks/blogs/useBlogs";
 
 export const Blogs = () => {
-  const blogsQuery = useQuery({
-    queryFn: fetchBlogs,
-    queryKey: ["blogs"],
-  });
-  const { data: blogs, isLoading } = blogsQuery;
+  const { blogs, isLoading } = useBlogs();
   return (
     <Wrapper className="flex items-start">
       <PageWrapper title="Литературные блоги" isTop={true}>

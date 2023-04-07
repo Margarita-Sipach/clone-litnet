@@ -11,7 +11,7 @@ export const useCheckingAuth = () => {
     if (oldToken) {
       (async () => {
         try {
-          const { token, user } = await API.checkUser(oldToken);
+          const { token, user } = await API.checkUser({ token: oldToken });
           LocalStorage.setUserToken(token);
           setUser(user);
         } catch {

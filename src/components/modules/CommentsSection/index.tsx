@@ -3,11 +3,11 @@ import { CommentType } from "../../../types/types";
 import { CommentElement } from "../elements/CommentElement";
 import { Button } from "../../ui/buttons/Button";
 import { useUserContext } from "../../context/userContext";
-import useComments from "../../../hooks/comments/useComments";
-import usePostComment, {
+import { useComments } from "../../../hooks/comments/useComments";
+import {
   CommentTypes,
+  usePostComment,
 } from "../../../hooks/comments/usePostComment";
-import { notifyError, notifySuccess } from "../../../hooks";
 import { Spinner } from "../../ui/Spinner";
 import { useForm } from "react-hook-form";
 import {
@@ -17,6 +17,7 @@ import {
   SuccessNotifies,
 } from "../../../utils/formUtils";
 import { ErrorMessage } from "@hookform/error-message";
+import { notifyError, notifySuccess } from "../../../utils/utils";
 
 type CommentSectionProps = {
   comments: CommentType[];
@@ -33,18 +34,18 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
     handleSubmit,
     resetField,
   } = useForm({ mode: "onBlur" });
-  const { data: comments, isLoading: isLoadingComments } = useComments(
+  const { comments, isLoading: isLoadingComments } = useComments(
     type,
     id.toString()
   );
-  const { mutate, isLoading, isError, isSuccess, error, hookStatus } =
+  const { createComment, isLoading, isError, isSuccess, error, hookStatus } =
     usePostComment({
       id: id.toString(),
       commentType: type,
     });
 
   const handleSubmitForm = (data) => {
-    mutate(data);
+    createComment(data);
     resetField(InputNames.TEXT);
     setIsActive(false);
   };

@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
-import { notifyError, useFetchGenres } from "../../../../../hooks";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
@@ -14,6 +13,8 @@ import {
   InputNames,
 } from "../../../../../utils/formUtils";
 import { useCreateBook } from "../../../../../hooks/account/useCreateBook";
+import { useGenres } from "../../../../../hooks/genres/useGenres";
+import { notifyError } from "../../../../../utils/utils";
 
 export const AccountAddBook = () => {
   const {
@@ -22,7 +23,7 @@ export const AccountAddBook = () => {
     handleSubmit,
   } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
-  const { genres } = useFetchGenres();
+  const { genres } = useGenres();
   const { createBook, isLoading, isError, error } = useCreateBook();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {

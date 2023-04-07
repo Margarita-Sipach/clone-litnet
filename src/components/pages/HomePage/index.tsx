@@ -4,14 +4,14 @@ import { Wrapper } from "../../ui/wrappers/Wrapper";
 import { PageWrapper } from "../../ui/wrappers/PageWrapper";
 import { ReadOnline } from "../../modules/home/ReadOnline";
 import { Slider } from "../../modules/home/Slider";
-import { useFetchBooks } from "../../../hooks";
 import { getBooksByComments, getBooksByRating } from "../../../utils/utils";
 import { Sidebar } from "../../modules/Sidebar";
+import { useBooks } from "../../../hooks/books/useBooks";
 
 const BOOK_COUNT = 7;
 
 export const HomePage = () => {
-  const { books } = useFetchBooks();
+  const { books } = useBooks();
 
   const popularBooks = useMemo(
     () => (books ? getBooksByRating(books, BOOK_COUNT) : []),

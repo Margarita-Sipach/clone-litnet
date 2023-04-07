@@ -1,15 +1,15 @@
 import { useMemo } from "react";
-import { useFetchBooks } from "../../../hooks";
 import { getBooksByReadings } from "../../../utils/utils";
 import { SidebarElement } from "../elements/SidebarElement";
 import { ElementWrapper } from "../../ui/wrappers/ElementWrapper";
+import { useBooks } from "../../../hooks/books/useBooks";
 
 export interface SidebarProps {
   className?: string;
 }
 
 export const Sidebar = ({ className }: SidebarProps) => {
-  const { books } = useFetchBooks();
+  const { books } = useBooks();
   const booksByReadings = useMemo(
     () => (books ? getBooksByReadings(books, 5) : []),
     [books]

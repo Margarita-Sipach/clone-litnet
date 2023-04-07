@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
 import { Button } from "../../ui/buttons/Button";
 import { PageWrapper } from "../../ui/wrappers/PageWrapper";
-import useBook from "../../../hooks/books/useBook";
+import { useBook } from "../../../hooks/books/useBook";
 import { useBookmark } from "../../../hooks/reader/useBookmark";
 import { useChapter } from "../../../hooks/reader/useChapter";
 import { usePostBookmark } from "../../../hooks/reader/usePostBookmark";
@@ -16,7 +16,7 @@ import { ReaderHeader } from "../../modules/reader/ReaderHeader";
 export const ReaderPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
-  const { data: book, isLoading: bookLoading } = useBook(id!);
+  const { book, isLoading: bookLoading } = useBook(id!);
   const bookmarkId = useMemo(
     () =>
       user?.bookmarks
@@ -24,14 +24,13 @@ export const ReaderPage = () => {
         : undefined,
     [id, user]
   );
-  const { data: bookmark, isLoading: bookmarkLoading } =
-    useBookmark(bookmarkId);
+  const { bookmark, isLoading: bookmarkLoading } = useBookmark(bookmarkId);
   const [chapterId, setChapterId] = useState(
     bookmark ? bookmark.progress.chapterId : 1
   );
   const [pageNumber, setPageNumber] = useState(0);
   const chapter = useChapter(chapterId);
-  const { mutate } = usePostBookmark();
+  const { createBookmark } = usePostBookmark();
 
   useEffect(() => {
     if (
@@ -72,7 +71,7 @@ export const ReaderPage = () => {
       <PageWrapper isTop={true}>
         <Button
           onClick={() =>
-            mutate({
+            createBookmark({
               userId: user!.id,
               bookId: +id!,
               chapterId,

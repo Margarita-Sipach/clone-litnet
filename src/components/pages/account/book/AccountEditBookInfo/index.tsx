@@ -1,10 +1,5 @@
 import { useParams } from "react-router-dom";
-import {
-  notifyError,
-  useFetchBook,
-  useFetchGenres,
-} from "../../../../../hooks";
-import useEditBook from "../../../../../hooks/account/useEditBook";
+import { useEditBook } from "../../../../../hooks/account/useEditBook";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";
@@ -13,18 +8,20 @@ import { Input } from "../../../../ui/inputs/Input";
 import { PrimarySelect } from "../../../../ui/PrimarySelect";
 import { Textarea } from "../../../../ui/Textarea";
 import { Spinner } from "../../../../ui/Spinner";
-import { processImage } from "../../../../../utils/utils";
+import { notifyError, processImage } from "../../../../../utils/utils";
 import { useForm } from "react-hook-form";
 import {
   ErrorInputMessages,
   ErrorNotifies,
   InputNames,
 } from "../../../../../utils/formUtils";
+import { useBook } from "../../../../../hooks/books/useBook";
+import { useGenres } from "../../../../../hooks/genres/useGenres";
 
 export const AccountEditBookInfo = () => {
   const { bookId } = useParams();
-  const { book } = useFetchBook(`${bookId}`);
-  const { genres } = useFetchGenres();
+  const { book } = useBook(`${bookId}`);
+  const { genres } = useGenres();
   const {
     register,
     formState: { errors },

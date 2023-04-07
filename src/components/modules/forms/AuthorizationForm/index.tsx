@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { notifyError } from "../../../../hooks";
-import useLogin from "../../../../hooks/user/useLogin";
+import { useLogin } from "../../../../hooks/user/useLogin";
 import {
   createFormData,
   ErrorInputMessages,
@@ -13,6 +12,7 @@ import { Router } from "../../../router";
 import { Button } from "../../../ui/buttons/Button";
 import { Input } from "../../../ui/inputs/Input";
 import { Spinner } from "../../../ui/Spinner";
+import { notifyError } from "../../../../utils/utils";
 
 export const AuthorizationForm = () => {
   const {

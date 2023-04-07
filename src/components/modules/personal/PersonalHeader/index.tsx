@@ -4,10 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../../context/userContext";
 import { AccountType } from "../../../../types/types";
-import { useImage } from "../../../../hooks";
 import avatar from "../../../../common/assets/images/avatar.png";
 import { Router } from "../../../router";
-import { getLastPathWord } from "../../../../utils/utils";
+import { getLastPathWord, processImage } from "../../../../utils/utils";
 import { Button } from "../../../ui/buttons/Button";
 import { Modal } from "../../../ui/modals/NewModal";
 import { UserMenu } from "../UserMenu";
@@ -25,7 +24,6 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
   const { id } = useParams();
   const { setSelectedUser, user } = useUserContext();
   const isPageOwner = useMemo(() => `${user?.id}` === id, [user, id]);
-  const image = useImage(account);
 
   useEffect(() => {
     if (account) setSelectedUser(account);
@@ -35,7 +33,7 @@ export const PersonalHeader = ({ account }: PersonalHeaderProps) => {
     <Wrapper className="mb-10 flex h-72 w-full flex-col justify-between rounded-md bg-slate-100 p-4 pt-24 sm:pt-24">
       <div className="flex w-full gap-x-5">
         <img
-          src={image}
+          src={processImage(account.img)}
           alt=""
           className="h-32 w-32 rounded border object-cover"
           onError={(e) => {

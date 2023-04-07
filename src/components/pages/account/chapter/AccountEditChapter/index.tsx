@@ -5,7 +5,7 @@ import { Button } from "../../../../ui/buttons/Button";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { Textarea } from "../../../../ui/Textarea";
-import useChapter from "../../../../../hooks/account/useChapter";
+import { useChapter } from "../../../../../hooks/account/useChapter";
 import { Spinner } from "../../../../ui/Spinner";
 import { useForm } from "react-hook-form";
 import {
@@ -13,8 +13,7 @@ import {
   ErrorNotifies,
   InputNames,
 } from "../../../../../utils/formUtils";
-import { notifyError } from "../../../../../hooks";
-import { getChapterText } from "../../../../../utils/utils";
+import { getChapterText, notifyError } from "../../../../../utils/utils";
 
 export const AccountEditChapter = () => {
   const { chapterId } = useParams();

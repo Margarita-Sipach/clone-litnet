@@ -4,11 +4,11 @@ import { ElementWrapper } from "../../../ui/wrappers/ElementWrapper";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { handleImageError, processImage } from "../../../../utils/utils";
-import useBook from "../../../../hooks/books/useBook";
+import { useBook } from "../../../../hooks/books/useBook";
 import { useUserContext } from "../../../context/userContext";
-import useComments from "../../../../hooks/comments/useComments";
+import { useComments } from "../../../../hooks/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
-import useChapters from "../../../../hooks/account/useChapters";
+import { useChapters } from "../../../../hooks/account/useChapters";
 import { CommentTypes } from "../../../../hooks/comments/usePostComment";
 import { RatingForm } from "../../../modules/rating/RatingForm/indext";
 import { useUserRating } from "../../../../hooks/books/useUserRating";
@@ -24,13 +24,13 @@ export const BookPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<Params>();
   const { chapters } = useChapters(id!);
-  const { data: book, isLoading: bookLoading, refetch } = useBook(id!);
+  const { book, isLoading: bookLoading, refetch } = useBook(id!);
   const {
-    data: rating,
+    rating,
     isSuccess: ratingSuccess,
     refetch: ratingRefetch,
   } = useUserRating(`${user?.id}`, `${id}`);
-  const { data: comments, isLoading: commentsLoading } = useComments(
+  const { comments, isLoading: commentsLoading } = useComments(
     CommentTypes.BOOK,
     id!,
     book

@@ -4,13 +4,12 @@ import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { BookElement } from "../../../modules/elements/BookElement";
 import { Spinner } from "../../../ui/Spinner";
 import { useParams } from "react-router-dom";
-import { BookType } from "../../../../types/types";
 import { useBooks } from "../../../../hooks/books/useBooks";
 
 export const BooksPage = () => {
-  const { data, isLoading } = useBooks();
-  const { rows: books, count } = useMemo(() => (data ? data : {}), [data]);
+  const { books, isLoading } = useBooks();
   const { genreName } = useParams();
+
   const filteredBooks = useMemo(() => {
     if (!books) return [];
     return genreName === "all"

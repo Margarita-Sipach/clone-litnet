@@ -1,5 +1,5 @@
 import React from "react";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import { useParams } from "react-router-dom";
 import { ContestBook } from "../../../modules/contests/ContestBook";
 
@@ -9,7 +9,7 @@ type Params = {
 
 export const ContestBooks = () => {
   const { id } = useParams<Params>();
-  const { data: contest, isLoading } = useContest(id!);
+  const { contest, isLoading } = useContest(id!);
   return (
     <div className="lg:mt-4">
       {contest ? (

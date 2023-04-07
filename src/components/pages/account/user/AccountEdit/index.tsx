@@ -13,7 +13,7 @@ import {
 } from "../../../../../utils/formUtils";
 import { Spinner } from "../../../../ui/Spinner";
 import { useEditUserPage } from "../../../../../hooks/account/useEditUserPage";
-import { notifyError } from "../../../../../hooks";
+import { notifyError } from "../../../../../utils/utils";
 
 export const AccountEdit = () => {
   const { user } = useUserContext();

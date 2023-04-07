@@ -5,9 +5,9 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { CommentSection } from "../../../modules/CommentsSection";
 import { Button } from "../../../ui/buttons/Button";
 import { useParams } from "react-router-dom";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import { createDate } from "../../../../utils/utils";
-import useComments from "../../../../hooks/comments/useComments";
+import { useComments } from "../../../../hooks/comments/useComments";
 import { DetailsElement } from "../../../modules/elements/DetailsElement";
 import { CommentTypes } from "../../../../hooks/comments/usePostComment";
 
@@ -17,8 +17,8 @@ const mockRules = {
 
 export const ContestRules = () => {
   const { id } = useParams();
-  const { data: contest, isLoading: contestLoading } = useContest(id!);
-  const { data: comments, isLoading: commentsLoading } = useComments(
+  const { contest } = useContest(id!);
+  const { comments, isLoading: commentsLoading } = useComments(
     CommentTypes.CONTEST,
     id!,
     contest

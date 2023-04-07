@@ -3,7 +3,7 @@ import { FaTrophy } from "react-icons/fa";
 import { Button } from "../../../ui/buttons/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { handleImageError } from "../../../../utils/utils";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import contestBackground from "../../../../common/assets/images/contestBackground1.png";
 
 type ContestHeaderProps = {
@@ -21,12 +21,12 @@ export const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
   ) {
     back = true;
   }
-  const { data: contest, isLoading } = useContest(id);
+  const { contest, isLoading } = useContest(id);
   return (
     <>
       {contest ? (
         <div
-          className="flex aspect-[3.8/1] w-full items-center bg-cover bg-no-repeat py-6 px-8"
+          className="flex aspect-[3.8/1] w-full items-center bg-cover bg-no-repeat px-8 py-6"
           style={{
             background: `linear-gradient(rgba(51,51,51,.6), rgba(51,51,51,.6)), url(${contestBackground}) center`,
           }}

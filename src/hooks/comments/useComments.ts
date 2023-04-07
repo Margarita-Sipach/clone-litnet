@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { CommentType } from "../../types/types";
 import { CommentTypes } from "./usePostComment";
 import { API } from "../../api/api";
+import { CommentTypeList } from "../../types/list.types";
 
 export const useComments = (
   commentType: CommentTypes.BLOG | CommentTypes.BOOK | CommentTypes.CONTEST,
@@ -12,22 +12,22 @@ export const useComments = (
 
   switch (commentType) {
     case CommentTypes.BOOK:
-      queryFunction = () => API.getBookCommentById(id);
+      queryFunction = () => API.getBookCommentByBookId(id);
       break;
     case CommentTypes.BLOG:
-      queryFunction = () => API.getBlogCommentById(id);
+      queryFunction = () => API.getBlogCommentByBlogId(id);
       break;
     case CommentTypes.CONTEST:
-      queryFunction = () => API.getContestCommentById(id);
+      queryFunction = () => API.getContestCommentByContestId(id);
       break;
     default:
       break;
   }
-  const { data, ...props } = useQuery<CommentType[] | undefined>({
+  const { data, ...props } = useQuery<CommentTypeList | undefined>({
     queryFn: () => queryFunction(),
     queryKey: ["comments", commentType, id],
     [dependentData && "enabled"]: !!dependentData,
   });
 
-  return { comment: data, ...props };
+  return { comments: data?.rows, count: data?.count, ...props };
 };

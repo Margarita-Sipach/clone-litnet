@@ -8,12 +8,12 @@ import { useDeleteBookmark } from "../../../../hooks/reader/useDeleteBookmark";
 
 export const AccountLibrary = () => {
   const { user } = useUserContext();
-  const { data: library, refetch } = useLibrary(user!.id);
+  const { books, refetch } = useLibrary(user!.id);
   const { mutate: deleteBookmark } = useDeleteBookmark();
 
-  return library ? (
+  return books ? (
     <PageWrapper title="Библиотека пользователя">
-      {library.map((book) => (
+      {books.map((book) => (
         <div className="grid grid-cols-[16fr_0.1fr_1fr]">
           <BookElement
             key={book.id}

@@ -14,7 +14,7 @@ import {
 } from "../../../../../utils/formUtils";
 import { useEditPassword } from "../../../../../hooks/account/useEditPassword";
 import { checkUserPassword } from "../../../../../hooks/user/useLogin";
-import { notifyError } from "../../../../../hooks";
+import { notifyError } from "../../../../../utils/utils";
 
 export const AccountEditPassword = () => {
   const { user } = useUserContext();
