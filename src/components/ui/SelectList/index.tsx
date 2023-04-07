@@ -13,6 +13,7 @@ export const SelectList = ({
     <select
       value={defaultOption || title}
       className="w-full border-spacing-1 rounded border border-gray-400 px-3 py-2"
+      onChange={() => {}}
     >
       <option value={title} disabled>
         {title}

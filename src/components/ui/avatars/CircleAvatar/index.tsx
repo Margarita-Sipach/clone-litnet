@@ -6,7 +6,7 @@ interface CircleAvatarProps {
 }
 
 export const CircleUserAvatar = ({ image }: CircleAvatarProps) => {
-  const picture = API.getImage(`/${image}` || "");
+  const picture = image ? API.getImage(`${image}` || "") : avatar;
 
   return (
     <div className=" flex h-10 w-10 justify-center rounded-full bg-slate-500 align-middle">
@@ -14,7 +14,9 @@ export const CircleUserAvatar = ({ image }: CircleAvatarProps) => {
         src={picture}
         alt=""
         className="rounded-full"
-        onError={(e) => ((e.target as HTMLImageElement).src = avatar)}
+        onError={(e) => {
+          (e.target as HTMLImageElement).src = avatar;
+        }}
       />
     </div>
   );

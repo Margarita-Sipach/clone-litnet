@@ -21,8 +21,8 @@ export const ContestBooks = () => {
             </span>
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {contest.books.map((book) => (
-              <ContestBook id={book.id} />
+            {contest.books.map((book, i) => (
+              <ContestBook key={i} id={book.id} />
             ))}
           </div>
         </>

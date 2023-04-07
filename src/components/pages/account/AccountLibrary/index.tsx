@@ -13,8 +13,8 @@ export const AccountLibrary = () => {
 
   return books ? (
     <PageWrapper title="Библиотека пользователя">
-      {books.map((book) => (
-        <div className="grid grid-cols-[16fr_0.1fr_1fr]">
+      {books.map((book, i) => (
+        <div key={i} className="grid grid-cols-[16fr_0.1fr_1fr]">
           <BookElement
             key={book.id}
             author={book.user.name}

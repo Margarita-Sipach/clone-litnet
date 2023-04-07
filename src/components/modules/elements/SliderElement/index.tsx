@@ -21,8 +21,10 @@ export const SliderElement = ({ book }: SliderElementProps) => {
         onError={(e) => ((e.target as HTMLImageElement).src = cover)}
       />
       <div className="mb-1 flex max-w-full gap-x-2 truncate">
-        {book.genres.map((item) => (
-          <div className="rounded-md bg-slate-200 p-1 text-sm">{item.name}</div>
+        {book.genres.map((item, i) => (
+          <div key={i} className="rounded-md bg-slate-200 p-1 text-sm">
+            {item.name}
+          </div>
         ))}
       </div>
       <div className="mb-1 max-w-full truncate text-base font-bold">

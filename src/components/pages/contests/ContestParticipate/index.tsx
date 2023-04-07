@@ -19,8 +19,9 @@ export const ContestParticipate = () => {
       <p className="mb-4">Ваши книги</p>
       {books ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {books.rows.map((book) => (
+          {books.rows.map((book, i) => (
             <ContestBook
+              key={i}
               participate={true}
               id={book.id.toString()}
               contestId={id}
