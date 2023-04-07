@@ -1,17 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { InputNames, createFormDataWithImage } from "../../utils/formUtils";
-import axios from "axios";
-import { baseUrl } from "../../utils/utils";
-
-const updateBook = async (id, data) => {
-  try {
-    const response = await axios.patch(`${baseUrl}/books/${id}`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
 
 const createCustomFormData = (data) => {
   const formData = createFormDataWithImage(data);
@@ -22,15 +12,11 @@ const createCustomFormData = (data) => {
   return formData;
 };
 
-const useEditBook = (id: string) => {
+export const useEditBook = (id: string) => {
   const navigate = useNavigate();
-  const {
-    mutate: editBook,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
-    mutationFn: (data: any) => updateBook(`${id}`, createCustomFormData(data)),
+  const { mutate: editBook, ...props } = useMutation({
+    mutationFn: (data: any) =>
+      API.updateBookById(`${id}`, createCustomFormData(data)),
     mutationKey: ["books", id],
     onSuccess: () => {
       navigate(-1);
@@ -40,7 +26,5 @@ const useEditBook = (id: string) => {
     },
   });
 
-  return { editBook, isError, isLoading, error };
+  return { editBook, ...props };
 };
-
-export default useEditBook;

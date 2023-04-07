@@ -44,10 +44,14 @@ export enum ErrorNotifies {
   CREATE_UPDATE = "Не удалось обновить главу, попробуйте позднее",
   COMMENT_ERROR = "Не удалось оставить комментарий, попробуйте позднее",
   RATING_ERROR = "Не удалось отставить рейтинг",
+  ERROR_ADDING_BOOK_TO_CONTEST = "Не удалось добавить книгу на конкурс",
 }
 
 export enum SuccessNotifies {
   COMMENT_CREATED = "Комментарий успешно создан",
+  ADD_BOOK_TO_CONTEST = "Книга успешно зарегистрирована",
+  ADD_BOOKMARK = "Закладка успешно добавлена",
+  DELETE_BOOKMARK = "Закладка успешно удалена",
 }
 
 export const createFormData = (data: Record<string, string>): any => {

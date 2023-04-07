@@ -1,25 +1,16 @@
-import axios from "axios";
-import { GenreType } from "../../types/types";
-import { baseUrl } from "../../utils/utils";
 import { useQuery } from "@tanstack/react-query";
-
-const fetchGenres = async () => {
-  try {
-    const response = await axios.get(`${baseUrl}/genre`);
-    if (response.status === 200) {
-      const data: GenreType[] = response.data.rows;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-  }
-};
+import { API } from "../../api/api";
+import { GenreListType } from "../../types/list.types";
 
 export const useGenres = () => {
-  return useQuery({
-    queryFn: fetchGenres,
-    queryKey: ["allGenres"],
+  const { data, ...props } = useQuery<GenreListType>({
+    queryKey: ["genres"],
+    queryFn: async (params?: any) => API.getGenres(params),
   });
-};
 
-export default useGenres;
+  return {
+    genres: data?.rows,
+    count: data?.count,
+    ...props,
+  };
+};

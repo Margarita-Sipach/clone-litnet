@@ -1,29 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../components/context/userContext";
 import { Router } from "../../components/router";
-import { baseUrl } from "../../utils/utils";
-
-const updateUserPassword = async (data) => {
-  try {
-    const response = await axios.patch(`${baseUrl}/auth/password`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
 
 export const useEditPassword = () => {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
-  const {
-    mutate: editPassword,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
-    mutationFn: (data: any) => updateUserPassword(data),
+  const { mutate: editPassword, ...props } = useMutation({
+    mutationFn: (data: any) => API.updateUserPassword(data),
     mutationKey: ["user", "edit-password", user?.id],
     onSuccess: ({ user }: any) => {
       setUser(user);
@@ -34,5 +19,5 @@ export const useEditPassword = () => {
     },
   });
 
-  return { editPassword, isError, isLoading, error };
+  return { editPassword, ...props };
 };

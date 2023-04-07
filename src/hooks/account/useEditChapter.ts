@@ -1,26 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { baseUrl } from "../../utils/utils";
-
-const updateChapter = async (id, data) => {
-  try {
-    const response = await axios.patch(`${baseUrl}/chapters/${id}`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
 
 const useEditChapter = (id: string) => {
   const navigate = useNavigate();
-  const {
-    mutate: editChapter,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
-    mutationFn: (data: any) => updateChapter(`${id}`, data),
+  const { mutate: editChapter, ...props } = useMutation({
+    mutationFn: (data: any) => API.updateChapterById(`${id}`, data),
     mutationKey: ["chapters", id],
     onSuccess: () => {
       navigate(-1);
@@ -30,7 +15,7 @@ const useEditChapter = (id: string) => {
     },
   });
 
-  return { editChapter, isError, isLoading, error };
+  return { editChapter, ...props };
 };
 
 export default useEditChapter;

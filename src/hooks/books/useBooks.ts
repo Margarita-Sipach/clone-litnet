@@ -1,25 +1,17 @@
-import axios from "axios";
-import { BookType } from "../../types/types";
-import { baseUrl } from "../../utils/utils";
 import { useQuery } from "@tanstack/react-query";
+import { QueryParams } from "../../types/api.types";
+import { API } from "../../api/api";
+import { BookListType } from "../../types/list.types";
 
-const fetchBooks = async () => {
-  try {
-    const response = await axios.get(`${baseUrl}/books`);
-    if (response.status === 200) {
-      const data: BookType[] = response.data.rows;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-  }
-};
-
-const useBooks = () => {
-  return useQuery({
-    queryFn: fetchBooks,
-    queryKey: ["allBooks"],
+export const useBooks = (params: QueryParams = {}) => {
+  const { data, ...props } = useQuery<BookListType>({
+    queryKey: ["books"],
+    queryFn: async () => API.getBooks(params),
   });
-};
 
-export default useBooks;
+  return {
+    books: data?.rows,
+    count: data?.count,
+    ...props,
+  };
+};

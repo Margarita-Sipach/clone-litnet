@@ -1,29 +1,21 @@
 import { ErrorResponse } from "@remix-run/router";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { baseUrl } from "../../utils/utils";
+import { AxiosError } from "axios";
 import { useUserContext } from "../../components/context/userContext";
-import { notifySuccess } from "..";
-
-const deleteBookmark = async (id: string) => {
-  try {
-    const response = await axios.delete(`${baseUrl}/bookmark/${id}`);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
+import { notifySuccess } from "../../utils/utils";
+import { SuccessNotifies } from "../../utils/formUtils";
 
 export const useDeleteBookmark = () => {
   const { user, setUser } = useUserContext();
   return useMutation({
-    mutationFn: (id: string) => deleteBookmark(id),
+    mutationFn: (id: string) => API.deleteBookmarkById(id),
     mutationKey: ["bookmark"],
     onSuccess: (bookmark) => {
       const bookmarks = user!.bookmarks.filter((b) => b.id !== bookmark.id);
       const newUser = { ...user!, bookmarks };
       setUser(newUser);
-      notifySuccess("Закладка успешно удалена");
+      notifySuccess(SuccessNotifies.DELETE_BOOKMARK);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;

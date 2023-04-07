@@ -3,7 +3,7 @@ import { Input } from "../../../ui/inputs/Input";
 import { FileInput } from "../../../ui/inputs/FileInput";
 import { Link } from "react-router-dom";
 import { Router } from "../../../router";
-import useRegistration from "../../../../hooks/forms/useRegistration";
+import useRegistration from "../../../../hooks/user/useRegistration";
 import { Button } from "../../../ui/buttons/Button";
 import { useForm } from "react-hook-form";
 import {

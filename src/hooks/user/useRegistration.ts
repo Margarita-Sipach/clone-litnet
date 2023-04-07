@@ -19,12 +19,7 @@ const registerUser = async (data) => {
 const useRegistration = () => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
-  const {
-    mutate: registration,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
+  const { mutate: registration, ...props } = useMutation({
     mutationFn: (data: any) => registerUser(createFormDataWithImage(data)),
     mutationKey: ["registration"],
     onSuccess: ({ token, user }: any) => {
@@ -36,7 +31,7 @@ const useRegistration = () => {
       throw error;
     },
   });
-  return { registration, isError, isLoading, error };
+  return { registration, ...props };
 };
 
 export default useRegistration;

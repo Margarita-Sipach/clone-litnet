@@ -1,26 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { baseUrl } from "../../utils/utils";
-import axios from "axios";
+import { API } from "../../api/api";
 
-const addChapter = async (data) => {
-  try {
-    const response = await axios.post(`${baseUrl}/chapters`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-const useCreateChapter = () => {
+export const useCreateChapter = () => {
   const navigate = useNavigate();
-  const {
-    mutate: createChapter,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
-    mutationFn: (data: any) => addChapter(data),
+  const { mutate: createChapter, ...props } = useMutation({
+    mutationFn: (data: any) => API.createChapter(data),
     mutationKey: ["chapter"],
     onSuccess: () => {
       navigate(-1);
@@ -30,7 +15,5 @@ const useCreateChapter = () => {
     },
   });
 
-  return { createChapter, isError, isLoading, error };
+  return { createChapter, ...props };
 };
-
-export default useCreateChapter;

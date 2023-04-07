@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChapterType } from "../../types/types";
-import { getChapter } from "../../api/service";
+import { API } from "../../api/api";
 
-const useChapter = (id: string) => {
+export const useChapter = (id: string) => {
   const { data: chapter } = useQuery<ChapterType>({
     queryKey: ["chapters", id],
-    queryFn: async () => getChapter(id),
+    queryFn: async () => API.getChapterById(id),
   });
 
   return { chapter };
 };
-
-export default useChapter;

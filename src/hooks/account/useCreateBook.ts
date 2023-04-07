@@ -2,18 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { Router } from "../../components/router";
 import { useUserContext } from "../../components/context/userContext";
-import { baseUrl } from "../../utils/utils";
-import axios from "axios";
 import { InputNames, createFormDataWithImage } from "../../utils/formUtils";
-
-const createNewBook = async (data) => {
-  try {
-    const response = await axios.post(`${baseUrl}/books`, data);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
 
 const createCustomFormData = (data) => {
   const formData = createFormDataWithImage(data);
@@ -27,14 +17,9 @@ const createCustomFormData = (data) => {
 export const useCreateBook = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
-  const {
-    mutate: createBook,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
+  const { mutate: createBook, ...props } = useMutation({
     mutationFn: (data: any) =>
-      createNewBook(createCustomFormData({ ...data, userId: `${user?.id}` })),
+      API.addBook(createCustomFormData({ ...data, userId: `${user?.id}` })),
     mutationKey: ["users", user?.id, "books"],
     onSuccess: () => {
       navigate(`${Router.users}/${user?.id}/${Router.books}`);
@@ -44,5 +29,5 @@ export const useCreateBook = () => {
     },
   });
 
-  return { createBook, isError, isLoading, error };
+  return { createBook, ...props };
 };

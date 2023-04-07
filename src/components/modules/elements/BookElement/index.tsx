@@ -46,7 +46,7 @@ export const BookElement = ({
             {categories.map((item) => (
               <div
                 key={item}
-                className="truncate rounded-md bg-gray-100 py-1 px-2 text-xs "
+                className="truncate rounded-md bg-gray-100 px-2 py-1 text-xs "
               >
                 {item}
               </div>

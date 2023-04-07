@@ -1,31 +1,18 @@
-import axios, { AxiosError } from "axios";
-import { baseUrl } from "../../utils/utils";
+import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { ErrorResponse } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../components/context/userContext";
 import { createFormDataWithImage } from "../../utils/formUtils";
 import { Router } from "../../components/router";
+import { API } from "../../api/api";
 
-const createContest = async (formData: FormData) => {
-  try {
-    const response = await axios.post(`${baseUrl}/contest`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-const useCreateContest = () => {
+export const useCreateContest = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (data: any) =>
-      createContest(
+      API.createContest(
         createFormDataWithImage({ ...data, userId: `${user?.id}` })
       ),
     mutationKey: ["createContest"],
@@ -37,5 +24,3 @@ const useCreateContest = () => {
     },
   });
 };
-
-export default useCreateContest;

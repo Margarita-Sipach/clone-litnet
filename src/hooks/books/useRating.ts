@@ -1,30 +1,18 @@
-import axios, { AxiosError } from "axios";
-import { baseUrl } from "../../utils/utils";
+import { AxiosError } from "axios";
 import { useUserContext } from "../../components/context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import { ErrorResponse } from "../../types/types";
-
-const rateBook = async (data) => {
-  try {
-    const response = await axios.post(`${baseUrl}/ratings/`, {
-      ...data,
-    });
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { API } from "../../api/api";
 
 export const useRating = (bookId, refetchBook) => {
   const { user } = useUserContext();
-  const {
-    mutate: createRating,
-    isError,
-    isLoading,
-    error,
-  } = useMutation({
+  const { mutate: createRating, ...props } = useMutation({
     mutationFn: (data: any) =>
-      rateBook({ rating: Number(data.rating), bookId, userId: user?.id }),
+      API.createRating({
+        rating: Number(data.rating),
+        bookId,
+        userId: user?.id,
+      }),
     mutationKey: ["rateBook"],
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
@@ -33,5 +21,5 @@ export const useRating = (bookId, refetchBook) => {
       refetchBook();
     },
   });
-  return { createRating, isError, isLoading, error };
+  return { createRating, ...props };
 };

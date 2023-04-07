@@ -13,7 +13,7 @@ import {
   InputNames,
 } from "../../../../../utils/formUtils";
 import { useEditPassword } from "../../../../../hooks/account/useEditPassword";
-import { checkUserPassword } from "../../../../../hooks/forms/useLogin";
+import { checkUserPassword } from "../../../../../hooks/user/useLogin";
 import { notifyError } from "../../../../../hooks";
 
 export const AccountEditPassword = () => {

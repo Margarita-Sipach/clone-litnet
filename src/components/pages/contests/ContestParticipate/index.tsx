@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useUserContext } from "../../../context/userContext";
 import { Spinner } from "../../../ui/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getBooksByUserId } from "../../../../api/service";
 import { BookListType } from "../../../../types/list.types";
 import { ContestBook } from "../../../modules/contests/ContestBook";
 
