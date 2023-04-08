@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBooksByUserId } from "../../api/service";
 import { BookListType } from "../../types/list.types";
+import { API } from "../../api/api";
 
-const useFetchUserBooks = (userId: string) => {
-  const { data, isError, isLoading, isSuccess } = useQuery<BookListType>({
+export const useFetchUserBooks = (userId: string) => {
+  const { data, ...props } = useQuery<BookListType>({
     queryKey: ["users", userId, "books"],
-    queryFn: async () => getBooksByUserId(userId as string),
-    staleTime: 1000 * 10,
+    queryFn: async () => API.getBooksByUserId(userId as string),
   });
   return {
     books: data?.rows,
     count: data?.count,
-    isSuccess,
-    isError,
-    isLoading,
+    ...props,
   };
 };
-
-export default useFetchUserBooks;

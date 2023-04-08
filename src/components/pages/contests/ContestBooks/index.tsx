@@ -1,5 +1,5 @@
 import React from "react";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import { useParams } from "react-router-dom";
 import { ContestBook } from "../../../modules/contests/ContestBook";
 
@@ -9,7 +9,7 @@ type Params = {
 
 export const ContestBooks = () => {
   const { id } = useParams<Params>();
-  const { data: contest, isLoading } = useContest(id!);
+  const { contest, isLoading } = useContest(id!);
   return (
     <div className="lg:mt-4">
       {contest ? (
@@ -21,8 +21,8 @@ export const ContestBooks = () => {
             </span>
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {contest.books.map((book) => (
-              <ContestBook id={book.id} />
+            {contest.books.map((book, i) => (
+              <ContestBook key={i} id={book.id} />
             ))}
           </div>
         </>

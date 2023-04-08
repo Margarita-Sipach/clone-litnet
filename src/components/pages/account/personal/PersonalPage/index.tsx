@@ -1,7 +1,7 @@
 import { Wrapper } from "../../../../ui/wrappers/Wrapper";
 import { Outlet, useParams } from "react-router-dom";
-import { useFetchUser } from "../../../../../hooks";
 import PersonalHeader from "../../../../modules/personal/PersonalHeader";
+import { useFetchUser } from "../../../../../hooks/user/useFetchUser";
 
 export const PersonalPage = () => {
   const { id } = useParams();

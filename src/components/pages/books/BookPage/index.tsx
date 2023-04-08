@@ -1,45 +1,20 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ElementWrapper } from "../../../ui/wrappers/ElementWrapper";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
-import { PrimarySelect } from "../../../ui/PrimarySelect";
-import { Rating } from "../../../ui/Rating";
-import { Button } from "../../../ui/buttons/Button";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
-import {
-  baseUrl,
-  handleImageError,
-  processImage,
-} from "../../../../utils/utils";
-import useBook from "../../../../hooks/books/useBook";
-import { PrimaryLink } from "../../../ui/PrimaryLink";
-import { Router } from "../../../router";
+import { handleImageError, processImage } from "../../../../utils/utils";
+import { useBook } from "../../../../hooks/books/useBook";
 import { useUserContext } from "../../../context/userContext";
-import { usePostBookmark } from "../../../../hooks/reader/usePostBookmark";
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { ErrorResponse } from "../../../../types/types";
-import { notifyError, notifySuccess } from "../../../../hooks";
-import useComments from "../../../../hooks/comments/useComments";
+import { useComments } from "../../../../hooks/comments/useComments";
 import { CommentSection } from "../../../modules/CommentsSection";
-import useChapters from "../../../../hooks/account/useChapters";
-
-const rateBook = async (
-  userId: string | number,
-  bookId: string,
-  rating: number
-) => {
-  try {
-    const response = await axios.post(`${baseUrl}/ratings/`, {
-      userId,
-      bookId,
-      rating,
-    });
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
+import { useChapters } from "../../../../hooks/account/useChapters";
+import { CommentTypes } from "../../../../hooks/comments/usePostComment";
+import { RatingForm } from "../../../modules/rating/RatingForm/indext";
+import { useUserRating } from "../../../../hooks/books/useUserRating";
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { SelectList } from "../../../ui/SelectList";
+import { ReadingBlock } from "../../../ui/ReadingBlock";
 
 export type Params = {
   id: string;
@@ -48,54 +23,22 @@ export type Params = {
 export const BookPage = () => {
   const { user } = useUserContext();
   const { id } = useParams<Params>();
-  const userBookmark = useMemo(
-    () =>
-      user?.bookmarks
-        ? user?.bookmarks.find((b) => b.bookId === Number(id))
-        : undefined,
-    [id, user?.bookmarks]
-  );
-  const addedBook = useMemo(() => !!userBookmark, [userBookmark]);
-  const { mutate: addBookmark } = usePostBookmark();
   const { chapters } = useChapters(id!);
-  const { data: book, isLoading: bookLoading, refetch } = useBook(id!);
-  const [rating, setRating] = useState<number | string>("");
-  const { data: comments, isLoading: commentsLoading } = useComments(
-    "book",
+  const { book, isLoading: bookLoading, refetch } = useBook(id!);
+  const {
+    rating,
+    isSuccess: ratingSuccess,
+    refetch: ratingRefetch,
+  } = useUserRating(`${user?.id}`, `${id}`);
+  const { comments, isLoading: commentsLoading } = useComments(
+    CommentTypes.BOOK,
     id!,
     book
   );
 
-  const pageId = useMemo(() => {
-    if (!book || !chapters || !book.chapters[0]) return 1;
-    const chapter = chapters?.find((ch) => ch.id === book.chapters[0].id);
-    return chapter && chapter.pages ? chapter.pages[0].id : 1;
-  }, [chapters, book]);
-
-  const handleAddBookmark = () => {
-    addBookmark({
-      userId: user!.id,
-      bookId: Number(id),
-      chapterId: book!.chapters[0].id,
-      pageId: pageId,
-    });
-  };
-
-  const ratingMutation = useMutation({
-    mutationFn: () => rateBook(user!.id, id!, Number(rating)),
-    mutationKey: ["rateBook"],
-    onError: (error: AxiosError<ErrorResponse>) => {
-      throw error;
-    },
-  });
   useEffect(() => {
-    if (ratingMutation.status === "success") {
-      notifySuccess("success");
-      refetch();
-    } else if (ratingMutation.status === "error") {
-      notifyError(ratingMutation.error.response!.data.message);
-    }
-  }, [ratingMutation.status]);
+    ratingRefetch();
+  }, [book, ratingRefetch, user]);
 
   return (
     <Wrapper>
@@ -111,7 +54,20 @@ export const BookPage = () => {
               />
               <div className="flex w-full flex-col justify-between">
                 <div className="relative flex h-full flex-grow flex-col gap-x-10">
-                  <h4 className="mb-1 text-2xl">{book.title}</h4>
+                  <span className="flex items-center">
+                    <h4 className="mb-1 text-2xl">{book.title}</h4>
+                    {ratingSuccess && rating ? (
+                      <BsStarFill
+                        className="cursor-pointer pl-3 text-3xl text-indigo-400"
+                        title={`Вы оценили книгу: ${rating.rating}`}
+                      />
+                    ) : (
+                      <BsStar
+                        className="cursor-pointer pl-3 text-3xl text-indigo-400"
+                        title="Вы ещё не оценили книгу"
+                      />
+                    )}
+                  </span>
                   <Link
                     to={`/users/${book.userId}`}
                     className="mb-4 text-indigo-500"
@@ -122,67 +78,28 @@ export const BookPage = () => {
                     {book.genres.map((item) => (
                       <div
                         key={item.id}
-                        className="max-w-full truncate rounded-md bg-slate-200 p-1 text-sm text-base"
+                        className="max-w-full truncate rounded-md bg-slate-200 p-1 text-base"
                       >
                         {item.name}
                       </div>
                     ))}
                   </div>
-                  <Rating
-                    rating={Number(book.rating)}
-                    statistic={book.ratings.map((item) => item.rating)}
-                  />
-                  {user && (
-                    <div className="mt-2 mb-4 flex items-center gap-2">
-                      <input
-                        value={rating!}
-                        onChange={(e) => setRating(Number(e.target.value))}
-                        type="number"
-                        placeholder="Оценка"
-                        className="w-40 self-start border p-1"
-                      />
-                      <Button size="sm" onClick={() => ratingMutation.mutate()}>
-                        Оценить
-                      </Button>
-                    </div>
-                  )}
+                  <RatingForm book={book} refetchBook={refetch} />
                 </div>
-                {chapters && chapters?.length > 0 ? (
-                  <div className="flex gap-x-5 justify-self-end">
-                    <Button
-                      type="secondary"
-                      className={`w-1/2 ${
-                        addedBook &&
-                        " border-indigo-500 text-indigo-500 hover:cursor-default"
-                      }`}
-                      onClick={() => {
-                        if (addedBook) return;
-                        handleAddBookmark();
-                      }}
-                    >
-                      {addedBook ? "Добавлена" : "Добавить"}
-                    </Button>
-                    <PrimaryLink
-                      path={`${Router.reader}/${id}`}
-                      className="w-1/2 text-center"
-                    >
-                      Читать онлайн
-                    </PrimaryLink>
-                  </div>
-                ) : (
-                  <div className="w-full text-center">
-                    В книге недостаточно глав для чтения
-                  </div>
-                )}
+                <ReadingBlock
+                  chapters={chapters}
+                  bookId={id!}
+                  book={book}
+                ></ReadingBlock>
                 <div className="my-5 h-[1px] w-full bg-slate-300"></div>
-                <PrimarySelect
+                <SelectList
                   title="Содержание"
                   options={
                     chapters
                       ? (chapters?.map((ch) => ch.title) as string[])
                       : []
                   }
-                ></PrimarySelect>
+                />
               </div>
             </ElementWrapper>
             <ElementWrapper className="mb-5">
@@ -196,7 +113,11 @@ export const BookPage = () => {
           <p>error loading book data</p>
         )}
         {comments ? (
-          <CommentSection id={id!} type="book" comments={comments} />
+          <CommentSection
+            id={id!}
+            type={CommentTypes.BOOK}
+            comments={comments}
+          />
         ) : commentsLoading ? (
           <p>loading comments...</p>
         ) : (

@@ -1,26 +1,11 @@
-import axios from "axios";
-import { ContestType } from "../../types/types";
-import { baseUrl } from "../../utils/utils";
 import { useQuery } from "@tanstack/react-query";
+import { API } from "../../api/api";
 
-export const fetchContest = async (contestId: string) => {
-  try {
-    const response = await axios.get(`${baseUrl}/contest/${contestId}`);
-    if (response.status === 200) {
-      const data: ContestType = response.data;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-    throw error;
-  }
-};
-
-const useContest = (contestId: string) => {
-  return useQuery({
-    queryFn: () => fetchContest(contestId),
+export const useContest = (contestId: string) => {
+  const { data, ...props } = useQuery({
+    queryFn: () => API.getContestById(contestId),
     queryKey: [contestId, "contest"],
   });
-};
 
-export default useContest;
+  return { contest: data, ...props };
+};

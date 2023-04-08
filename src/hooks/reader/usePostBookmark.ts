@@ -1,8 +1,10 @@
 import { ErrorResponse } from "@remix-run/router";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { baseUrl } from "../../utils/utils";
+import { AxiosError } from "axios";
 import { useUserContext } from "../../components/context/userContext";
+import { API } from "../../api/api";
+import { notifySuccess } from "../../utils/utils";
+import { SuccessNotifies } from "../../utils/formUtils";
 
 interface BookmarkPostType {
   chapterId: number;
@@ -11,29 +13,23 @@ interface BookmarkPostType {
   userId: number;
 }
 
-const postBookmark = async (bookmark: BookmarkPostType) => {
-  try {
-    const response = await axios.post(`${baseUrl}/bookmark`, { ...bookmark });
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
 export const usePostBookmark = () => {
   const { user, setUser } = useUserContext();
-  return useMutation({
-    mutationFn: (bookmark: BookmarkPostType) => postBookmark(bookmark),
+  const { mutate, ...props } = useMutation({
+    mutationFn: (bookmark: BookmarkPostType) => API.createBookmark(bookmark),
     mutationKey: ["bookmark"],
     onSuccess: (bookmark) => {
-      const bookmarks = user!.bookmarks.map((b) =>
-        b.id === bookmark.id ? bookmark : b
-      );
+      const bookmarks = user!.bookmarks.find((b) => b.id === bookmark.id)
+        ? user!.bookmarks.map((b) => (b.id === bookmark.id ? bookmark : b))
+        : [...user!.bookmarks, bookmark];
       const newUser = { ...user!, bookmarks };
       setUser(newUser);
+      notifySuccess(SuccessNotifies.ADD_BOOKMARK);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       throw error;
     },
   });
+
+  return { createBookmark: mutate, ...props };
 };

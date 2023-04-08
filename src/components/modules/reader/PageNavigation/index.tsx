@@ -15,8 +15,8 @@ export const ReaderContent = ({
   setPageNumber,
 }: ReaderContentProps) => {
   return readingView === "pages" ? (
-    <div>
-      <div className="mb-2 flex flex-row gap-2 break-all">
+    <div className="">
+      <div className="mb-2 flex flex-row gap-2 whitespace-pre break-all">
         {chapter?.pages.map((p) => (
           <Button
             key={p.id}
@@ -31,9 +31,9 @@ export const ReaderContent = ({
           >{`${p.number}`}</Button>
         ))}
       </div>
-      <div className="break-all">{chapter.pages[pageNumber].text}</div>
+      <div className="w-full break-all">{chapter.pages[pageNumber].text}</div>
     </div>
   ) : (
-    <div>{chapter.pages.map((p) => p.text)}</div>
+    <p className="w-full break-all">{chapter.pages.map((p) => p.text)}</p>
   );
 };

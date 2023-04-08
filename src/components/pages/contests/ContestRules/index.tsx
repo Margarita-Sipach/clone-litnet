@@ -5,10 +5,11 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { CommentSection } from "../../../modules/CommentsSection";
 import { Button } from "../../../ui/buttons/Button";
 import { useParams } from "react-router-dom";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import { createDate } from "../../../../utils/utils";
-import useComments from "../../../../hooks/comments/useComments";
+import { useComments } from "../../../../hooks/comments/useComments";
 import { DetailsElement } from "../../../modules/elements/DetailsElement";
+import { CommentTypes } from "../../../../hooks/comments/usePostComment";
 
 const mockRules = {
   genres: ["ЛитРПГ", "РеалРПГ", "Постапокалипсис"],
@@ -16,9 +17,9 @@ const mockRules = {
 
 export const ContestRules = () => {
   const { id } = useParams();
-  const { data: contest, isLoading: contestLoading } = useContest(id!);
-  const { data: comments, isLoading: commentsLoading } = useComments(
-    "contest",
+  const { contest } = useContest(id!);
+  const { comments, isLoading: commentsLoading } = useComments(
+    CommentTypes.CONTEST,
     id!,
     contest
   );
@@ -62,7 +63,7 @@ export const ContestRules = () => {
             </div>
           </div>
 
-          <hr className="mt-4 mb-12" />
+          <hr className="mb-12 mt-4" />
 
           <div>
             <p className="mb-2 text-lg font-medium lg:text-xl">О конкурсе</p>
@@ -94,7 +95,11 @@ export const ContestRules = () => {
 
           <Button className="mb-6">Участвовать в конкурсе</Button>
           {comments ? (
-            <CommentSection comments={comments} type="contest" id={id!} />
+            <CommentSection
+              comments={comments}
+              type={CommentTypes.CONTEST}
+              id={id!}
+            />
           ) : commentsLoading ? (
             <p>loading comments...</p>
           ) : (

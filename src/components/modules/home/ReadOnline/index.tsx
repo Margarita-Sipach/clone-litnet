@@ -1,7 +1,9 @@
-import useGenres from "../../../../hooks/genres/useGenres";
+import { Link } from "react-router-dom";
+import { useGenres } from "../../../../hooks/genres/useGenres";
+import { Router } from "../../../router";
 
 export const ReadOnline = () => {
-  const { data: genres, isLoading } = useGenres();
+  const { genres, isLoading } = useGenres();
   return (
     <div className="flex flex-col gap-y-4">
       <p>
@@ -13,9 +15,13 @@ export const ReadOnline = () => {
       <div>
         {genres ? (
           genres.splice(0, 5).map((genre, i) => (
-            <a className="block text-indigo-400 hover:text-indigo-500" key={i}>
+            <Link
+              to={`${Router.genres}/${genre.name}`}
+              className="block text-indigo-400 hover:text-indigo-500"
+              key={i}
+            >
               {genre.name}
-            </a>
+            </Link>
           ))
         ) : isLoading ? (
           <p>Loading genres...</p>

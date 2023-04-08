@@ -30,7 +30,6 @@ import { AccountAddContest } from "../pages/account/AccountAddContest";
 import { UserContextProvider } from "../context/userContext";
 import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useCheckingAuth } from "../../hooks";
 import { AccountEditChapter } from "../pages/account/chapter/AccountEditChapter";
 import { BooksPage } from "../pages/books/BooksPage";
 import { ToastContainer } from "react-toastify";
@@ -42,6 +41,7 @@ import { AdminRoot } from "../pages/admin/AdminRoot";
 import { AdminBooksPage } from "../pages/admin/AdminBooksPage";
 import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
 import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
+import { useCheckingAuth } from "../../hooks/user/useCheckingAuth";
 
 const client = new QueryClient({
   logger: {

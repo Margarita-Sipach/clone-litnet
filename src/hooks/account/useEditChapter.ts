@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { updateChapter } from "../../api/service";
+import { API } from "../../api/api";
 
 const useEditChapter = (id: string) => {
   const navigate = useNavigate();
-  const { mutate: editChapter, isError, isLoading } = useMutation({
-    mutationFn: (data: any) => updateChapter(`${id}`, data),
+  const { mutate: editChapter, ...props } = useMutation({
+    mutationFn: (data: any) => API.updateChapterById(`${id}`, data),
     mutationKey: ["chapters", id],
     onSuccess: () => {
       navigate(-1);
     },
+    onError: (error) => {
+      throw error;
+    },
   });
 
-  return { editChapter, isError, isLoading };
+  return { editChapter, ...props };
 };
 
 export default useEditChapter;

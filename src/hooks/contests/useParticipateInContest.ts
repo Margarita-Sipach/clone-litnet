@@ -1,28 +1,21 @@
-import axios from "axios";
-import { baseUrl } from "../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "../../types/types";
+import { API } from "../../api/api";
+import { notifyError, notifySuccess } from "../../utils/utils";
+import { ErrorNotifies, SuccessNotifies } from "../../utils/formUtils";
 
-const addBookToContest = async (contestId: string, bookId: string) => {
-  try {
-    const response = await axios.post(
-      `${baseUrl}/contest/${contestId}/addBook/${bookId}`
-    );
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-const useParticipateInContest = (contestId: string, bookId: string) => {
-  return useMutation({
-    mutationFn: () => addBookToContest(contestId, bookId),
+export const useParticipateInContest = (contestId: string, bookId: string) => {
+  const { mutate, ...props } = useMutation({
+    mutationFn: () => API.addBookToContest(bookId, contestId),
     mutationKey: ["addBookToContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
-      throw error;
+      notifyError(ErrorNotifies.ERROR_ADDING_BOOK_TO_CONTEST);
+    },
+    onSuccess: () => {
+      notifySuccess(SuccessNotifies.ADD_BOOK_TO_CONTEST);
     },
   });
-};
 
-export default useParticipateInContest;
+  return { addBook: mutate, ...props };
+};

@@ -30,8 +30,10 @@ const navItems = [
 export const UserMenu = () => {
   return (
     <div className="flex flex-col items-center gap-3">
-      {navItems.map((item) => (
-        <Link to={item.link}>{item.title}</Link>
+      {navItems.map((item, i) => (
+        <Link key={i} to={item.link}>
+          {item.title}
+        </Link>
       ))}
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
-import useContest from "../../../../hooks/contests/useContest";
+import { useContest } from "../../../../hooks/contests/useContest";
 import { ContestType } from "../../../../types/types";
 import { ContestHeader } from "../../../modules/contests/ContestHeader";
 
@@ -16,7 +16,7 @@ export type ContestContextType = {
 
 export const ContestPage = () => {
   const { id } = useParams<Params>();
-  const { data: contest, isLoading } = useContest(id!);
+  const { contest, isLoading } = useContest(id!);
   return (
     <Wrapper>
       <PageWrapper isTop={true}>

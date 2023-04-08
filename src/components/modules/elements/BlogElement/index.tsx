@@ -1,10 +1,9 @@
 import { Avatar } from "../../../ui/avatars/Avatar";
 import { ElementWrapper } from "../../../ui/wrappers/ElementWrapper";
 import React from "react";
-import { fetchUserData } from "../../../../api/data";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { processImage } from "../../../../utils/utils";
+import { useFetchUser } from "../../../../hooks/user/useFetchUser";
 
 type BlogElementProps = {
   id: string;
@@ -21,20 +20,16 @@ export const BlogElement: React.FC<BlogElementProps> = ({
   text,
   createdAt,
 }) => {
-  const userQuery = useQuery({
-    queryFn: () => fetchUserData(userId),
-    queryKey: ["user", userId],
-  });
-  const userData = userQuery.data!;
+  const { account, isSuccess, isLoading } = useFetchUser(userId);
   return (
     <Link to={`${id}`}>
       <ElementWrapper className="relative flex h-40 flex-col gap-y-5 sm:h-44">
-        {userQuery.isSuccess && (
+        {isSuccess && account && (
           <>
             <div className="text-xl">{title}</div>
             <Avatar
-              image={processImage(userData.img)}
-              name={userData.name}
+              image={processImage(account.img)}
+              name={account.name}
               date={createdAt}
             ></Avatar>
             <div className="overflow-hidden overflow-ellipsis text-sm">
@@ -42,7 +37,7 @@ export const BlogElement: React.FC<BlogElementProps> = ({
             </div>
           </>
         )}
-        {userQuery.isLoading && <p>loading user data...</p>}
+        {isLoading && <p>loading user data...</p>}
       </ElementWrapper>
     </Link>
   );

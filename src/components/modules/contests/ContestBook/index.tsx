@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
 import { Button } from "../../../ui/buttons/Button";
-import useBook from "../../../../hooks/books/useBook";
+import { useBook } from "../../../../hooks/books/useBook";
 import { handleImageError, processImage } from "../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../ui/Spinner";
-import useParticipateInContest from "../../../../hooks/contests/useParticipateInContest";
-import { notifyError, notifySuccess } from "../../../../hooks";
+import { useParticipateInContest } from "../../../../hooks/contests/useParticipateInContest";
 
 type ContestBookProps = {
   id: string;
@@ -20,16 +19,12 @@ export const ContestBook: React.FC<ContestBookProps> = ({
   contestId,
   participate = false,
 }) => {
-  const { data: book, isLoading } = useBook(id);
+  const { book, isLoading } = useBook(id);
   const navigate = useNavigate();
-  const mutation = useParticipateInContest(contestId!, id);
-  useEffect(() => {
-    if (mutation.status === "success") {
-      notifySuccess("Книга успешно зарегистрирована на конкурс");
-    } else if (mutation.status === "error") {
-      notifyError(mutation.error.response!.data.message);
-    }
-  }, [mutation.status]);
+  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest(
+    contestId!,
+    id
+  );
 
   return (
     <div className="flex gap-4 border p-4">
@@ -39,7 +34,7 @@ export const ContestBook: React.FC<ContestBookProps> = ({
             className="aspect-[2/3] w-[100px] object-contain"
             src={processImage(book.img)}
             onError={handleImageError}
-            alt="book image"
+            alt="book"
           />
           <div className="flex flex-col">
             <p className="font-medium">{book.title}</p>
@@ -61,14 +56,14 @@ export const ContestBook: React.FC<ContestBookProps> = ({
                   .join(", ")}`}
               </span>
             </p>
-            {participate && mutation.isLoading ? (
+            {participate && isAddBookLoading ? (
               <Spinner className="mt-auto self-start" />
             ) : (
               <Button
                 size="sm"
                 onClick={() => {
                   if (participate) {
-                    mutation.mutate();
+                    addBook();
                   } else {
                     navigate(`/books/${book.id}`);
                   }

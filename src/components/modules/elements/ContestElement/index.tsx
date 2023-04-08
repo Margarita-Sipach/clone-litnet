@@ -37,7 +37,7 @@ export const ContestElement: React.FC<ContestElementProps> = ({
         <img
           className="hidden aspect-[6.5/10] w-full max-w-[175px] rounded-md border object-cover sm:block"
           src={imageUrl || avatar}
-          alt="contest image"
+          alt="contest"
           onError={handleImageError}
         />
         <div className="flex flex-1 flex-col">

@@ -1,28 +1,28 @@
+import { useMemo } from "react";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { BookElement } from "../../../modules/elements/BookElement";
 import { Spinner } from "../../../ui/Spinner";
 import { useParams } from "react-router-dom";
-import { BookType } from "../../../../types/types";
-import useBooks from "../../../../hooks/books/useBooks";
+import { useBooks } from "../../../../hooks/books/useBooks";
 
 export const BooksPage = () => {
-  const { data: books, isLoading } = useBooks();
+  const { books, isLoading } = useBooks();
   const { genreName } = useParams();
-  let filteredBooks: BookType[];
-  if (books) {
-    filteredBooks =
-      genreName === "all"
-        ? books
-        : books.filter((book) => {
-            return book.genres.map((genre) => genre.name).includes(genreName!);
-          });
-  }
+
+  const filteredBooks = useMemo(() => {
+    if (!books) return [];
+    return genreName === "all"
+      ? books
+      : books.filter((book) => {
+          return book.genres.map((genre) => genre.name).includes(genreName!);
+        });
+  }, [books, genreName]);
 
   return (
     <Wrapper>
       <PageWrapper title={genreName} isTop={true}>
-        {books ? (
+        {filteredBooks ? (
           <div className="flex flex-col gap-4">
             {filteredBooks!.length > 0 ? (
               filteredBooks!.map((book) => (
@@ -45,7 +45,7 @@ export const BooksPage = () => {
         ) : isLoading ? (
           <Spinner className="flex w-full items-center justify-center" />
         ) : (
-          <p>error loading books</p>
+          <p>Непредвиденные проблемы</p>
         )}
       </PageWrapper>
     </Wrapper>

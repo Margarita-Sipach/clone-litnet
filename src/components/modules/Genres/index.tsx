@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useGenres from "../../../hooks/genres/useGenres";
+import { useGenres } from "../../../hooks/genres/useGenres";
 import { Spinner } from "../../ui/Spinner";
 
 interface CategoriesProps {
@@ -7,7 +7,7 @@ interface CategoriesProps {
 }
 
 export const Categories = ({ onClick }: CategoriesProps) => {
-  const { data: genres, isLoading } = useGenres();
+  const { genres, isLoading } = useGenres();
   return (
     <div>
       {genres ? (

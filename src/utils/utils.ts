@@ -1,9 +1,8 @@
 import defaultImage from "../common/assets/images/avatar.png";
 import React from "react";
-
 import { BlogType, BookType, ChapterType } from "../types/types";
-
-export const baseUrl = "https://litnet.herokuapp.com";
+import { API } from "../api/api";
+import { toast } from "react-toastify";
 
 export const createDate = (string: string) => {
   const date = new Date(string);
@@ -13,16 +12,16 @@ export const createDate = (string: string) => {
   return `${day}.${month}.${year}`;
 };
 
+export const notifySuccess = (message: string) => toast.success(message);
+
+export const notifyError = (message: string) => toast.error(message);
+
 export const addZero = (number: number) => {
   return number < 10 && number > 0 ? `0${number}` : number;
 };
 
-const getImagePath = (img: string) => {
-  return `${baseUrl}/${img}`;
-};
-
 export const processImage = (image: string | null | undefined) => {
-  return image ? getImagePath(image) : defaultImage;
+  return image ? API.getImage(image) : defaultImage;
 };
 
 export const handleImageError = (

@@ -1,11 +1,13 @@
-import { FetchArguments, QueryParams } from "../types/api.types";
+import axios from "axios";
+import { QueryParams } from "../types/api.types";
 
-enum API_URLS {
+export enum API_URLS {
   BASE_URL = "https://litnet.herokuapp.com",
   BOOKS = "/books",
   BOOKS_BY_ID = "/books/:id",
   BOOKS_BY_USER_ID = "/books/user/:id",
   BOOKS_BY_GENRE_NAME = "books/genre",
+  USER_LIBRARY = "/books/library/:id",
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
   USERS_AVATAR = "/users/avatar/:id",
@@ -20,6 +22,7 @@ enum API_URLS {
   RATING_BY_ID = "/ratings/:id",
   RATING_BY_USER_ID = "/ratings/user/:id",
   RATING_BY_BOOK_ID = "/ratings/book/:id",
+  RATING_BY_BOOK_USER_ID = "/ratings/user/:userId/book/:bookId",
   CONTEST = "/contest",
   CONTEST_BY_ID = "/contest/:id",
   CONTEST_BY_USER_ID = "/contest/user/:id",
@@ -34,7 +37,7 @@ enum API_URLS {
   PAGE_BY_CHAPTER_ID = "/pages/chapter/:id",
   CHAPTER = "/chapters",
   CHAPTER_BY_ID = "/chapters/:id",
-  CHAPTER_BY_BOOK_ID = "/chapters/book/:id",
+  CHAPTERS_BY_BOOK_ID = "/chapters/book/:id",
   BOOKS_COMMENT = "/book-comments",
   BOOKS_COMMENT_BY_ID = "/book-comments/:id",
   BOOKS_COMMENT_BY_USER_ID = "/book-comments/user/:id",
@@ -49,83 +52,64 @@ enum API_URLS {
   BLOG_COMMENT_BY_BLOG_ID = "/blog-comment/blog/:id",
   BLOG = "/blog",
   BLOG_BY_ID = "/blog/:id",
-  BLOG_BY_USER_ID = "/blog/user/:id",
+  BLOGS_BY_USER_ID = "/blog/user/:id",
 }
 
 export class API {
   private static URLS = API_URLS;
-
-  private static fetch = async ({
-    url = "",
-    params = {},
-    options = { method: "GET", body: "", headers: {} },
-  }: FetchArguments) => {
-    const fetchUrl = `${API.URLS.BASE_URL}${url}${API.createQueryString(
-      params
-    )}`;
-    try {
-      return await fetch(fetchUrl, {
-        method: options.method,
-        body: options.body,
-        headers: options.headers,
-      });
-    } catch (error) {
-      return new Promise((resolve, reject) => {
-        reject(error);
-      }) as Promise<Response>;
-    }
-  };
+  private static client = axios.create({
+    baseURL: API_URLS.BASE_URL,
+  });
 
   private static createQueryString = (params: QueryParams) => {
-    const queryString = Object.keys(params)
+    const paramsString = Object.keys(params);
+    if (!paramsString.length) return "";
+    const queryString = paramsString
       .map((key) => `${key}=${params[key]}`)
       .join("&");
-    return queryString.length ? `?${queryString}` : "";
-  };
-
-  private static delete = async (url: string) => {
-    const fetchArguments: FetchArguments = {
-      url,
-      options: { method: "DELETE" },
-    };
-    return await API.fetch(fetchArguments);
-  };
-
-  private static update = async (
-    url: string,
-    body: any = {},
-    headers: any = {}
-  ) => {
-    const fetchArguments: FetchArguments = {
-      url,
-      options: { method: "PATCH", body, headers },
-    };
-    return await API.fetch(fetchArguments);
-  };
-
-  private static post = async (
-    url: string,
-    body: any = {},
-    headers: any = {}
-  ) => {
-    const fetchArguments: FetchArguments = {
-      url,
-      options: { method: "POST", body, headers },
-    };
-    return await API.fetch(fetchArguments);
+    return `?${queryString}`;
   };
 
   private static get = async (url: string, params: QueryParams = {}) => {
-    const fetchArguments: FetchArguments = {
-      url,
-      params,
-      options: { method: "GET" },
-    };
-    return await API.fetch(fetchArguments);
+    try {
+      const response = await API.client.get(
+        `${url}${API.createQueryString(params)}`
+      );
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  private static post = async (url: string, data: any) => {
+    try {
+      const response = await API.client.post(url, data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  private static update = async (url: string, data: any) => {
+    try {
+      const response = await API.client.patch(url, data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  private static delete = async (url: string) => {
+    try {
+      const response = await API.client.delete(url);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
   };
 
   public static getImage = (url: string) => {
-    return API.URLS.BASE_URL + url;
+    return `${API.URLS.BASE_URL}/${url}`;
   };
 
   public static getBooks = async (params: QueryParams = {}) => {
@@ -133,9 +117,9 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static addBook = async (params: QueryParams = {}) => {
+  public static addBook = async (data) => {
     const url = API.URLS.BOOKS;
-    return await API.post(url, params);
+    return await API.post(url, data);
   };
 
   public static getBookById = async (id: string) => {
@@ -161,6 +145,11 @@ export class API {
   public static updateBookById = async (id: string, body: any) => {
     const url = API.URLS.BOOKS_BY_ID.replace(":id", id);
     return await API.update(url, body);
+  };
+
+  public static getUserLibrary = async (id: string) => {
+    const url = API.URLS.USER_LIBRARY.replace(":id", id);
+    return await API.get(url);
   };
 
   public static getUsers = async (params: QueryParams = {}) => {
@@ -195,12 +184,12 @@ export class API {
 
   public static checkUser = async (body: any) => {
     const url = API.URLS.USER_REFRESH_TOKEN;
-    return await API.post(url, body, { "Content-Type": "application/json" });
+    return await API.post(url, body);
   };
 
   public static updateUserPassword = async (body: any) => {
     const url = API.URLS.USER_PASSWORD;
-    return await API.update(url, body, { "Content-Type": "application/json" });
+    return await API.update(url, body);
   };
 
   public static loginUser = async (body: any) => {
@@ -240,6 +229,17 @@ export class API {
 
   public static getRatingById = async (id: string) => {
     const url = API.URLS.RATING_BY_ID.replace(":id", id);
+    return await API.get(url);
+  };
+
+  public static getRatingByBookUserId = async (
+    userId: string,
+    bookId: string
+  ) => {
+    const url = API.URLS.RATING_BY_BOOK_USER_ID.replace(
+      ":userId",
+      userId
+    ).replace(":bookId", bookId);
     return await API.get(url);
   };
 
@@ -391,19 +391,19 @@ export class API {
     return await API.get(url);
   };
 
-  public static getChapterByBookId = async (id: string) => {
-    const url = API.URLS.CHAPTER_BY_BOOK_ID.replace(":id", id);
+  public static getChaptersByBookId = async (id: string) => {
+    const url = API.URLS.CHAPTERS_BY_BOOK_ID.replace(":id", id);
     return await API.get(url);
   };
 
   public static createChapter = async (body: any) => {
     const url = API.URLS.CHAPTER;
-    return await API.post(url, body, { "Content-type": "application/json" });
+    return await API.post(url, body);
   };
 
   public static updateChapterById = async (id: string, body: any) => {
     const url = API.URLS.CHAPTER_BY_ID.replace(":id", id);
-    return await API.update(url, body, { "Content-type": "application/json" });
+    return await API.update(url, body);
   };
 
   public static deleteChapterById = async (id: string) => {
@@ -521,8 +521,8 @@ export class API {
     return await API.get(url);
   };
 
-  public static getBlogByUserId = async (id: string) => {
-    const url = API.URLS.BLOG_BY_USER_ID.replace(":id", id);
+  public static getBlogsByUserId = async (id: string) => {
+    const url = API.URLS.BLOGS_BY_USER_ID.replace(":id", id);
     return await API.get(url);
   };
 

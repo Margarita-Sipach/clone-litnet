@@ -4,10 +4,10 @@ import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { ContestElement } from "../../../modules/elements/ContestElement";
 import { createDate, processImage } from "../../../../utils/utils";
 import { Spinner } from "../../../ui/Spinner";
-import useContests from "../../../../hooks/contests/useContests";
+import { useContests } from "../../../../hooks/contests/useContests";
 
 export const Contests = () => {
-  const { data: contests, isLoading } = useContests();
+  const { contests, isLoading } = useContests();
   return (
     <Wrapper>
       <PageWrapper title="Конкурсы" isTop={true}>

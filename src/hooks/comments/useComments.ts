@@ -1,71 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  BlogCommentType,
-  BookCommentType,
-  CommentType,
-  ContestCommentType,
-} from "../../types/types";
-import axios from "axios";
-import { baseUrl } from "../../utils/utils";
+import { CommentTypes } from "./usePostComment";
+import { API } from "../../api/api";
+import { CommentTypeList } from "../../types/list.types";
 
-const fetchContestComments = async (contestId: string) => {
-  try {
-    const response = await axios.get(
-      `${baseUrl}/contest-comment/contest/${contestId}`
-    );
-    if (response.status === 200) {
-      const data: ContestCommentType[] = response.data.rows;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-    throw error;
-  }
-};
-
-const fetchBlogComments = async (blogId: string) => {
-  try {
-    const response = await axios.get(`${baseUrl}/blog-comment/blog/${blogId}`);
-    if (response.status === 200) {
-      const data: BlogCommentType[] = response.data.rows;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-  }
-};
-
-const fetchBookComments = async (bookId: string) => {
-  try {
-    const response = await axios.get(`${baseUrl}/book-comments/book/${bookId}`);
-    if (response.status === 200) {
-      const data: BookCommentType[] = response.data.rows;
-      return data;
-    }
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-    throw error;
-  }
-};
-
-const useComments = (
-  type: "book" | "blog" | "contest",
+export const useComments = (
+  commentType: CommentTypes.BLOG | CommentTypes.BOOK | CommentTypes.CONTEST,
   id: string,
   dependentData?: any
 ) => {
-  let queryFunction: (id: string) => Promise<any>;
-  if (type === "blog") {
-    queryFunction = fetchBlogComments;
-  } else if (type === "book") {
-    queryFunction = fetchBookComments;
-  } else if (type === "contest") {
-    queryFunction = fetchContestComments;
+  let queryFunction: () => Promise<any>;
+
+  switch (commentType) {
+    case CommentTypes.BOOK:
+      queryFunction = () => API.getBookCommentByBookId(id);
+      break;
+    case CommentTypes.BLOG:
+      queryFunction = () => API.getBlogCommentByBlogId(id);
+      break;
+    case CommentTypes.CONTEST:
+      queryFunction = () => API.getContestCommentByContestId(id);
+      break;
+    default:
+      break;
   }
-  return useQuery<CommentType[] | undefined>({
-    queryFn: () => queryFunction(id),
-    queryKey: ["comments", type, id],
+  const { data, ...props } = useQuery<CommentTypeList | undefined>({
+    queryFn: () => queryFunction(),
+    queryKey: ["comments", commentType, id],
     [dependentData && "enabled"]: !!dependentData,
   });
-};
 
-export default useComments;
+  return { comments: data?.rows, count: data?.count, ...props };
+};

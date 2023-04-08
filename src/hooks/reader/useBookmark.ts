@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { BookmarkType } from "../../types/types";
-import { baseUrl } from "../../utils/utils";
+import { API } from "../../api/api";
 
 const defaultBookmark = {
   progress: {
@@ -14,19 +12,18 @@ const defaultBookmark = {
 const fetchBookmark = async (id: number | undefined) => {
   if (!id) return defaultBookmark;
   try {
-    const response = await axios.get(`${baseUrl}/bookmark/${id}`);
-    if (response.status === 200) {
-      const data: Required<BookmarkType> = response.data;
-      return data;
-    }
+    const response = await API.getBookmarkById(`${id}`);
+    return response;
   } catch (error: any) {
     console.log(`Error: ${error.message}`);
   }
 };
 
 export const useBookmark = (id: number | undefined) => {
-  return useQuery({
+  const { data, ...props } = useQuery({
     queryFn: () => fetchBookmark(id),
     queryKey: ["bookmark"],
   });
+
+  return { bookmark: data, ...props };
 };

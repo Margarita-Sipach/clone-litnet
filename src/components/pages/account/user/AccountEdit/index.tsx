@@ -1,58 +1,85 @@
-import { ChangeEvent, useState } from "react";
-import { useEditUserPage } from "../../../../../hooks";
+import { ChangeEvent, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useUserContext } from "../../../../context/userContext";
 import { Button } from "../../../../ui/buttons/Button";
 import { FileInput } from "../../../../ui/inputs/FileInput";
 import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Input } from "../../../../ui/inputs/Input";
 import { Textarea } from "../../../../ui/Textarea";
+import {
+  ErrorInputMessages,
+  ErrorNotifies,
+  InputNames,
+} from "../../../../../utils/formUtils";
+import { Spinner } from "../../../../ui/Spinner";
+import { useEditUserPage } from "../../../../../hooks/account/useEditUserPage";
+import { notifyError } from "../../../../../utils/utils";
 
 export const AccountEdit = () => {
   const { user } = useUserContext();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
   const [readingView, setReadingView] = useState(user?.readingView || "");
-  const [autobiography, setAutobiography] = useState(user?.autobiography || "");
-  const { edit, isError } = useEditUserPage();
+  const { edit, isError, isLoading, error } = useEditUserPage();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
     if (files) setFile(files[0]);
   };
 
-  const createFormData = () => {
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("name", name);
-    formData.append("readingView", readingView);
-    formData.append("autobiography", autobiography);
-    if (file) formData.append("img", file);
-    return formData;
+  const handleSubmitForm = async (data) => {
+    edit({ ...data, img: file, readingView });
   };
 
-  const handleSubmitForm = async () => {
-    edit(createFormData());
-  };
+  useEffect(() => {
+    if (isError && error) {
+      notifyError(ErrorNotifies.UNEXPECTED_ERROR);
+    }
+  }, [error, isError]);
 
   return (
     <PageWrapper title="Редактирование профиля">
       <FileInput className="h-32 w-32" onChange={handleSetFile}></FileInput>
       <Input
         placeholder="Логин"
-        value={name}
-        onChange={(e) => setName(e?.target.value || "")}
+        value={user?.name}
+        properties={{
+          ...register(InputNames.NAME, {
+            required: ErrorInputMessages.REQUIRED,
+          }),
+        }}
+        name={InputNames.NAME}
+        errors={errors}
       />
       <Input
         invalid={isError}
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e?.target.value || "")}
+        value={user?.email}
+        properties={{
+          ...register(InputNames.EMAIL, {
+            required: ErrorInputMessages.REQUIRED,
+          }),
+        }}
+        name={InputNames.EMAIL}
+        errors={errors}
       />
       <Textarea
         placeholder="О себе"
-        value={autobiography}
-        onChange={(e) => setAutobiography(e?.target.value || "")}
+        value={user?.autobiography}
+        properties={{
+          ...register(InputNames.AUTOBIOGRAPHY, {
+            maxLength: {
+              value: 1000,
+              message: ErrorInputMessages.TEXT_LENGTH,
+            },
+          }),
+        }}
+        name={InputNames.AUTOBIOGRAPHY}
+        errors={errors}
       />
       <div className="flex flex-col">
         <p className="mb-2 text-lg">Вид чтения: разбить на страницы?</p>
@@ -78,7 +105,11 @@ export const AccountEdit = () => {
           <label htmlFor="no">Нет</label>
         </div>
       </div>
-      <Button onClick={handleSubmitForm}>Сохранить</Button>
+      {isLoading ? (
+        <Spinner className="flex w-full justify-center" />
+      ) : (
+        <Button onClick={handleSubmit(handleSubmitForm)}>Сохранить</Button>
+      )}
     </PageWrapper>
   );
 };
