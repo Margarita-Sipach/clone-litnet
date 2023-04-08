@@ -5,6 +5,7 @@ import { BookElementType } from "../../../../types/types";
 import { Button } from "../../../ui/buttons/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { handleImageError, processImage } from "../../../../utils/utils";
+import { Router } from "../../../router";
 
 type BookElementProps = {
   onClick?: () => void;
@@ -22,22 +23,27 @@ export const BookElement = ({
   annotation,
   isUserBook = false,
 }: BookElementProps) => {
+  // ывывфывфыв;
   const navigate = useNavigate();
   return (
-    <Link to={`/books/${id}`}>
+    <div>
       <ElementWrapper className="flex flex-col gap-6 sm:h-60 sm:flex-row lg:h-72">
-        <img
-          src={processImage(img)}
-          alt=""
-          onError={handleImageError}
-          className="aspect-square h-full rounded border object-cover sm:mr-5"
-        />
+        <Link to={`${Router.absoluteBooks}/${id}`}>
+          <img
+            src={processImage(img)}
+            alt=""
+            onError={handleImageError}
+            className="aspect-square h-full rounded border object-cover sm:mr-5"
+          />
+        </Link>
         <div className="flex h-full w-full flex-col items-start justify-center self-center sm:w-auto">
-          <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
-            {title}
-          </p>
+          <Link to={`${Router.absoluteBooks}/${id}`}>
+            <p className="pb-2 text-lg font-bold leading-5 text-gray-700 lg:text-xl">
+              {title}
+            </p>
+          </Link>
           <Link
-            to={`/users/${authorId}`}
+            to={`${Router.users}/${authorId}`}
             className="mb-2 text-sm font-medium text-blue-800"
           >
             {author}
@@ -71,6 +77,6 @@ export const BookElement = ({
           )}
         </div>
       </ElementWrapper>
-    </Link>
+    </div>
   );
 };
