@@ -1,5 +1,4 @@
 import {
-  BookType,
   ChapterType,
   DetailedBookType,
 } from "../../../../types/types";
