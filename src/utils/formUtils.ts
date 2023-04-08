@@ -45,11 +45,13 @@ export enum ErrorNotifies {
   COMMENT_ERROR = "Не удалось оставить комментарий, попробуйте позднее",
   RATING_ERROR = "Не удалось отставить рейтинг",
   ERROR_ADDING_BOOK_TO_CONTEST = "Не удалось добавить книгу на конкурс",
+  ERROR_DROP_BOOK_OUT_CONTEST = "Не удалось снять книгу с конкурса",
 }
 
 export enum SuccessNotifies {
   COMMENT_CREATED = "Комментарий успешно создан",
   ADD_BOOK_TO_CONTEST = "Книга успешно зарегистрирована",
+  DROP_BOOK_OUT_CONTEST = "Книга успешно снята с конкурса",
   ADD_BOOKMARK = "Закладка успешно добавлена",
   DELETE_BOOKMARK = "Закладка успешно удалена",
 }

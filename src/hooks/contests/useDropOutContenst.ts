@@ -5,17 +5,17 @@ import { API } from "../../api/api";
 import { notifyError, notifySuccess } from "../../utils/utils";
 import { ErrorNotifies, SuccessNotifies } from "../../utils/formUtils";
 
-export const useParticipateInContest = (contestId: string, bookId: string) => {
+export const useDropOutContest = (contestId: string, bookId: string) => {
   const { mutate, ...props } = useMutation({
-    mutationFn: () => API.addBookToContest(bookId, contestId),
-    mutationKey: ["addBookToContest"],
+    mutationFn: () => API.removeBookFromContest(bookId, contestId),
+    mutationKey: ["dropBookToContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
-      notifyError(ErrorNotifies.ERROR_ADDING_BOOK_TO_CONTEST);
+      notifyError(ErrorNotifies.ERROR_DROP_BOOK_OUT_CONTEST);
     },
     onSuccess: () => {
-      notifySuccess(SuccessNotifies.ADD_BOOK_TO_CONTEST);
+      notifySuccess(SuccessNotifies.DROP_BOOK_OUT_CONTEST);
     },
   });
 
-  return { addBook: mutate, ...props };
+  return { dropBook: mutate, ...props };
 };

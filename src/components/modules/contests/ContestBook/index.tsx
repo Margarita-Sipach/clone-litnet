@@ -1,18 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoReload } from "react-icons/io5";
 import { Button } from "../../../ui/buttons/Button";
 import { useBook } from "../../../../hooks/books/useBook";
-import {
-  handleImageError,
-  notifyError,
-  notifySuccess,
-  processImage,
-} from "../../../../utils/utils";
+import { handleImageError, processImage } from "../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../ui/Spinner";
 import { useParticipateInContest } from "../../../../hooks/contests/useParticipateInContest";
-import { ErrorNotifies, SuccessNotifies } from "../../../../utils/formUtils";
 
 type ContestBookProps = {
   id: string;
@@ -27,20 +21,10 @@ export const ContestBook: React.FC<ContestBookProps> = ({
 }) => {
   const { book, isLoading } = useBook(id);
   const navigate = useNavigate();
-  const {
-    addBook,
-    isLoading: isAddBookLoading,
-    isError,
-    isSuccess,
-  } = useParticipateInContest(contestId!, id);
-
-  useEffect(() => {
-    if (isSuccess) {
-      notifySuccess(SuccessNotifies.ADD_BOOK_TO_CONTEST);
-    } else if (isError) {
-      notifyError(ErrorNotifies.ERROR_ADDING_BOOK_TO_CONTEST);
-    }
-  }, [isError, isSuccess]);
+  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest(
+    contestId!,
+    id
+  );
 
   return (
     <div className="flex gap-4 border p-4">
