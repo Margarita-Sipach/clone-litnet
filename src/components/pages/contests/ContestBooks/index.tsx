@@ -18,7 +18,10 @@ export const ContestBooks = () => {
           <p className="mb-6 font-medium">
             Работы участников
             <span className="ml-4 rounded-md bg-gray-700 px-3 py-1 text-sm font-medium text-white">
-              {contest.contestApplications.length}
+              {
+                contest.contestApplications.filter((a) => a.status === true)
+                  .length
+              }
             </span>
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

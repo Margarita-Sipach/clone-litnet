@@ -60,7 +60,10 @@ export const ContestBook: React.FC<ContestBookProps> = ({
                 size="sm"
                 onClick={() => {
                   if (participate) {
-                    addBook({ contestId: `${contestId}`, bookId: id });
+                    addBook({
+                      contestId: Number(contestId),
+                      bookId: Number(id),
+                    });
                   } else {
                     navigate(`/books/${book.id}`);
                   }

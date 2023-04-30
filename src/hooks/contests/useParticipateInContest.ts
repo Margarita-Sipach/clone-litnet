@@ -7,7 +7,7 @@ import { ErrorNotifies, SuccessNotifies } from "../../utils/formUtils";
 
 export const useParticipateInContest = () => {
   const { mutate, ...props } = useMutation({
-    mutationFn: (data: { contestId: string; bookId: string }) =>
+    mutationFn: (data: { contestId: number; bookId: number }) =>
       API.addBookToContest(data),
     mutationKey: ["addBookToContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
