@@ -53,12 +53,34 @@ export interface ContestType {
   countCharacters: number;
   userId: string;
   createdAt: string;
-  books: ContestBook[];
+  books: ApplicationType[];
+  contestWinner: WinnerType | null;
+}
+
+export interface WinnerType {
+  id: string;
+  contestId: string;
+  bookId: string;
+}
+
+export interface ApplicationType {
+  id: string;
+  status: boolean;
+  contestId: string;
+  bookId: string;
+  book: BookType;
 }
 
 export interface ContestBook {
   id: string;
   bookId: string;
+}
+
+export interface ModerationType {
+  id: string;
+  contestId: string;
+  userId: string;
+  user: UserType;
 }
 
 export interface GenreType {

@@ -10,10 +10,7 @@ import { createDate } from "../../../../utils/utils";
 import { useComments } from "../../../../hooks/comments/useComments";
 import { DetailsElement } from "../../../modules/elements/DetailsElement";
 import { CommentTypes } from "../../../../hooks/comments/usePostComment";
-
-const mockRules = {
-  genres: ["ЛитРПГ", "РеалРПГ", "Постапокалипсис"],
-};
+import { GenreType } from "../../../../types/types";
 
 export const ContestRules = () => {
   const { id } = useParams();
@@ -56,7 +53,9 @@ export const ContestRules = () => {
                 />
                 <DetailsElement
                   title="Жанры"
-                  description={mockRules.genres.join(", ")}
+                  description={contest.genres
+                    .map((g: GenreType) => g.name)
+                    .join(", ")}
                   icon={TiSortAlphabetically}
                 />
               </div>
@@ -84,7 +83,7 @@ export const ContestRules = () => {
               <li>
                 Зайдите на страницу конкурса и добавьте свое произведение, нажав
                 на кнопку “Участвовать в конкурсе”. Напоминаем, что один автор
-                может подать на конкурс не больше двух произведений.
+                может подать на конкурс не больше одного произведения.
               </li>
               <li>
                 Ожидайте прохождения модерации. После этого ваша книга появится
@@ -94,6 +93,7 @@ export const ContestRules = () => {
           </div>
 
           <Button className="mb-6">Участвовать в конкурсе</Button>
+
           {comments ? (
             <CommentSection
               comments={comments}

@@ -1,4 +1,5 @@
 import {
+  ApplicationType,
   BlogCommentType,
   BlogType,
   BookCommentType,
@@ -7,7 +8,9 @@ import {
   ChapterType,
   ContestCommentType,
   GenreType,
+  ModerationType,
   RatingType,
+  UserType,
 } from "./types";
 
 export interface BookmarkListType {
@@ -15,8 +18,18 @@ export interface BookmarkListType {
   count: number;
 }
 
+export interface UserListType {
+  rows: UserType[];
+  count: number;
+}
+
 export interface BookListType {
   rows: BookType[];
+  count: number;
+}
+
+export interface ApplicationListType {
+  rows: ApplicationType[];
   count: number;
 }
 
@@ -47,6 +60,11 @@ export interface BookCommentListType {
 
 export interface ContestCommentListType {
   rows: ContestCommentType[];
+  count: number;
+}
+
+export interface ModerationListType {
+  rows: ModerationType[];
   count: number;
 }
 

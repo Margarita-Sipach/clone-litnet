@@ -23,7 +23,7 @@ export const Contests = () => {
                 startDate={createDate(contest.createdAt)}
                 endDate={createDate(contest.date)}
                 resultsDate={createDate(contest.date)}
-                booksAmount={contest.books.length}
+                booksAmount={contest.contestApplications.length}
               />
             ))}
           </div>

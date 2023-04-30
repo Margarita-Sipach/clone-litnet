@@ -6,6 +6,8 @@ type ButtonProps = {
   onClick?: (e: FormEvent<HTMLButtonElement>) => void;
   className?: string;
   size?: "sm" | "md";
+  disabled?: boolean;
+  title?: string;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -13,6 +15,8 @@ export const Button: React.FC<ButtonProps> = ({
   type = "primary",
   size = "md",
   onClick,
+  disabled = false,
+  title = "",
   className = "",
 }) => {
   const conditionalStyles =
@@ -29,10 +33,12 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`rounded-md border-2 border-indigo-400 py-1 px-1 text-sm font-medium hover:border-indigo-500 sm:px-3 sm:${
+      className={`rounded-md border-2 border-indigo-400 px-1 py-1 text-sm font-medium hover:border-indigo-500 disabled:border-indigo-800 disabled:bg-indigo-700 sm:px-3 sm:${
         size === "md" && "text-base"
       } ${conditionalStyles} ${className}`}
       onClick={handleClick}
+      disabled={disabled}
+      title={title}
     >
       {children}
     </button>

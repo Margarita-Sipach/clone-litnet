@@ -5,18 +5,18 @@ import { API } from "../../api/api";
 import { notifyError, notifySuccess } from "../../utils/utils";
 import { ErrorNotifies, SuccessNotifies } from "../../utils/formUtils";
 
-export const useParticipateInContest = () => {
+export const useContestWinner = () => {
   const { mutate, ...props } = useMutation({
-    mutationFn: (data: { contestId: string; bookId: string }) =>
-      API.addBookToContest(data),
-    mutationKey: ["addBookToContest"],
+    mutationFn: (data: { contestId: number; bookId: number }) =>
+      API.addWinner(data),
+    mutationKey: ["addWinner"],
     onError: (error: AxiosError<ErrorResponse>) => {
-      notifyError(ErrorNotifies.ERROR_ADDING_BOOK_TO_CONTEST);
+      notifyError(ErrorNotifies.ERROR_ADDING_WINNER_TO_CONTEST);
     },
     onSuccess: () => {
-      notifySuccess(SuccessNotifies.ADD_BOOK_TO_CONTEST);
+      notifySuccess(SuccessNotifies.ADD_WINNER);
     },
   });
 
-  return { addBook: mutate, ...props };
+  return { addWinner: mutate, ...props };
 };

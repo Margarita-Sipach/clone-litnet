@@ -21,10 +21,7 @@ export const ContestBook: React.FC<ContestBookProps> = ({
 }) => {
   const { book, isLoading } = useBook(id);
   const navigate = useNavigate();
-  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest(
-    contestId!,
-    id
-  );
+  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest();
 
   return (
     <div className="flex gap-4 border p-4">
@@ -63,7 +60,7 @@ export const ContestBook: React.FC<ContestBookProps> = ({
                 size="sm"
                 onClick={() => {
                   if (participate) {
-                    addBook();
+                    addBook({ contestId: `${contestId}`, bookId: id });
                   } else {
                     navigate(`/books/${book.id}`);
                   }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { QueryParams } from "../types/api.types";
+import { LocalStorage } from "../components/storage";
 
 export enum API_URLS {
   BASE_URL = "https://litnet.herokuapp.com",
@@ -26,12 +27,17 @@ export enum API_URLS {
   CONTEST = "/contest",
   CONTEST_BY_ID = "/contest/:id",
   CONTEST_BY_USER_ID = "/contest/user/:id",
-  CONTEST_ADD_BOOK = "/contest/:contestId/addBook/:bookId",
+  CONTEST_APPLICATION = "/contest-application",
+  CONTEST_APPLICATIONS_BY_CONTEST_ID = "/contest-application/contest/:contestId",
   CONTEST_REMOVE_BOOK = "/contest/:contestId/removeBook/:bookId",
+  CONTEST_WINNER = "/contest-winner",
   CONTEST_COMMENT = "/contest-comment",
   CONTEST_COMMENT_BY_ID = "/contest-comment/:id",
   CONTEST_COMMENT_BY_USER_ID = "/contest-comment/user/:id",
   CONTEST_COMMENT_BY_CONTEST_ID = "/contest-comment/contest/:id",
+  MODERATORS = "/contest-moderation",
+  MODERATOR = "/contest-moderation/:id",
+  MODERATORS_BY_CONTEST = "/contest-moderation/contest/:contestId",
   PAGE = "/pages",
   PAGE_BY_ID = "/pages/:id",
   PAGE_BY_CHAPTER_ID = "/pages/chapter/:id",
@@ -59,6 +65,9 @@ export class API {
   private static URLS = API_URLS;
   private static client = axios.create({
     baseURL: API_URLS.BASE_URL,
+    headers: {
+      Authorization: `Bearer ${LocalStorage.getUserToken()}`,
+    },
   });
 
   private static createQueryString = (params: QueryParams) => {
@@ -333,15 +342,29 @@ export class API {
     return await API.delete(url);
   };
 
-  public static addBookToContest = async (
-    bookId: string,
-    contestId: string,
-    body: any = {}
+  public static addWinner = async (body: any) => {
+    const url = API.URLS.CONTEST_WINNER;
+    return await API.post(url, body);
+  };
+
+  public static getApplications = async (params: QueryParams = {}) => {
+    const url = API.URLS.CONTEST_APPLICATION;
+    return await API.get(url, params);
+  };
+
+  public static getApplicationsByContestId = async (
+    id: string,
+    params: QueryParams = {}
   ) => {
-    const url = API.URLS.CONTEST_ADD_BOOK.replace(":bookId", bookId).replace(
+    const url = API.URLS.CONTEST_APPLICATIONS_BY_CONTEST_ID.replace(
       ":contestId",
-      contestId
+      id
     );
+    return await API.get(url, params);
+  };
+
+  public static addBookToContest = async (body: any = {}) => {
+    const url = API.URLS.CONTEST_APPLICATION;
     return await API.post(url, body);
   };
 
@@ -353,6 +376,24 @@ export class API {
       ":contestId",
       contestId
     );
+    return await API.delete(url);
+  };
+
+  public static getModerators = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
+    const url = API.URLS.MODERATORS_BY_CONTEST.replace(":contestId", id);
+    return await API.get(url, params);
+  };
+
+  public static addModerator = async (body: any) => {
+    const url = API.URLS.MODERATORS;
+    return await API.post(url, body);
+  };
+
+  public static removeModerator = async (id: string) => {
+    const url = API.URLS.MODERATOR.replace(":id", id);
     return await API.delete(url);
   };
 
