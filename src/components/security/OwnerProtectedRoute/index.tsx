@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import { Navigate, useParams } from "react-router-dom";
-import { useContest } from "../../hooks/contests/useContest";
-import { Spinner } from "../ui/Spinner";
-import { Router } from "../router";
+import { useContest } from "../../../hooks/contests/useContest";
+import { Spinner } from "../../ui/Spinner";
+import { Router } from "../../router";
 
 export interface OwnerProtectedRouteProps {
   children: JSX.Element;

@@ -28,7 +28,6 @@ import { AccountAddBook } from "../pages/account/book/AccountAddBook";
 import { AccountEditBookInfo } from "../pages/account/book/AccountEditBookInfo";
 import { AccountAddContest } from "../pages/account/AccountAddContest";
 import { UserContextProvider } from "../context/userContext";
-import { UserProtectedRoute } from "../security/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AccountEditChapter } from "../pages/account/chapter/AccountEditChapter";
 import { BooksPage } from "../pages/books/BooksPage";
@@ -43,8 +42,10 @@ import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
 import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
 import { useCheckingAuth } from "../../hooks/user/useCheckingAuth";
 import { ContestAdminPage } from "../pages/contests/ContestAdminPage";
-import { OwnerProtectedRoute } from "../security/moderationProtectedRoute";
 import { ContestModerationPage } from "../pages/contests/ContestModerationPage";
+import { UserProtectedRoute } from "../security/UserProtectedRoute";
+import { OwnerProtectedRoute } from "../security/OwnerProtectedRoute";
+import { ModerationProtectedRoute } from "../security/ModerationProtectedRoute";
 
 const client = new QueryClient({
   logger: {
@@ -142,9 +143,9 @@ const router = createBrowserRouter([
           {
             path: "moderation",
             element: (
-              // <ModerationProtectedRoute>
+              <ModerationProtectedRoute>
                 <ContestModerationPage />
-              // </ModerationProtectedRoute>
+              </ModerationProtectedRoute>
             ),
           },
         ],
