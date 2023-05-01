@@ -12,6 +12,7 @@ import {
   ModerationType,
   RatingType,
   UserType,
+  WinnerType,
 } from "./types";
 
 export interface BookmarkListType {
@@ -31,6 +32,11 @@ export interface BookListType {
 
 export interface ContestListType {
   rows: ContestType[];
+  count: number;
+}
+
+export interface WinnerListType {
+  rows: WinnerType[];
   count: number;
 }
 

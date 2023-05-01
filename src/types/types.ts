@@ -64,6 +64,9 @@ export interface WinnerType {
   id: string;
   contestId: string;
   bookId: string;
+  contest: {
+    title: string;
+  };
 }
 
 export interface ApplicationType {

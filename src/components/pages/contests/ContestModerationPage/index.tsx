@@ -1,7 +1,6 @@
 import React from "react";
 import { useContest } from "../../../../hooks/contests/useContest";
 import { useParams } from "react-router-dom";
-import { ContestBook } from "../../../modules/contests/ContestBook";
 import { ApplicationType } from "../../../../types/types";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { useUserContext } from "../../../context/userContext";
