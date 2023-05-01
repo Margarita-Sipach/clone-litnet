@@ -42,8 +42,9 @@ import { AdminBooksPage } from "../pages/admin/AdminBooksPage";
 import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
 import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
 import { useCheckingAuth } from "../../hooks/user/useCheckingAuth";
-import { ContestModeration } from "../pages/contests/ContestModeration";
-import { ModerationProtectedRoute } from "../security/moderationProtectedRoute";
+import { ContestAdminPage } from "../pages/contests/ContestAdminPage";
+import { OwnerProtectedRoute } from "../security/moderationProtectedRoute";
+import { ContestModerationPage } from "../pages/contests/ContestModerationPage";
 
 const client = new QueryClient({
   logger: {
@@ -131,11 +132,19 @@ const router = createBrowserRouter([
             element: <ContestParticipate />,
           },
           {
+            path: "admin",
+            element: (
+              <OwnerProtectedRoute>
+                <ContestAdminPage />
+              </OwnerProtectedRoute>
+            ),
+          },
+          {
             path: "moderation",
             element: (
-              <ModerationProtectedRoute>
-                <ContestModeration />
-              </ModerationProtectedRoute>
+              // <ModerationProtectedRoute>
+                <ContestModerationPage />
+              // </ModerationProtectedRoute>
             ),
           },
         ],

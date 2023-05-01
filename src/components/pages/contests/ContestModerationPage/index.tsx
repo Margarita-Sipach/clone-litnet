@@ -5,32 +5,37 @@ import { ContestBook } from "../../../modules/contests/ContestBook";
 import { ApplicationType } from "../../../../types/types";
 import { PrimaryLink } from "../../../ui/PrimaryLink";
 import { useUserContext } from "../../../context/userContext";
+import { Router } from "../../../router";
+import { ContestModeratedBook } from "../../../modules/contests/ContestModeratedBook";
+import { useApplications } from "../../../../hooks/contests/useApplications";
 
 type Params = {
   id: string;
 };
 
-export const ContestBooks = () => {
+export const ContestModerationPage = () => {
   const { id } = useParams<Params>();
   const { contest, isLoading } = useContest(id!);
   const { user } = useUserContext();
+  const { applications, updateApplication, removeApplication } =
+    useApplications(id!, { disabled: false });
   return (
     <div className="lg:mt-4">
-      {contest ? (
+      {contest && applications ? (
         <>
           <div className="flex flex-col-reverse justify-between sm:flex-row">
             <p className="mb-6 font-medium">
-              Работы участников
+              Открытые заявки
               <span className="ml-4 rounded-md bg-gray-700 px-3 py-1 text-sm font-medium text-white">
-                {
-                  contest.contestApplications.filter((a) => a.status === true)
-                    .length
-                }
+                {applications.length}
               </span>
             </p>
             <div className="flex w-1/3 flex-row-reverse items-start">
               {+contest.userId === +user!.id && (
-                <PrimaryLink className=" ml-5" path={`admin`}>
+                <PrimaryLink
+                  className=" ml-5"
+                  path={`${Router.contest}/${id}/admin`}
+                >
                   Параметры конкурса
                 </PrimaryLink>
               )}
@@ -38,19 +43,26 @@ export const ContestBooks = () => {
                 contest.contestModerations.some(
                   (m) => +m.userId === +user!.id
                 )) && (
-                <PrimaryLink className=" items-end" path={`moderation`}>
+                <PrimaryLink
+                  className=" items-end"
+                  path={`${Router.contest}/${id}/moderation`}
+                >
                   Модерация книг
                 </PrimaryLink>
               )}
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {contest.contestApplications.map(
-              (application: ApplicationType, i: number) =>
-                application.status && (
-                  <ContestBook key={i} id={application.bookId} />
-                )
-            )}
+            {applications.map((application: ApplicationType, i: number) => (
+              <ContestModeratedBook
+                key={i}
+                id={application.bookId}
+                onConfirm={() =>
+                  updateApplication({ id: application.id, status: true })
+                }
+                onCancel={() => removeApplication(application.id)}
+              />
+            ))}
           </div>
         </>
       ) : isLoading ? (

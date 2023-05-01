@@ -11,7 +11,7 @@ import { SelectWinner } from "../SelectWinner";
 import { Link } from "react-router-dom";
 import { Router } from "../../../router";
 
-export const ContestModeration = () => {
+export const ContestAdminPage = () => {
   const { id } = useParams();
   const { contest } = useContest(id!);
   const [moderatorModalIsOpen, setModeratorModalIsOpen] = useState(false);

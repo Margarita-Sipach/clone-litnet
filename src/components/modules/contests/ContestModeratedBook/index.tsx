@@ -4,26 +4,22 @@ import { IoReload } from "react-icons/io5";
 import { Button } from "../../../ui/buttons/Button";
 import { useBook } from "../../../../hooks/books/useBook";
 import { handleImageError, processImage } from "../../../../utils/utils";
-import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../ui/Spinner";
-import { useParticipateInContest } from "../../../../hooks/contests/useParticipateInContest";
 import { Link } from "react-router-dom";
 import { Router } from "../../../router";
 
-type ContestBookProps = {
+type ContestModeratedBookProps = {
   id: string;
-  contestId?: string;
-  participate?: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
 };
 
-export const ContestBook: React.FC<ContestBookProps> = ({
+export const ContestModeratedBook: React.FC<ContestModeratedBookProps> = ({
   id,
-  contestId,
-  participate = false,
+  onConfirm,
+  onCancel,
 }) => {
   const { book, isLoading } = useBook(id);
-  const navigate = useNavigate();
-  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest();
 
   return (
     <div className="flex gap-4 border p-4">
@@ -62,26 +58,22 @@ export const ContestBook: React.FC<ContestBookProps> = ({
                   .join(", ")}`}
               </span>
             </p>
-            {participate && isAddBookLoading ? (
-              <Spinner className="mt-auto self-start" />
-            ) : (
+            <div className=" flex w-7/12 justify-around pt-3">
               <Button
                 size="sm"
-                onClick={() => {
-                  if (participate) {
-                    addBook({
-                      contestId: Number(contestId),
-                      bookId: Number(id),
-                    });
-                  } else {
-                    navigate(`/books/${book.id}`);
-                  }
-                }}
-                className="mt-auto self-start"
+                onClick={() => onCancel()}
+                className="mt-auto self-start border-0 bg-red-500 hover:bg-red-600"
               >
-                {participate ? "Участвовать" : "Читать"}
+                ✖
               </Button>
-            )}
+              <Button
+                size="sm"
+                onClick={() => onConfirm()}
+                className="mt-auto self-start border-0 bg-green-500 hover:bg-green-600"
+              >
+                ✔
+              </Button>
+            </div>
           </div>
         </>
       ) : isLoading ? (

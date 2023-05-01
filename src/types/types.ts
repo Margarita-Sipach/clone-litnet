@@ -50,11 +50,14 @@ export interface ContestType {
   prize: number | string;
   img: string;
   date: string;
+  status: boolean;
   countCharacters: number;
   userId: string;
   createdAt: string;
-  books: ApplicationType[];
+  contestApplications: ApplicationType[];
   contestWinner: WinnerType | null;
+  contestModerations: ModerationType[];
+  genres: GenreType[];
 }
 
 export interface WinnerType {

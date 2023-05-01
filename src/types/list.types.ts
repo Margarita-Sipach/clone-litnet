@@ -7,6 +7,7 @@ import {
   BookType,
   ChapterType,
   ContestCommentType,
+  ContestType,
   GenreType,
   ModerationType,
   RatingType,
@@ -25,6 +26,11 @@ export interface UserListType {
 
 export interface BookListType {
   rows: BookType[];
+  count: number;
+}
+
+export interface ContestListType {
+  rows: ContestType[];
   count: number;
 }
 

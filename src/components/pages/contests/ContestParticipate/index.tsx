@@ -22,7 +22,7 @@ export const ContestParticipate = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {books.rows
             .filter(
-              (b) => !contest.contestApplications.find((a) => a.bookId === b.id)
+              (b) => !contest.contestApplications.find((a) => +a.bookId === b.id)
             )
             .map((book, i) => (
               <ContestBook

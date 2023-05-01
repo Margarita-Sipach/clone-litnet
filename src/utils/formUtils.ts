@@ -48,6 +48,8 @@ export enum ErrorNotifies {
   ERROR_DROP_BOOK_OUT_CONTEST = "Не удалось снять книгу с конкурса",
   EXIST_MODERATOR = "Пользователь уже является модератором",
   ERROR_ADDING_WINNER_TO_CONTEST = "Не удалось установить победителя",
+  ERROR_UPDATING_APPLICATION = "Не удалось обновить заявку",
+  ERROR_REMOVING_APPLICATION = "Не удалось удалить заявку",
 }
 
 export enum SuccessNotifies {
@@ -57,6 +59,8 @@ export enum SuccessNotifies {
   ADD_BOOKMARK = "Закладка успешно добавлена",
   DELETE_BOOKMARK = "Закладка успешно удалена",
   ADD_WINNER = "Победитель успешно установлен",
+  UPDATE_APPLICATION = "Заявка успешно обновлена",
+  REMOVE_APPLICATION = "Заявка успешно удалена",
 }
 
 export const createFormData = (data: Record<string, string>): any => {

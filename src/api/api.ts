@@ -28,6 +28,7 @@ export enum API_URLS {
   CONTEST_BY_ID = "/contest/:id",
   CONTEST_BY_USER_ID = "/contest/user/:id",
   CONTEST_APPLICATION = "/contest-application",
+  CONTEST_APPLICATION_BY_ID = "/contest-application/:id",
   CONTEST_APPLICATIONS_BY_CONTEST_ID = "/contest-application/contest/:contestId",
   CONTEST_REMOVE_BOOK = "/contest/:contestId/removeBook/:bookId",
   CONTEST_WINNER = "/contest-winner",
@@ -366,6 +367,16 @@ export class API {
   public static addBookToContest = async (body: any = {}) => {
     const url = API.URLS.CONTEST_APPLICATION;
     return await API.post(url, body);
+  };
+
+  public static updateApplication = async (id: string, body: any = {}) => {
+    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id);
+    return await API.update(url, body);
+  };
+
+  public static removeApplication = async (id: string) => {
+    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id);
+    return await API.delete(url);
   };
 
   public static removeBookFromContest = async (

@@ -5,11 +5,11 @@ import { useContest } from "../../hooks/contests/useContest";
 import { Spinner } from "../ui/Spinner";
 import { Router } from "../router";
 
-export interface ModerationProtectedRouteProps {
+export interface OwnerProtectedRouteProps {
   children: JSX.Element;
 }
 
-export const ModerationProtectedRoute: FC<ModerationProtectedRouteProps> = ({
+export const OwnerProtectedRoute: FC<OwnerProtectedRouteProps> = ({
   children,
 }) => {
   const { user } = useUserContext();
@@ -18,7 +18,7 @@ export const ModerationProtectedRoute: FC<ModerationProtectedRouteProps> = ({
 
   if (isLoading) return <Spinner />;
 
-  return contest && contest.userId === user?.id ? (
+  return contest && +contest.userId === user?.id ? (
     children
   ) : (
     <Navigate to={Router.main} />
