@@ -75,7 +75,7 @@ export const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
             />
             <div>
               <p className="mb-2 text-xs uppercase text-white">Приз</p>
-              <p className="text-sm text-white">{`3 победителя получат: выплаты от ${contest.prize} руб.; шанс на экранизацию`}</p>
+              <p className="text-sm text-white">{`Победитель получит: выплату от ${contest.prize} руб.; шанс на экранизацию`}</p>
             </div>
           </div>
         </div>
