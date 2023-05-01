@@ -8,6 +8,7 @@ export enum API_URLS {
   BOOKS_BY_ID = "/books/:id",
   BOOKS_BY_USER_ID = "/books/user/:id",
   BOOKS_BY_GENRE_NAME = "books/genre",
+  VERIFY_BOOK = "/books/verify/:id",
   USER_LIBRARY = "/books/library/:id",
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
@@ -16,6 +17,7 @@ export enum API_URLS {
   USER_LOGIN = "/auth/login",
   USER_PASSWORD = "/auth/password",
   USER_REFRESH_TOKEN = "/auth/refresh",
+  BAN_USER = "/users/ban",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
@@ -32,6 +34,7 @@ export enum API_URLS {
   CONTEST_APPLICATIONS_BY_CONTEST_ID = "/contest-application/contest/:contestId",
   CONTEST_REMOVE_BOOK = "/contest/:contestId/removeBook/:bookId",
   CONTEST_WINNER = "/contest-winner",
+  CONTEST_WINNER_BY_BOOK_ID = "/contest-winner/book/:id",
   CONTEST_COMMENT = "/contest-comment",
   CONTEST_COMMENT_BY_ID = "/contest-comment/:id",
   CONTEST_COMMENT_BY_USER_ID = "/contest-comment/user/:id",
@@ -157,6 +160,11 @@ export class API {
     return await API.update(url, body);
   };
 
+  public static verifyBook = async (id: string) => {
+    const url = API.URLS.VERIFY_BOOK.replace(":id", id);
+    return await API.post(url, {});
+  };
+
   public static getUserLibrary = async (id: string) => {
     const url = API.URLS.USER_LIBRARY.replace(":id", id);
     return await API.get(url);
@@ -165,6 +173,11 @@ export class API {
   public static getUsers = async (params: QueryParams = {}) => {
     const url = API.URLS.USERS;
     return await API.get(url, params);
+  };
+
+  public static banUser = async (body = {}) => {
+    const url = API.URLS.BAN_USER;
+    return await API.post(url, body);
   };
 
   public static getUserById = async (id: string) => {
@@ -346,6 +359,14 @@ export class API {
   public static addWinner = async (body: any) => {
     const url = API.URLS.CONTEST_WINNER;
     return await API.post(url, body);
+  };
+
+  public static getWinnersByBook = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
+    const url = API.URLS.CONTEST_WINNER_BY_BOOK_ID.replace(":id", id);
+    return await API.get(url, params);
   };
 
   public static getApplications = async (params: QueryParams = {}) => {

@@ -8,8 +8,9 @@ export class Router {
   public static edit = "/account/edit";
   public static editPassword = "/account/edit-password";
   public static genres = "/books/genre";
-  public static absoluteBooks = "/books"
-  public static contest = "/contests"
+  public static absoluteBooks = "/books";
+  public static contest = "/contests";
+  public static admin = "/admin";
 
   public static books = "books";
   public static blogs = "blogs";

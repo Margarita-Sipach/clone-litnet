@@ -102,6 +102,12 @@ export interface UserType {
   readingView: string | null;
   bookmarks: BookmarkType[];
   img: string | null;
+  role: RoleType;
+}
+
+export interface RoleType {
+  id: string;
+  value: string;
 }
 
 export interface BlogType {
@@ -120,6 +126,7 @@ export interface AccountType extends UserType {
   updatedAt: string;
   contestId?: number | null;
   contest?: ContestType | null;
+  role: RoleType
   blogs?: BlogType[];
   ratings?: RatingType[];
   bookComments?: BookCommentType[];

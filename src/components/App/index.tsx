@@ -38,14 +38,13 @@ import { ContestParticipate } from "../pages/contests/ContestParticipate";
 import { AdminHomePage } from "../pages/admin/AdminHomePage";
 import { AdminRoot } from "../pages/admin/AdminRoot";
 import { AdminBooksPage } from "../pages/admin/AdminBooksPage";
-import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
-import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
 import { useCheckingAuth } from "../../hooks/user/useCheckingAuth";
 import { ContestAdminPage } from "../pages/contests/ContestAdminPage";
 import { ContestModerationPage } from "../pages/contests/ContestModerationPage";
-import { UserProtectedRoute } from "../security/UserProtectedRoute";
 import { OwnerProtectedRoute } from "../security/OwnerProtectedRoute";
 import { ModerationProtectedRoute } from "../security/ModerationProtectedRoute";
+import { UserProtectedRoute } from "../security/UserProtectedRoute";
+import { AdminProtectedRoute } from "../security/AdminProtectedRoute";
 
 const client = new QueryClient({
   logger: {
@@ -56,29 +55,25 @@ const client = new QueryClient({
 });
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/admin",
-  //   element: <AdminRoot />,
-  //   errorElement: <NotFound />,
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <AdminHomePage />,
-  //     },
-  //     {
-  //       path: "books/",
-  //       element: <AdminBooksPage />,
-  //     },
-  //     {
-  //       path: "contests/",
-  //       element: <AdminContestsPage />,
-  //     },
-  //     {
-  //       path: "blogs/",
-  //       element: <AdminBlogsPage />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/admin",
+    element: (
+      <AdminProtectedRoute>
+        <AdminRoot />
+      </AdminProtectedRoute>
+    ),
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <AdminHomePage />,
+      },
+      {
+        path: "books/",
+        element: <AdminBooksPage />,
+      },
+    ],
+  },
   {
     path: "/",
     element: <Root />,

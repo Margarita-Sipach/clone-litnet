@@ -16,6 +16,7 @@ export enum InputNames {
   DATE = "date",
   READING_VIEW = "readingView",
   RATING = "rating",
+  BAN_REASON = "banReason",
 }
 
 export enum ErrorInputMessages {
@@ -50,6 +51,9 @@ export enum ErrorNotifies {
   ERROR_ADDING_WINNER_TO_CONTEST = "Не удалось установить победителя",
   ERROR_UPDATING_APPLICATION = "Не удалось обновить заявку",
   ERROR_REMOVING_APPLICATION = "Не удалось удалить заявку",
+  BAN_ERROR = "Не удалось забанить пользователя",
+  ERROR_VERIFY_BOOK = "Не удалось верифицировать книгу",
+  ERROR_DELETE_BOOK = "Не удалось удалить книгу",
 }
 
 export enum SuccessNotifies {
@@ -61,6 +65,9 @@ export enum SuccessNotifies {
   ADD_WINNER = "Победитель успешно установлен",
   UPDATE_APPLICATION = "Заявка успешно обновлена",
   REMOVE_APPLICATION = "Заявка успешно удалена",
+  BAN_SUCCESS = "Пользователь успешно забанен",
+  VERIFY_BOOK = "Книга успешно верифицирована",
+  DELETE_BOOK = "Книга успешно удалена",
 }
 
 export const createFormData = (data: Record<string, string>): any => {

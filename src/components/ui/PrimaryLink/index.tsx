@@ -14,7 +14,7 @@ export const PrimaryLink: React.FC<PrimaryLinkProps> = ({
 }) => {
   return (
     <Link
-      className={`rounded-md border-2 border-indigo-400 bg-indigo-400 py-1 px-3 text-sm font-medium text-white hover:border-indigo-500 hover:bg-indigo-500 ${className}`}
+      className={`${className} rounded-md border-2 border-indigo-400 bg-indigo-400 px-3 py-1 font-medium text-white hover:border-indigo-500 hover:bg-indigo-500`}
       to={path}
     >
       {children}

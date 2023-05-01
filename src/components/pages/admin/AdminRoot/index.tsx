@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import { Footer } from "../../../modules/Footer";
 import { AdminHeader } from "../../../modules/AdminHeader";
