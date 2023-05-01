@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { handleImageError } from "../../../../utils/utils";
 import { useContest } from "../../../../hooks/contests/useContest";
 import contestBackground from "../../../../common/assets/images/contestBackground1.png";
+import { Router } from "../../../router";
 
 type ContestHeaderProps = {
   id: string;
@@ -41,7 +42,12 @@ export const ContestHeader: React.FC<ContestHeaderProps> = ({ id, back }) => {
             </p>
             <div className="mt-auto flex gap-4">
               {back ? (
-                <Button onClick={() => navigate(-1)}>Назад</Button>
+                <Button
+                  className=""
+                  onClick={() => navigate(`${Router.contest}/${id}`)}
+                >
+                  К работам
+                </Button>
               ) : (
                 <>
                   {" "}
