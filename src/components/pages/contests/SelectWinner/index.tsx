@@ -1,18 +1,40 @@
-import { FC } from "react";
+import { FC, useEffect, useState, useMemo } from "react";
 import { Button } from "../../../ui/buttons/Button";
 import { useApplications } from "../../../../hooks/contests/useApplications";
 import { useContestWinner } from "../../../../hooks/contests/useContestWinner";
 import { useNavigate } from "react-router-dom";
 import { Router } from "../../../router";
+import { PaginationPanel } from "../../../ui/PaginationPanel";
+import {
+  PageConfig,
+  getOffset,
+  getPageCount,
+} from "../../../../utils/pageUtils";
 
 interface SelectWinnerProps {
   contestId: string;
 }
 
 export const SelectWinner: FC<SelectWinnerProps> = ({ contestId }) => {
-  const { applications } = useApplications(contestId);
   const { addWinner } = useContestWinner();
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(0);
+  const params = useMemo(
+    () => ({
+      limit: PageConfig.LIMIT,
+      offset: getOffset(currentPage, PageConfig.LIMIT),
+    }),
+    [currentPage]
+  );
+  const { applications, refetch, count } = useApplications(contestId, params);
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
 
   return (
     <div>
@@ -38,6 +60,11 @@ export const SelectWinner: FC<SelectWinnerProps> = ({ contestId }) => {
               </Button>
             </div>
           ))}
+        <PaginationPanel
+          pageCount={getPageCount(Number(count), PageConfig.LIMIT)}
+          onClick={handlePageClick}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

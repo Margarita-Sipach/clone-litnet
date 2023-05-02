@@ -49,7 +49,7 @@ export const ContestElement: React.FC<ContestElementProps> = ({
           <div className="flex flex-col justify-between gap-4 rounded-md border border-slate-300 p-2 sm:flex-row lg:gap-12 lg:p-6">
             <DetailsElement
               title="Приз"
-              description={`3 победителя получат: выплаты от ${prize} руб.; рекламную поддержку; коммерческий статус.`}
+              description={`Победитель получит: выплаты от ${prize} руб.; рекламную поддержку; коммерческий статус.`}
               icon={FaTrophy}
               className="flex shrink-0 grow-0 basis-2/5"
             />

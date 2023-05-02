@@ -14,6 +14,7 @@ export const ContestBooks = () => {
   const { id } = useParams<Params>();
   const { contest, isLoading } = useContest(id!);
   const { user } = useUserContext();
+
   return (
     <div className="lg:mt-4">
       {contest ? (
@@ -28,7 +29,7 @@ export const ContestBooks = () => {
                 }
               </span>
             </p>
-            <div className="flex w-1/3 flex-row-reverse items-start">
+            <div className="flex w-9/12 flex-row-reverse items-start">
               {+contest.userId === +user!.id && (
                 <PrimaryLink className=" ml-5" path={`admin`}>
                   Параметры конкурса

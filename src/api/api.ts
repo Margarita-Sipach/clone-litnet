@@ -140,9 +140,12 @@ export class API {
     return await API.get(url);
   };
 
-  public static getBooksByUserId = async (id: string) => {
+  public static getBooksByUserId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BOOKS_BY_USER_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
   public static getBooksByGenreName = async (params: QueryParams = {}) => {
@@ -165,9 +168,12 @@ export class API {
     return await API.post(url, {});
   };
 
-  public static getUserLibrary = async (id: string) => {
+  public static getUserLibrary = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.USER_LIBRARY.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
   public static getUsers = async (params: QueryParams = {}) => {
@@ -301,14 +307,20 @@ export class API {
     return await API.get(url);
   };
 
-  public static getContestCommentByContestId = async (id: string) => {
+  public static getContestCommentByContestId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.CONTEST_COMMENT_BY_CONTEST_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
-  public static getContestCommentByUserId = async (id: string) => {
+  public static getContestCommentByUserId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.CONTEST_COMMENT_BY_USER_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
   public static createContestComment = async (body: any) => {
@@ -489,19 +501,28 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static getBookCommentById = async (id: string) => {
+  public static getBookCommentById = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
-  public static getBookCommentByBookId = async (id: string) => {
+  public static getBookCommentByBookId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BOOKS_COMMENT_BY_BOOK_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
-  public static getBookCommentByUserId = async (id: string) => {
+  public static getBookCommentByUserId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BOOKS_COMMENT_BY_USER_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
   public static createBookComment = async (body: any) => {
@@ -554,19 +575,28 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static getBlogCommentById = async (id: string) => {
+  public static getBlogCommentById = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BLOG_COMMENT_BY_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
-  public static getBlogCommentByBlogId = async (id: string) => {
+  public static getBlogCommentByBlogId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BLOG_COMMENT_BY_BLOG_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
-  public static getBlogCommentByUserId = async (id: string) => {
+  public static getBlogCommentByUserId = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
     const url = API.URLS.BLOG_COMMENT_BY_USER_ID.replace(":id", id);
-    return await API.get(url);
+    return await API.get(url, params);
   };
 
   public static createBlogComment = async (body: any) => {

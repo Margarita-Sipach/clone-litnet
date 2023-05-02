@@ -44,6 +44,7 @@ export const useApplications = (
     count: data?.count,
     updateApplication,
     removeApplication,
+    refetch,
     ...props,
   };
 };

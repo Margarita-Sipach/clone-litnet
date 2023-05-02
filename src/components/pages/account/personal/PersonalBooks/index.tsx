@@ -1,3 +1,4 @@
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { BookType } from "../../../../../types/types";
 import { useUserContext } from "../../../../context/userContext";
@@ -6,11 +7,38 @@ import { PageWrapper } from "../../../../ui/wrappers/PageWrapper";
 import { Spinner } from "../../../../ui/Spinner";
 import { MotionWrapper } from "../../../../ui/wrappers/MotionWrapper";
 import { useFetchUserBooks } from "../../../../../hooks/account/useUserBooks";
+import { PaginationPanel } from "../../../../ui/PaginationPanel";
+import {
+  PageConfig,
+  getOffset,
+  getPageCount,
+} from "../../../../../utils/pageUtils";
 
 export const PersonalBooks = () => {
   const { id } = useParams();
   const { user } = useUserContext();
-  const { books, isLoading } = useFetchUserBooks(id as string);
+  const [currentPage, setCurrentPage] = useState(0);
+  const params = useMemo(
+    () => ({
+      limit: PageConfig.LIMIT,
+      offset: getOffset(currentPage, PageConfig.LIMIT),
+    }),
+    [currentPage]
+  );
+  const { books, count, refetch, isLoading } = useFetchUserBooks(
+    id as string,
+    params
+  );
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
+
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
+
   return (
     <PageWrapper title="Книги">
       {books ? (
@@ -28,6 +56,11 @@ export const PersonalBooks = () => {
                   isUserBook={Number(id) === user?.id}
                 ></BookElement>
               ))}
+              <PaginationPanel
+                pageCount={getPageCount(Number(count), PageConfig.LIMIT)}
+                onClick={handlePageClick}
+                currentPage={currentPage}
+              />
             </div>
           ) : (
             <h1>Пользователь пока не добавил книги</h1>

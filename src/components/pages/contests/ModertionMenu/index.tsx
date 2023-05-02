@@ -1,9 +1,15 @@
 import { ChangeEvent } from "react";
 import { Input } from "../../../ui/inputs/Input";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useMemo } from "react";
 import { useUsers } from "../../../../hooks/user/useUsers";
 import { Button } from "../../../ui/buttons/Button";
 import { useUserContext } from "../../../context/userContext";
+import { PaginationPanel } from "../../../ui/PaginationPanel";
+import {
+  PageConfig,
+  getOffset,
+  getPageCount,
+} from "../../../../utils/pageUtils";
 
 interface ModerationMenuProps {
   onClick: (id: number) => void;
@@ -12,7 +18,22 @@ interface ModerationMenuProps {
 export const ModerationMenu: FC<ModerationMenuProps> = ({ onClick }) => {
   const { user } = useUserContext();
   const [search, setSearch] = useState<string>("");
-  const { users, refetch } = useUsers({ search: `${search}` }, 1000);
+  const [currentPage, setCurrentPage] = useState(0);
+  const params = useMemo(
+    () => ({
+      limit: PageConfig.LIMIT,
+      offset: getOffset(currentPage, PageConfig.LIMIT),
+    }),
+    [currentPage]
+  );
+  const { users, count, refetch } = useUsers(
+    { search: `${search}`, ...params },
+    1000
+  );
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(`${e.target.value}`);
@@ -20,7 +41,7 @@ export const ModerationMenu: FC<ModerationMenuProps> = ({ onClick }) => {
 
   useEffect(() => {
     refetch();
-  }, [search]);
+  }, [search, params]);
 
   return (
     <div>
@@ -47,6 +68,11 @@ export const ModerationMenu: FC<ModerationMenuProps> = ({ onClick }) => {
                 </Button>
               </div>
             ))}
+        <PaginationPanel
+          pageCount={getPageCount(Number(count), PageConfig.LIMIT)}
+          onClick={handlePageClick}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
