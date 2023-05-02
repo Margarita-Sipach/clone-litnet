@@ -1,5 +1,5 @@
 export enum PageConfig {
-  LIMIT = 1,
+  LIMIT = 10,
 }
 
 export const getOffset = (page: number, limit: number) => page * limit;
