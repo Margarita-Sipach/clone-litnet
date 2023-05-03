@@ -15,6 +15,7 @@ import { useUserRating } from "../../../../hooks/books/useUserRating";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { SelectList } from "../../../ui/SelectList";
 import { ReadingBlock } from "../../../ui/ReadingBlock";
+import { useContestWinner } from "../../../../hooks/contests/useContestWinner";
 
 export type Params = {
   id: string;
@@ -35,7 +36,8 @@ export const BookPage = () => {
     id!,
     book
   );
-
+  const { wins } = useContestWinner(id);
+  
   useEffect(() => {
     ratingRefetch();
   }, [book, ratingRefetch, user]);
@@ -102,10 +104,21 @@ export const BookPage = () => {
                 />
               </div>
             </ElementWrapper>
-            <ElementWrapper className="mb-5">
-              <h3 className="mb-2 text-xl">Аннотация</h3>
-              <div>{book.description}</div>
-            </ElementWrapper>
+            <div className=" flex items-center justify-end">
+              <ElementWrapper className="mb-5 w-full">
+                <h3 className="mb-2 text-xl">Аннотация</h3>
+                <div>{book.description}</div>
+              </ElementWrapper>
+              {wins && Boolean(wins.length) && (
+                <div className="ml-5 w-3/12">
+                  <SelectList
+                    title="Победы в конкурсах"
+                    className=""
+                    options={wins.map((w) => w.contest.title) as string[]}
+                  />
+                </div>
+              )}
+            </div>
           </>
         ) : bookLoading ? (
           <p>loading book data...</p>

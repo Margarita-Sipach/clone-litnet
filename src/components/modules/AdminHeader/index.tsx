@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from "../../../common/assets/icons/logo.svg";
 import { Burger } from "../../ui/buttons/Burger";
 import { CloseButton } from "../../ui/buttons/CloseButton";
 import { useState } from "react";
+import { Router } from "../../router";
 
 const navItems = [
   {
@@ -14,14 +15,6 @@ const navItems = [
     title: "Книги",
     link: "books",
   },
-  {
-    title: "Конкурсы",
-    link: "contests",
-  },
-  {
-    title: "Блоги",
-    link: "blogs",
-  },
 ];
 
 export const AdminHeader = () => {
@@ -30,13 +23,13 @@ export const AdminHeader = () => {
   return (
     <header className="fixed z-10 flex h-16 w-full justify-center bg-white bg-opacity-60 shadow backdrop-blur-sm">
       <Wrapper className="flex items-center justify-between">
-        <Link to="/admin">
+        <Link to={Router.main}>
           <Logo className="sm:mr-5 lg:mr-10" />
         </Link>
         <nav
           className={`${
             burgerMenuDisplay ? "flex" : "hidden"
-          } absolute top-0 left-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
+          } absolute left-0 top-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
             {navItems.map((item) => (

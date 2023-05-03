@@ -5,9 +5,10 @@ import { API } from "../../api/api";
 import { notifyError, notifySuccess } from "../../utils/utils";
 import { ErrorNotifies, SuccessNotifies } from "../../utils/formUtils";
 
-export const useParticipateInContest = (contestId: string, bookId: string) => {
+export const useParticipateInContest = () => {
   const { mutate, ...props } = useMutation({
-    mutationFn: () => API.addBookToContest(bookId, contestId),
+    mutationFn: (data: { contestId: number; bookId: number }) =>
+      API.addBookToContest(data),
     mutationKey: ["addBookToContest"],
     onError: (error: AxiosError<ErrorResponse>) => {
       notifyError(ErrorNotifies.ERROR_ADDING_BOOK_TO_CONTEST);

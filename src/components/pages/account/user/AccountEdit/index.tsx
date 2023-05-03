@@ -12,8 +12,8 @@ import {
   InputNames,
 } from "../../../../../utils/formUtils";
 import { Spinner } from "../../../../ui/Spinner";
-import { useEditUserPage } from "../../../../../hooks/account/useEditUserPage";
 import { notifyError } from "../../../../../utils/utils";
+import { useUsers } from "../../../../../hooks/user/useUsers";
 
 export const AccountEdit = () => {
   const { user } = useUserContext();
@@ -24,7 +24,7 @@ export const AccountEdit = () => {
   } = useForm({ mode: "onBlur" });
   const [file, setFile] = useState<File | null>(null);
   const [readingView, setReadingView] = useState(user?.readingView || "");
-  const { edit, isError, isLoading, error } = useEditUserPage();
+  const { edit, isEditError, isEditLoading, editError } = useUsers();
 
   const handleSetFile = (e?: ChangeEvent<HTMLInputElement>) => {
     const files = (e?.target as HTMLInputElement)?.files;
@@ -36,10 +36,10 @@ export const AccountEdit = () => {
   };
 
   useEffect(() => {
-    if (isError && error) {
+    if (isEditError && editError) {
       notifyError(ErrorNotifies.UNEXPECTED_ERROR);
     }
-  }, [error, isError]);
+  }, [editError, isEditError]);
 
   return (
     <PageWrapper title="Редактирование профиля">
@@ -56,7 +56,7 @@ export const AccountEdit = () => {
         errors={errors}
       />
       <Input
-        invalid={isError}
+        invalid={isEditError}
         placeholder="Email"
         value={user?.email}
         properties={{
@@ -105,7 +105,7 @@ export const AccountEdit = () => {
           <label htmlFor="no">Нет</label>
         </div>
       </div>
-      {isLoading ? (
+      {isEditLoading ? (
         <Spinner className="flex w-full justify-center" />
       ) : (
         <Button onClick={handleSubmit(handleSubmitForm)}>Сохранить</Button>

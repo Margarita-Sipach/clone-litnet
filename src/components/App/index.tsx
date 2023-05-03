@@ -28,7 +28,6 @@ import { AccountAddBook } from "../pages/account/book/AccountAddBook";
 import { AccountEditBookInfo } from "../pages/account/book/AccountEditBookInfo";
 import { AccountAddContest } from "../pages/account/AccountAddContest";
 import { UserContextProvider } from "../context/userContext";
-import { ProtectedRoute } from "../context/userProtectRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AccountEditChapter } from "../pages/account/chapter/AccountEditChapter";
 import { BooksPage } from "../pages/books/BooksPage";
@@ -39,9 +38,13 @@ import { ContestParticipate } from "../pages/contests/ContestParticipate";
 import { AdminHomePage } from "../pages/admin/AdminHomePage";
 import { AdminRoot } from "../pages/admin/AdminRoot";
 import { AdminBooksPage } from "../pages/admin/AdminBooksPage";
-import { AdminBlogsPage } from "../pages/admin/AdminBlogsPage";
-import { AdminContestsPage } from "../pages/admin/AdminContestsPage";
 import { useCheckingAuth } from "../../hooks/user/useCheckingAuth";
+import { ContestAdminPage } from "../pages/contests/ContestAdminPage";
+import { ContestModerationPage } from "../pages/contests/ContestModerationPage";
+import { OwnerProtectedRoute } from "../security/OwnerProtectedRoute";
+import { ModerationProtectedRoute } from "../security/ModerationProtectedRoute";
+import { UserProtectedRoute } from "../security/UserProtectedRoute";
+import { AdminProtectedRoute } from "../security/AdminProtectedRoute";
 
 const client = new QueryClient({
   logger: {
@@ -54,7 +57,11 @@ const client = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/admin",
-    element: <AdminRoot />,
+    element: (
+      <AdminProtectedRoute>
+        <AdminRoot />
+      </AdminProtectedRoute>
+    ),
     errorElement: <NotFound />,
     children: [
       {
@@ -64,14 +71,6 @@ const router = createBrowserRouter([
       {
         path: "books/",
         element: <AdminBooksPage />,
-      },
-      {
-        path: "contests/",
-        element: <AdminContestsPage />,
-      },
-      {
-        path: "blogs/",
-        element: <AdminBlogsPage />,
       },
     ],
   },
@@ -128,6 +127,22 @@ const router = createBrowserRouter([
             path: "participate",
             element: <ContestParticipate />,
           },
+          {
+            path: "admin",
+            element: (
+              <OwnerProtectedRoute>
+                <ContestAdminPage />
+              </OwnerProtectedRoute>
+            ),
+          },
+          {
+            path: "moderation",
+            element: (
+              <ModerationProtectedRoute>
+                <ContestModerationPage />
+              </ModerationProtectedRoute>
+            ),
+          },
         ],
       },
       {
@@ -163,9 +178,9 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: (
-          <ProtectedRoute>
+          <UserProtectedRoute>
             <Account />
-          </ProtectedRoute>
+          </UserProtectedRoute>
         ),
         children: [
           {

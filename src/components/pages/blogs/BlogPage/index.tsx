@@ -16,7 +16,7 @@ type Params = {
 export const BlogPage = () => {
   const { id } = useParams<Params>();
   const { blog, isLoading: isBlogLoading } = useBlog(id!);
-  const { account, isSuccess: isUserSuccess } = useFetchUser(blog?.userId); //(! custom fetch)
+  const { account, isSuccess: isUserSuccess } = useFetchUser(blog?.userId);
   const { comments, isLoading: commentsLoading } = useComments(
     CommentTypes.BLOG,
     id!,

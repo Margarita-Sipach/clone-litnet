@@ -50,15 +50,43 @@ export interface ContestType {
   prize: number | string;
   img: string;
   date: string;
+  status: boolean;
   countCharacters: number;
   userId: string;
   createdAt: string;
-  books: ContestBook[];
+  contestApplications: ApplicationType[];
+  contestWinner: WinnerType | null;
+  contestModerations: ModerationType[];
+  genres: GenreType[];
+}
+
+export interface WinnerType {
+  id: string;
+  contestId: string;
+  bookId: string;
+  contest: {
+    title: string;
+  };
+}
+
+export interface ApplicationType {
+  id: string;
+  status: boolean;
+  contestId: string;
+  bookId: string;
+  book: BookType;
 }
 
 export interface ContestBook {
   id: string;
   bookId: string;
+}
+
+export interface ModerationType {
+  id: string;
+  contestId: string;
+  userId: string;
+  user: UserType;
 }
 
 export interface GenreType {
@@ -74,6 +102,12 @@ export interface UserType {
   readingView: string | null;
   bookmarks: BookmarkType[];
   img: string | null;
+  role: RoleType;
+}
+
+export interface RoleType {
+  id: string;
+  value: string;
 }
 
 export interface BlogType {
@@ -92,6 +126,7 @@ export interface AccountType extends UserType {
   updatedAt: string;
   contestId?: number | null;
   contest?: ContestType | null;
+  role: RoleType
   blogs?: BlogType[];
   ratings?: RatingType[];
   bookComments?: BookCommentType[];

@@ -1,14 +1,36 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PageWrapper } from "../../../ui/wrappers/PageWrapper";
 import { Wrapper } from "../../../ui/wrappers/Wrapper";
 import { BookElement } from "../../../modules/elements/BookElement";
 import { Spinner } from "../../../ui/Spinner";
 import { useParams } from "react-router-dom";
 import { useBooks } from "../../../../hooks/books/useBooks";
+import { PaginationPanel } from "../../../ui/PaginationPanel";
+import {
+  PageConfig,
+  getOffset,
+  getPageCount,
+} from "../../../../utils/pageUtils";
 
 export const BooksPage = () => {
-  const { books, isLoading } = useBooks();
+  const [currentPage, setCurrentPage] = useState(0);
+  const params = useMemo(
+    () => ({
+      limit: PageConfig.LIMIT,
+      offset: getOffset(currentPage, PageConfig.LIMIT),
+    }),
+    [currentPage]
+  );
+  const { books, count, refetch, isLoading } = useBooks(params);
   const { genreName } = useParams();
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
 
   const filteredBooks = useMemo(() => {
     if (!books) return [];
@@ -41,6 +63,11 @@ export const BooksPage = () => {
             ) : (
               <p>Книги не найдены</p>
             )}
+            <PaginationPanel
+              pageCount={getPageCount(Number(count), PageConfig.LIMIT)}
+              onClick={handlePageClick}
+              currentPage={currentPage}
+            />
           </div>
         ) : isLoading ? (
           <Spinner className="flex w-full items-center justify-center" />

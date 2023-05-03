@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CommentType } from "../../../types/types";
 import { CommentElement } from "../elements/CommentElement";
 import { Button } from "../../ui/buttons/Button";
@@ -18,6 +18,8 @@ import {
 } from "../../../utils/formUtils";
 import { ErrorMessage } from "@hookform/error-message";
 import { notifyError, notifySuccess } from "../../../utils/utils";
+import { PageConfig, getOffset, getPageCount } from "../../../utils/pageUtils";
+import { PaginationPanel } from "../../ui/PaginationPanel";
 
 type CommentSectionProps = {
   comments: CommentType[];
@@ -34,21 +36,39 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
     handleSubmit,
     resetField,
   } = useForm({ mode: "onBlur" });
-  const { comments, isLoading: isLoadingComments } = useComments(
-    type,
-    id.toString()
-  );
   const { createComment, isLoading, isError, isSuccess, error, hookStatus } =
     usePostComment({
       id: id.toString(),
       commentType: type,
     });
+  const [currentPage, setCurrentPage] = useState(0);
+  const params = useMemo(
+    () => ({
+      limit: PageConfig.LIMIT,
+      offset: getOffset(currentPage, PageConfig.LIMIT),
+    }),
+    [currentPage]
+  );
+  const {
+    comments,
+    count,
+    refetch,
+    isLoading: isLoadingComments,
+  } = useComments(type, id.toString(), {}, params);
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
 
   const handleSubmitForm = (data) => {
     createComment(data);
     resetField(InputNames.TEXT);
     setIsActive(false);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
 
   useEffect(() => {
     if (isError && error) {
@@ -62,7 +82,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
     <form className="w-full border p-6">
       {comments ? (
         <>
-          <p className="pb-4">{comments.length} комментариев</p>
+          <p className="pb-4">{count} комментариев</p>
 
           <label>
             <textarea
@@ -111,6 +131,11 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ id, type }) => {
             {comments.map((comment) => (
               <CommentElement key={comment.id} {...comment} />
             ))}
+            <PaginationPanel
+              pageCount={getPageCount(Number(count), PageConfig.LIMIT)}
+              onClick={handlePageClick}
+              currentPage={currentPage}
+            />
           </div>
         </>
       ) : isLoadingComments ? (

@@ -16,12 +16,13 @@ export enum InputNames {
   DATE = "date",
   READING_VIEW = "readingView",
   RATING = "rating",
+  BAN_REASON = "banReason",
 }
 
 export enum ErrorInputMessages {
   REQUIRED = "Поле обязательно для заполнения",
   PASSWORD_LENGTH = "Пароль должен содержать больше 4 и меньше 12 символов",
-  TEXT_LENGTH = "Текст не должен превышать 1000 символов",
+  TEXT_LENGTH = "Текст не должен превышать 2500 символов",
   NAME_LENGTH = "Количество символов должно быть больше 3 и меньше 12",
   TITLE_LENGTH = "Количество символов должно быть больше 3 и меньше 24",
   EQUALS_GENRES = "Жанры не должны повторяться",
@@ -46,6 +47,13 @@ export enum ErrorNotifies {
   RATING_ERROR = "Не удалось отставить рейтинг",
   ERROR_ADDING_BOOK_TO_CONTEST = "Не удалось добавить книгу на конкурс",
   ERROR_DROP_BOOK_OUT_CONTEST = "Не удалось снять книгу с конкурса",
+  EXIST_MODERATOR = "Пользователь уже является модератором",
+  ERROR_ADDING_WINNER_TO_CONTEST = "Не удалось установить победителя",
+  ERROR_UPDATING_APPLICATION = "Не удалось обновить заявку",
+  ERROR_REMOVING_APPLICATION = "Не удалось удалить заявку",
+  BAN_ERROR = "Не удалось забанить пользователя",
+  ERROR_VERIFY_BOOK = "Не удалось верифицировать книгу",
+  ERROR_DELETE_BOOK = "Не удалось удалить книгу",
 }
 
 export enum SuccessNotifies {
@@ -54,6 +62,12 @@ export enum SuccessNotifies {
   DROP_BOOK_OUT_CONTEST = "Книга успешно снята с конкурса",
   ADD_BOOKMARK = "Закладка успешно добавлена",
   DELETE_BOOKMARK = "Закладка успешно удалена",
+  ADD_WINNER = "Победитель успешно установлен",
+  UPDATE_APPLICATION = "Заявка успешно обновлена",
+  REMOVE_APPLICATION = "Заявка успешно удалена",
+  BAN_SUCCESS = "Пользователь успешно забанен",
+  VERIFY_BOOK = "Книга успешно верифицирована",
+  DELETE_BOOK = "Книга успешно удалена",
 }
 
 export const createFormData = (data: Record<string, string>): any => {

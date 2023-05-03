@@ -10,6 +10,7 @@ import { Router } from "../../router";
 import { CircleUserAvatar } from "../../ui/avatars/CircleAvatar";
 import { Button } from "../../ui/buttons/Button";
 import { Modal } from "../../ui/modals/NewModal";
+import { PrimaryLink } from "../../ui/PrimaryLink";
 
 const navItems = [
   {
@@ -54,7 +55,7 @@ export const Header = () => {
         <nav
           className={`${
             burgerMenuDisplay ? "flex" : "hidden"
-          } absolute top-0 left-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
+          } absolute left-0 top-0 h-screen w-screen flex-col items-center bg-white py-8 sm:relative sm:flex sm:h-auto sm:w-auto sm:flex-grow sm:flex-row sm:justify-between sm:bg-transparent sm:py-0`}
         >
           <div className="flex flex-col items-center sm:flex-row sm:gap-2 lg:gap-4">
             {navItems.map((item) => (
@@ -84,7 +85,15 @@ export const Header = () => {
               </Button>
             </div>
           ) : (
-            <div className="flex justify-center gap-4">
+            <div className="flex items-center justify-center gap-4">
+              {user && user.role && user.role.value === "ADMIN" && (
+                <PrimaryLink
+                  className="py-1 text-base font-medium"
+                  path={Router.admin}
+                >
+                  Управление
+                </PrimaryLink>
+              )}
               <Link to={Router.main}>
                 <Button type="secondary" onClick={handleLogout}>
                   Выход

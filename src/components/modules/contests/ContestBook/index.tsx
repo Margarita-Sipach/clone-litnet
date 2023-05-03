@@ -7,6 +7,8 @@ import { handleImageError, processImage } from "../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../ui/Spinner";
 import { useParticipateInContest } from "../../../../hooks/contests/useParticipateInContest";
+import { Link } from "react-router-dom";
+import { Router } from "../../../router";
 
 type ContestBookProps = {
   id: string;
@@ -21,23 +23,27 @@ export const ContestBook: React.FC<ContestBookProps> = ({
 }) => {
   const { book, isLoading } = useBook(id);
   const navigate = useNavigate();
-  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest(
-    contestId!,
-    id
-  );
+  const { addBook, isLoading: isAddBookLoading } = useParticipateInContest();
 
   return (
     <div className="flex gap-4 border p-4">
       {book ? (
         <>
-          <img
-            className="aspect-[2/3] w-[100px] object-contain"
-            src={processImage(book.img)}
-            onError={handleImageError}
-            alt="book"
-          />
+          <Link to={`${Router.absoluteBooks}/${book.id}`}>
+            <img
+              className="aspect-[2/3] w-[100px] object-contain"
+              src={processImage(book.img)}
+              onError={handleImageError}
+              alt="book"
+            />
+          </Link>
           <div className="flex flex-col">
-            <p className="font-medium">{book.title}</p>
+            <Link
+              to={`${Router.absoluteBooks}/${book.id}`}
+              className="font-medium"
+            >
+              {book.title}
+            </Link>
             <p className="mb-2 text-xs text-gray-500">{book.user.name}</p>
             <div className="mb-2 flex gap-4">
               <div className="flex items-center gap-1">
@@ -63,7 +69,10 @@ export const ContestBook: React.FC<ContestBookProps> = ({
                 size="sm"
                 onClick={() => {
                   if (participate) {
-                    addBook();
+                    addBook({
+                      contestId: Number(contestId),
+                      bookId: Number(id),
+                    });
                   } else {
                     navigate(`/books/${book.id}`);
                   }
