@@ -86,7 +86,7 @@ export const Header = () => {
             </div>
           ) : (
             <div className="flex items-center justify-center gap-4">
-              {user!.role.value === "ADMIN" && (
+              {user && user.role && user.role.value === "ADMIN" && (
                 <PrimaryLink
                   className="py-1 text-base font-medium"
                   path={Router.admin}

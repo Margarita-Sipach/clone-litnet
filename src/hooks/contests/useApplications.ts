@@ -16,7 +16,8 @@ export const useApplications = (
   });
 
   const { mutate: updateApplication } = useMutation({
-    mutationFn: ({ id, ...body }: any) => API.updateApplication(id, body),
+    mutationFn: ({ id, ...body }: any) =>
+      API.updateApplication(id, contestId, body),
     mutationKey: ["updateApplication"],
     onSuccess: () => {
       notifySuccess(SuccessNotifies.UPDATE_APPLICATION);
@@ -28,7 +29,7 @@ export const useApplications = (
   });
 
   const { mutate: removeApplication } = useMutation({
-    mutationFn: (id: string) => API.removeApplication(id),
+    mutationFn: (id: string) => API.removeApplication(id, contestId),
     mutationKey: ["removeApplication"],
     onSuccess: () => {
       notifySuccess(SuccessNotifies.REMOVE_APPLICATION);

@@ -61,15 +61,17 @@ export const ContestModeratedBook: React.FC<ContestModeratedBookProps> = ({
             <div className=" flex w-7/12 justify-around pt-3">
               <Button
                 size="sm"
+                type="secondary"
                 onClick={() => onCancel()}
-                className="mt-auto self-start border-0 bg-red-500 hover:bg-red-600"
+                className="mt-auto self-start border-0 border-red-500 bg-red-500 text-white hover:border-red-600 hover:bg-red-600 hover:text-white"
               >
                 ✖
               </Button>
               <Button
                 size="sm"
+                type="secondary"
                 onClick={() => onConfirm()}
-                className="mt-auto self-start border-0 bg-green-500 hover:bg-green-600"
+                className="mt-auto self-start border-0 border-green-500 bg-green-500 text-white hover:border-green-600 hover:bg-green-600 hover:text-white"
               >
                 ✔
               </Button>

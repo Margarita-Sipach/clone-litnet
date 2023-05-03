@@ -16,7 +16,7 @@ export const useModerators = (contestId: string) => {
     isError: isAddError,
     error: addError,
   } = useMutation({
-    mutationFn: (body: any) => API.addModerator(body),
+    mutationFn: (body: any) => API.addModerator(contestId, body),
     mutationKey: ["addModerator"],
     onSuccess: () => {
       refetch();
@@ -32,7 +32,7 @@ export const useModerators = (contestId: string) => {
     isError: isRemoveError,
     error: removeError,
   } = useMutation({
-    mutationFn: (id: string) => API.removeModerator(id),
+    mutationFn: (id: string) => API.removeModerator(id, contestId),
     mutationKey: ["removeModerator"],
     onSuccess: () => {
       refetch();

@@ -6,63 +6,57 @@ export enum API_URLS {
   BASE_URL = "https://litnet.herokuapp.com",
   BOOKS = "/books",
   BOOKS_BY_ID = "/books/:id",
-  BOOKS_BY_USER_ID = "/books/user/:id",
   BOOKS_BY_GENRE_NAME = "books/genre",
   VERIFY_BOOK = "/books/verify/:id",
-  USER_LIBRARY = "/books/library/:id",
+  RATING_BY_BOOK_ID = "/books/:id/ratings",
+  CHAPTERS_BY_BOOK_ID = "/books/:id/chapters",
+  BOOKS_COMMENT_BY_BOOK_ID = "/books/:id/comments",
+  BOOKS_COMMENT_BY_ID = "/books/:bookId/comments/:id",
+  BOOKMARK_BY_BOOK_ID = "/books/:id/bookmark",
+  CONTEST_WINNER_BY_BOOK_ID = "/books/:id/winner",
   USERS = "/users",
   USERS_BY_ID = "/users/:id",
   USERS_AVATAR = "/users/avatar/:id",
+  BOOKS_BY_USER_ID = "/users/:id/books",
+  USER_LIBRARY = "/users/:id/library",
+  RATING_BY_USER_ID = "/users/:id/ratings",
+  CONTEST_BY_USER_ID = "/contest/user/:id",
+  BLOGS_BY_USER_ID = "/users/:id/blog",
+  BOOKMARK_BY_USER_ID = "/users/:id/bookmark",
+  BOOKS_COMMENT_BY_USER_ID = "/users/:id/book-comments",
+  CONTEST_COMMENT_BY_USER_ID = "/users/:id/contest-comments",
+  BLOG_COMMENT_BY_USER_ID = "/users/:id/blog-comments",
+  BAN_USER = "/users/ban",
   USER_REGISTER = "/auth/registration",
   USER_LOGIN = "/auth/login",
   USER_PASSWORD = "/auth/password",
   USER_REFRESH_TOKEN = "/auth/refresh",
-  BAN_USER = "/users/ban",
   GENRE = "/genre",
   GENRE_BY_NAME = "/genre/:name",
   GENRE_BY_ID = "/genre/:id",
   RATING = "/ratings",
   RATING_BY_ID = "/ratings/:id",
-  RATING_BY_USER_ID = "/ratings/user/:id",
-  RATING_BY_BOOK_ID = "/ratings/book/:id",
   RATING_BY_BOOK_USER_ID = "/ratings/user/:userId/book/:bookId",
   CONTEST = "/contest",
   CONTEST_BY_ID = "/contest/:id",
-  CONTEST_BY_USER_ID = "/contest/user/:id",
-  CONTEST_APPLICATION = "/contest-application",
-  CONTEST_APPLICATION_BY_ID = "/contest-application/:id",
-  CONTEST_APPLICATIONS_BY_CONTEST_ID = "/contest-application/contest/:contestId",
-  CONTEST_REMOVE_BOOK = "/contest/:contestId/removeBook/:bookId",
-  CONTEST_WINNER = "/contest-winner",
-  CONTEST_WINNER_BY_BOOK_ID = "/contest-winner/book/:id",
-  CONTEST_COMMENT = "/contest-comment",
-  CONTEST_COMMENT_BY_ID = "/contest-comment/:id",
-  CONTEST_COMMENT_BY_USER_ID = "/contest-comment/user/:id",
-  CONTEST_COMMENT_BY_CONTEST_ID = "/contest-comment/contest/:id",
-  MODERATORS = "/contest-moderation",
-  MODERATOR = "/contest-moderation/:id",
-  MODERATORS_BY_CONTEST = "/contest-moderation/contest/:contestId",
+  CONTEST_COMMENT_BY_CONTEST_ID = "/contest/:id/comments",
+  CONTEST_COMMENT_BY_ID = "/contest/:contestId/comments/:id",
+  CONTEST_APPLICATION = "/contest/:id/application",
+  CONTEST_APPLICATION_BY_ID = "/contest/:contestId/application/:id",
+  CONTEST_WINNER = "/contest/:id/winner",
+  MODERATOR = "/contest/:contestId/moderation/:id",
+  MODERATORS_BY_CONTEST = "/contest/:id/moderation",
   PAGE = "/pages",
   PAGE_BY_ID = "/pages/:id",
-  PAGE_BY_CHAPTER_ID = "/pages/chapter/:id",
   CHAPTER = "/chapters",
   CHAPTER_BY_ID = "/chapters/:id",
-  CHAPTERS_BY_BOOK_ID = "/chapters/book/:id",
-  BOOKS_COMMENT = "/book-comments",
-  BOOKS_COMMENT_BY_ID = "/book-comments/:id",
-  BOOKS_COMMENT_BY_USER_ID = "/book-comments/user/:id",
-  BOOKS_COMMENT_BY_BOOK_ID = "/book-comments/book/:id",
+  PAGE_BY_CHAPTER_ID = "/chapters/:id/pages",
   BOOKMARK = "/bookmark",
   BOOKMARK_BY_ID = "/bookmark/:id",
-  BOOKMARK_BY_USER_ID = "/bookmark/user/:id",
-  BOOKMARK_BY_BOOK_ID = "/bookmark/book/:id",
-  BLOG_COMMENT = "/blog-comment",
-  BLOG_COMMENT_BY_ID = "/blog-comment/:id",
-  BLOG_COMMENT_BY_USER_ID = "/blog-comment/user/:id",
-  BLOG_COMMENT_BY_BLOG_ID = "/blog-comment/blog/:id",
   BLOG = "/blog",
   BLOG_BY_ID = "/blog/:id",
-  BLOGS_BY_USER_ID = "/blog/user/:id",
+  BLOG_COMMENT_BY_BLOG_ID = "/blog/:id/comments",
+  BLOG_COMMENT_BY_ID = "/blog/:blogId/comments/:id",
 }
 
 export class API {
@@ -297,13 +291,22 @@ export class API {
     return await API.delete(url);
   };
 
-  public static getContestComments = async (params: QueryParams = {}) => {
-    const url = API.URLS.CONTEST_COMMENT;
+  public static getContestComments = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
+    const url = API.URLS.CONTEST_COMMENT_BY_CONTEST_ID.replace(":id", id);
     return await API.get(url, params);
   };
 
-  public static getContestCommentById = async (id: string) => {
-    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id);
+  public static getContestCommentById = async (
+    id: string,
+    contestId: string
+  ) => {
+    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id).replace(
+      ":contestId",
+      contestId
+    );
     return await API.get(url);
   };
 
@@ -323,18 +326,31 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static createContestComment = async (body: any) => {
-    const url = API.URLS.CONTEST_COMMENT;
+  public static createContestComment = async (id: string, body: any) => {
+    const url = API.URLS.CONTEST_COMMENT_BY_CONTEST_ID.replace(":id", id);
     return await API.post(url, body);
   };
 
-  public static updateContestCommentById = async (id: string, body: any) => {
-    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id);
+  public static updateContestCommentById = async (
+    id: string,
+    contestId: string,
+    body: any
+  ) => {
+    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id).replace(
+      ":contestId",
+      contestId
+    );
     return await API.update(url, body);
   };
 
-  public static deleteContestCommentById = async (id: string) => {
-    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id);
+  public static deleteContestCommentById = async (
+    id: string,
+    contestId: string
+  ) => {
+    const url = API.URLS.CONTEST_COMMENT_BY_ID.replace(":id", id).replace(
+      ":contestId",
+      contestId
+    );
     return await API.delete(url);
   };
 
@@ -390,10 +406,7 @@ export class API {
     id: string,
     params: QueryParams = {}
   ) => {
-    const url = API.URLS.CONTEST_APPLICATIONS_BY_CONTEST_ID.replace(
-      ":contestId",
-      id
-    );
+    const url = API.URLS.CONTEST_APPLICATION.replace(":id", id);
     return await API.get(url, params);
   };
 
@@ -402,21 +415,20 @@ export class API {
     return await API.post(url, body);
   };
 
-  public static updateApplication = async (id: string, body: any = {}) => {
-    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id);
+  public static updateApplication = async (
+    id: string,
+    contestId: string,
+    body: any = {}
+  ) => {
+    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id).replace(
+      ":contestId",
+      contestId
+    );
     return await API.update(url, body);
   };
 
-  public static removeApplication = async (id: string) => {
-    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id);
-    return await API.delete(url);
-  };
-
-  public static removeBookFromContest = async (
-    bookId: string,
-    contestId: string
-  ) => {
-    const url = API.URLS.CONTEST_REMOVE_BOOK.replace(":bookId", bookId).replace(
+  public static removeApplication = async (id: string, contestId: string) => {
+    const url = API.URLS.CONTEST_APPLICATION_BY_ID.replace(":id", id).replace(
       ":contestId",
       contestId
     );
@@ -427,17 +439,20 @@ export class API {
     id: string,
     params: QueryParams = {}
   ) => {
-    const url = API.URLS.MODERATORS_BY_CONTEST.replace(":contestId", id);
+    const url = API.URLS.MODERATORS_BY_CONTEST.replace(":id", id);
     return await API.get(url, params);
   };
 
-  public static addModerator = async (body: any) => {
-    const url = API.URLS.MODERATORS;
+  public static addModerator = async (id: string, body: any) => {
+    const url = API.URLS.MODERATORS_BY_CONTEST.replace(":id", id);
     return await API.post(url, body);
   };
 
-  public static removeModerator = async (id: string) => {
-    const url = API.URLS.MODERATOR.replace(":id", id);
+  public static removeModerator = async (id: string, contestId: string) => {
+    const url = API.URLS.MODERATOR.replace(":id", id).replace(
+      ":contestId",
+      contestId
+    );
     return await API.delete(url);
   };
 
@@ -496,16 +511,23 @@ export class API {
     return await API.delete(url);
   };
 
-  public static getBookComments = async (params: QueryParams = {}) => {
-    const url = API.URLS.BOOKS_COMMENT;
+  public static getBookComments = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
+    const url = API.URLS.BOOKS_COMMENT_BY_BOOK_ID.replace(":id", id);
     return await API.get(url, params);
   };
 
   public static getBookCommentById = async (
     id: string,
+    bookId: string,
     params: QueryParams = {}
   ) => {
-    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id);
+    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id).replace(
+      ":bookId",
+      bookId
+    );
     return await API.get(url, params);
   };
 
@@ -525,18 +547,28 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static createBookComment = async (body: any) => {
-    const url = API.URLS.BOOKS_COMMENT;
+  public static createBookComment = async (id: string, body: any) => {
+    const url = API.URLS.BOOKS_COMMENT_BY_BOOK_ID.replace(":id", id);
     return await API.post(url, body);
   };
 
-  public static updateBookCommentById = async (id: string, body: any) => {
-    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id);
+  public static updateBookCommentById = async (
+    id: string,
+    bookId: string,
+    body: any
+  ) => {
+    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id).replace(
+      ":bookId",
+      bookId
+    );
     return await API.update(url, body);
   };
 
-  public static deleteBookCommentById = async (id: string) => {
-    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id);
+  public static deleteBookCommentById = async (id: string, bookId: string) => {
+    const url = API.URLS.BOOKS_COMMENT_BY_ID.replace(":id", id).replace(
+      ":bookId",
+      bookId
+    );
     return await API.delete(url);
   };
 
@@ -570,8 +602,11 @@ export class API {
     return await API.delete(url);
   };
 
-  public static getBlogComments = async (params: QueryParams = {}) => {
-    const url = API.URLS.BLOG_COMMENT;
+  public static getBlogComments = async (
+    id: string,
+    params: QueryParams = {}
+  ) => {
+    const url = API.URLS.BLOG_COMMENT_BY_BLOG_ID.replace(":id", id);
     return await API.get(url, params);
   };
 
@@ -599,8 +634,8 @@ export class API {
     return await API.get(url, params);
   };
 
-  public static createBlogComment = async (body: any) => {
-    const url = API.URLS.BLOG_COMMENT;
+  public static createBlogComment = async (id: string, body: any) => {
+    const url = API.URLS.BLOG_COMMENT_BY_BLOG_ID.replace(":id", id);
     return await API.post(url, body);
   };
 

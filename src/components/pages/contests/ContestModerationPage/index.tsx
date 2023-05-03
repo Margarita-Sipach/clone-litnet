@@ -29,7 +29,7 @@ export const ContestModerationPage = () => {
                 {applications.length}
               </span>
             </p>
-            <div className="flex w-1/3 flex-row-reverse items-start">
+            <div className="flex w-9/12 flex-row-reverse items-start">
               {+contest.userId === +user!.id && (
                 <PrimaryLink
                   className=" ml-5"

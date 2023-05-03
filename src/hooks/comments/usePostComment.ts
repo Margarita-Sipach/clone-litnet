@@ -24,15 +24,19 @@ export const usePostComment = ({ id, commentType }: CommentParams) => {
   switch (commentType) {
     case CommentTypes.BOOK:
       mutationFunction = (data) =>
-        API.createBookComment({ bookId: id, userId: user?.id!, ...data });
+        API.createBookComment(id, { bookId: id, userId: user?.id!, ...data });
       break;
     case CommentTypes.BLOG:
       mutationFunction = (data) =>
-        API.createBlogComment({ blogId: id, userId: user?.id!, ...data });
+        API.createBlogComment(id, { blogId: id, userId: user?.id!, ...data });
       break;
     case CommentTypes.CONTEST:
       mutationFunction = (data) =>
-        API.createContestComment({ contestId: id, userId: user?.id!, ...data });
+        API.createContestComment(id, {
+          contestId: id,
+          userId: user?.id!,
+          ...data,
+        });
       break;
     default:
       break;
